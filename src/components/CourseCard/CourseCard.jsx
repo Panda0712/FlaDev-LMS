@@ -1,13 +1,3 @@
-// {
-//     thumbnail:
-//       "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-//     instructor: "John Smilga",
-//     courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-//     duration: "20.5 hours",
-//     students: 19387,
-//     price: 1949000,
-//     discount: 0,
-//   },
 import { Link } from "react-router-dom";
 import ClockImg from "~/assets/images/clock.png";
 import EducationImg from "~/assets/images/education.png";
