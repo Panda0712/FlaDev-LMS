@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Exo", sans-serif;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}

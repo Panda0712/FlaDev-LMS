@@ -1,0 +1,33 @@
+const Button = ({ title, style, onClick, type = "primary", ...props }) => {
+  let buttonColor = "bg-[#3252DF]";
+
+  switch (type) {
+    case "primary":
+      buttonColor = "bg-[#ff782d] text-white font-medium";
+      break;
+    case "submit":
+      buttonColor = "bg-[#3252DF] text-white";
+      break;
+    case "cancel":
+      buttonColor = "bg-gray-400 text-white";
+      break;
+    case "cancel-secondary":
+      buttonColor = "bg-[#f5f6f8] text-[#b3b3b3]";
+      break;
+    case "warning":
+      buttonColor = "bg-red-500 text-white";
+      break;
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className={`${buttonColor} py-2 rounded-full transition hover:opacity-90 cursor-pointer px-4 shadow-sm ${style}`}
+      {...props}
+    >
+      {title}
+    </button>
+  );
+};
+
+export default Button;
