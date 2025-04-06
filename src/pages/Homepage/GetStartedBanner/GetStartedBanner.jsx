@@ -7,7 +7,7 @@ const GetStartedBanner = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative px-28 w-full min-h-[250px]">
+    <section className="relative px-28 py-[90px] my-[45px] w-full min-h-[250px]">
       <img
         src={GetStartedBannerImg}
         className="object-cover w-full h-full"
