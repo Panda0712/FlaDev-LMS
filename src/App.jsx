@@ -12,6 +12,7 @@ import Auth from "~/pages/Auth/Auth";
 import Verification from "~/pages/Auth/Verification";
 import Blog from "~/pages/Blog/Blog";
 import Contact from "~/pages/Contact/Contact";
+import Course from "~/pages/Courses/Course/Course";
 import Courses from "~/pages/Courses/Courses";
 // import NotFound from "~/pages/404/NotFound";
 import Homepage from "~/pages/Homepage/Homepage";
@@ -64,7 +65,7 @@ const App = () => {
 
           {/* Courses */}
           <Route path="/courses" element={<Courses />} />
-          {/* <Route path="/courses/:courseId" element={<CourseDetails />} /> */}
+          <Route path="/courses/:courseId" element={<Course />} />
 
           {/* Profile */}
           {/* <Route path="/account/security" element={<Profile />} />
