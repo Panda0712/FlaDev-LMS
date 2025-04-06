@@ -9,6 +9,10 @@ const Button = ({ title, style, onClick, type = "primary", ...props }) => {
       buttonColor =
         "bg-transparent text-black text-[16px] shadow-none p-[24px] border-2 border-[#9d9d9d] font-semibold hover:bg-slate-100";
       break;
+    case "cart":
+      buttonColor =
+        "bg-[#020617] text-white text-[16px] py-3 shadow-none p-[24px] font-semibold hover:opacity-80";
+      break;
     case "submit":
       buttonColor = "bg-[#3252DF] text-white";
       break;
