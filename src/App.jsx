@@ -19,6 +19,7 @@ import Courses from "~/pages/Courses/Courses";
 import Homepage from "~/pages/Homepage/Homepage";
 import NotFound from "~/pages/NotFound/NotFound";
 import Order from "~/pages/Order/Order";
+import Profile from "~/pages/Profile/Profile";
 // import { selectCurrentUser } from "~/redux/activeUser/activeUserSlice";
 
 const ProtectedRoutes = ({ user }) => {
@@ -75,6 +76,12 @@ const App = () => {
           {/* Order */}
           <Route path="/order/complete" element={<Order />} />
           <Route path="/order/checkout" element={<Order />} />
+
+          {/* Profile */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/list_courses" element={<Profile />} />
+          <Route path="/profile/list_teachers" element={<Profile />} />
+          <Route path="/profile/list_reviews" element={<Profile />} />
 
           {/* Profile */}
           {/* <Route path="/account/security" element={<Profile />} />
