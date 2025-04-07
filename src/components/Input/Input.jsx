@@ -14,8 +14,14 @@ const Input = ({
   const globalStyle =
     "text-[16px] border border-slate-400 rounded-[12px] px-4 py-4 my-2 font-medium";
 
-  if (type === "file") {
-    return <FileInput image={image} handleImageChange={handleImageChange} />;
+  if (type === "file" || type === "file-secondary") {
+    return (
+      <FileInput
+        image={image}
+        handleImageChange={handleImageChange}
+        type={type}
+      />
+    );
   }
 
   if (type === "textarea") {
