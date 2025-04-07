@@ -6,6 +6,7 @@ const Input = ({
   type = "text",
   style,
   image = null,
+  icon = null,
   handleImageChange = () => {},
   ...props
 }) => {
@@ -45,6 +46,7 @@ const Input = ({
         className={`${globalStyle} h-[50px] ${style}`}
         {...props}
       />
+      {icon && icon}
       {error && (
         <p className="text-red-500 text-left max-w-[300px] text-[14px] my-1">
           {error.message}
