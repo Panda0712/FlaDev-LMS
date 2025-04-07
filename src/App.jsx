@@ -11,6 +11,7 @@ import Navbar from "~/components/Navbar/Navbar";
 import Auth from "~/pages/Auth/Auth";
 import Verification from "~/pages/Auth/Verification";
 import Blog from "~/pages/Blog/Blog";
+import Cart from "~/pages/Cart/Cart";
 import Contact from "~/pages/Contact/Contact";
 import Course from "~/pages/Courses/Course/Course";
 import Courses from "~/pages/Courses/Courses";
@@ -66,6 +67,9 @@ const App = () => {
           {/* Courses */}
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:courseId" element={<Course />} />
+
+          {/* Cart */}
+          <Route path="/cart" element={<Cart />} />
 
           {/* Profile */}
           {/* <Route path="/account/security" element={<Profile />} />
