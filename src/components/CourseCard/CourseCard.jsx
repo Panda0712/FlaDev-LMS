@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
 import ClockImg from "~/assets/images/clock.png";
 import EducationImg from "~/assets/images/education.png";
+import Star from "~/components/Star/Star";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, type = "primary" }) => {
+  if (type === "secondary") {
+    return (
+      <div className="relative p-[16px] rounded-[16px] shadow-md">
+        <img
+          src={course?.thumbnail}
+          className="w-full h-[145px] object-cover rounded-[8px]"
+          alt=""
+        />
+        <h3 className="text-[18px] font-semibold mt-4">{course?.courseName}</h3>
+        <p className="text-[16px] text-[#555555] font-medium my-3">
+          Giảng dạy bởi {course?.instructor}
+        </p>
+        <div className="flex items-center gap-3">
+          <Star value={5} />
+          <span>(400 đánh giá)</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-[20px] cursor-pointer transform transition hover:translate-y-[-20px] hover:shadow-xl hover:border-0">
       <img

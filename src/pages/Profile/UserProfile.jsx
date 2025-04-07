@@ -126,7 +126,7 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="flex justify-end">
-        <Button type="submit" title="Cập nhật thông tin" type="cart" />
+        <Button type="submit" title="Cập nhật thông tin" />
       </div>
     </form>
   );
