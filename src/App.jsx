@@ -88,7 +88,8 @@ const App = () => {
             <Route path="/account/general" element={<Profile />} /> */}
 
           {/* Authentication */}
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/auth/login" element={<Auth />} />
+          <Route path="/auth/register" element={<Auth />} />
           <Route path="/auth/verification" element={<Verification />} />
 
           {/* 404 */}
