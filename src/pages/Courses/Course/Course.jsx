@@ -73,7 +73,7 @@ const Course = () => {
 
         <CourseReviews courseInfo={courseInfo} />
 
-        <CourseSuggestion />
+        <CourseSuggestion style="bg-white" />
       </div>
     </section>
   );
