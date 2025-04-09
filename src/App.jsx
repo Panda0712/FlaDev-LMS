@@ -14,6 +14,7 @@ import Blog from "~/pages/Blog/Blog";
 import Cart from "~/pages/Cart/Cart";
 import Contact from "~/pages/Contact/Contact";
 import Course from "~/pages/Courses/Course/Course";
+import CourseLearning from "~/pages/Courses/CourseLearning/CourseLearning";
 import Courses from "~/pages/Courses/Courses";
 // import NotFound from "~/pages/404/NotFound";
 import Homepage from "~/pages/Homepage/Homepage";
@@ -69,6 +70,10 @@ const App = () => {
           {/* Courses */}
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:courseId" element={<Course />} />
+          <Route
+            path="/courses/:courseId/learning"
+            element={<CourseLearning />}
+          />
 
           {/* Cart */}
           <Route path="/cart" element={<Cart />} />
@@ -82,10 +87,6 @@ const App = () => {
           <Route path="/profile/list_courses" element={<Profile />} />
           <Route path="/profile/list_teachers" element={<Profile />} />
           <Route path="/profile/list_reviews" element={<Profile />} />
-
-          {/* Profile */}
-          {/* <Route path="/account/security" element={<Profile />} />
-            <Route path="/account/general" element={<Profile />} /> */}
 
           {/* Authentication */}
           <Route path="/auth/login" element={<Auth />} />
