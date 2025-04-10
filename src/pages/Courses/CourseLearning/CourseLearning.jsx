@@ -1,4 +1,3 @@
-import { ChevronDown, ChevronUp, Play } from "lucide-react";
 import { useState } from "react";
 import ExampleAvatar from "~/assets/images/example-avatar-2.png";
 import CourseContent from "~/pages/Courses/Course/CourseContent/CourseContent";
@@ -7,9 +6,8 @@ import CourseLinkBox from "~/pages/Courses/Course/CourseLinkBox/CourseLinkBox";
 import CourseReviews from "~/pages/Courses/Course/CourseReviews/CourseReviews";
 import CourseSuggestion from "~/pages/Courses/Course/CourseSuggestion/CourseSuggestion";
 import CourseAim from "~/pages/Courses/CourseLearning/CourseAim/CourseAim";
-import RecorderImg from "~/assets/images/recorder.png";
-import CheckBoxImg from "~/assets/images/checkbox.png";
-import BlankCheckBoxImg from "~/assets/images/blank-checkbox.png";
+import CourseProgress from "~/pages/Courses/CourseLearning/CourseProgress/CourseProgress";
+import CourseVideo from "~/pages/Courses/CourseLearning/CourseVideo/CourseVideo";
 
 const courseInfo = {
   thumbnail:
@@ -31,19 +29,25 @@ const courseInfo = {
       lessons: 5,
       listLessons: [
         {
+          id: 1,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
         {
+          id: 2,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
         {
+          id: 3,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: false,
         },
       ],
       duration: "1 hour",
@@ -53,19 +57,25 @@ const courseInfo = {
       lessons: 5,
       listLessons: [
         {
+          id: 4,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: false,
         },
         {
+          id: 5,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
         {
+          id: 6,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
       ],
       duration: "1 hour",
@@ -75,19 +85,25 @@ const courseInfo = {
       lessons: 5,
       listLessons: [
         {
+          id: 7,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
         {
+          id: 8,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: false,
         },
         {
+          id: 9,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
       ],
       duration: "1 hour",
@@ -97,19 +113,25 @@ const courseInfo = {
       lessons: 5,
       listLessons: [
         {
+          id: 10,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: false,
         },
         {
+          id: 11,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: false,
         },
         {
+          id: 12,
           name: "What is User Experience (UX) Design?",
           duration: "4min",
           videoUrl: "",
+          completed: true,
         },
       ],
       duration: "1 hour",
@@ -156,6 +178,15 @@ const CourseLearning = () => {
       active: false,
     }))
   );
+  const [currentActiveLesson, setCurrentActiveLesson] = useState(
+    courseInfo?.courseModule[0]?.listLessons[0]?.id
+  );
+
+  const handleChangeActiveLesson = (lessonId) => {
+    if (lessonId === currentActiveLesson) return;
+
+    setCurrentActiveLesson(lessonId);
+  };
 
   const handleToggleList = (index) => {
     setOpenItemList((prev) =>
@@ -173,19 +204,7 @@ const CourseLearning = () => {
 
       <div className="flex items-start gap-[32px]">
         <div className="basis-[calc(70%-16px)]">
-          <div className="relative">
-            <img
-              src={courseInfo?.thumbnail}
-              className="w-full min-h-[450px] object-cover rounded-[16px]"
-              alt=""
-            />
-            <div
-              className="absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] 
-            w-[100px] h-[100px] shadow-sm cursor-pointer transition hover:opacity-80 bg-white rounded-full flex items-center justify-center"
-            >
-              <Play size={44} className="fill-black" />
-            </div>
-          </div>
+          <CourseVideo thumbnail={courseInfo?.thumbnail} />
 
           <CourseLinkBox />
 
@@ -200,65 +219,13 @@ const CourseLearning = () => {
             Tiến độ hoàn thành
           </h3>
 
-          <div className="flex flex-col w-full">
-            {courseInfo?.courseModule?.map((item, index) => (
-              <div
-                key={index}
-                className="rounded-md flex flex-col items-center justify-start"
-                onClick={() => handleToggleList(index)}
-              >
-                <div
-                  className={`${
-                    index < courseInfo?.courseModule?.length - 1
-                      ? "border-b border-slate-300"
-                      : ""
-                  } flex items-center gap-4 cursor-pointer transition hover:bg-slate-200 py-[24px] px-[20px] w-full`}
-                >
-                  {openItemList[index]?.active ? (
-                    <ChevronDown size={24} />
-                  ) : (
-                    <ChevronUp size={24} />
-                  )}
-                  <p className="font-semibold text-[18px]">{item?.title}</p>
-                </div>
-                <div
-                  className={`${
-                    openItemList[index]?.active ? "flex flex-col" : "hidden"
-                  } transition`}
-                >
-                  {courseInfo?.courseModule[index]?.listLessons?.map(
-                    (lesson, lessonIndex) => (
-                      <div
-                        key={lessonIndex}
-                        className="flex items-start justify-between gap-5 pt-4 pb-5 px-[20px] cursor-pointer transition hover:bg-[#0f172a] hover:text-white"
-                      >
-                        <div className="flex gap-2">
-                          <img
-                            src={CheckBoxImg}
-                            className="w-[24px] h-[24px]"
-                            alt=""
-                          />
-                          <p>
-                            {lessonIndex + 1}. {lesson?.name}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <img
-                            src={RecorderImg}
-                            className="w-[24px] h-[24px] text-[#64748b]"
-                            alt=""
-                          />
-                          <p className="text-[#64748b] text-[16px]">
-                            {lesson?.duration}
-                          </p>
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <CourseProgress
+            openItemList={openItemList}
+            courseModule={courseInfo?.courseModule}
+            currentActiveLesson={currentActiveLesson}
+            handleToggleList={handleToggleList}
+            handleChangeActiveLesson={handleChangeActiveLesson}
+          />
         </div>
       </div>
 
