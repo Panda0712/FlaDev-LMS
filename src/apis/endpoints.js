@@ -1,63 +1,212 @@
 import api from "./api";
 
 // Courses
-export const fetchCourses = () => api.get("/courses");
-export const fetchCourseById = (id) => api.get(`/courses/${id}`);
-export const createCourse = (data) => api.post("/courses", data);
-export const updateCourse = (id, data) => api.put(`/courses/${id}`, data);
-export const deleteCourse = (id) => api.delete(`/courses/${id}`);
+export const fetchCourses = async () => {
+  const res = await api.get("/courses");
+  return res.data;
+};
+
+export const fetchCourseById = async (id) => {
+  const res = await api.get(`/courses/${id}`);
+  return res.data;
+};
+
+export const createCourse = async (data) => {
+  const res = await api.post("/courses", data);
+  return res.data;
+};
+
+export const updateCourse = async (id, data) => {
+  const res = await api.put(`/courses/${id}`, data);
+  return res.data;
+};
+
+export const deleteCourse = async (id) => {
+  const res = await api.delete(`/courses/${id}`);
+  return res.data;
+};
 
 // Modules
-export const fetchModules = () => api.get("/modules");
-export const createModule = (data) => api.post("/modules", data);
-export const updateModule = (id, data) => api.put(`/modules/${id}`, data);
-export const deleteModule = (id) => api.delete(`/modules/${id}`);
+export const fetchModules = async () => {
+  const res = await api.get("/modules");
+  return res.data;
+};
+
+export const createModule = async (data) => {
+  const res = await api.post("/modules", data);
+  return res.data;
+};
+
+export const updateModule = async (id, data) => {
+  const res = await api.put(`/modules/${id}`, data);
+  return res.data;
+};
+
+export const deleteModule = async (id) => {
+  const res = await api.delete(`/modules/${id}`);
+  return res.data;
+};
 
 // Reviews
-export const fetchReviews = () => api.get("/reviews");
-export const createReview = (data) => api.post("/reviews", data);
-export const updateReview = (id, data) => api.put(`/reviews/${id}`, data);
-export const deleteReview = (id) => api.delete(`/reviews/${id}`);
+export const fetchReviews = async () => {
+  const res = await api.get("/reviews");
+  return res.data;
+};
+
+export const createReview = async (data) => {
+  const res = await api.post("/reviews", data);
+  return res.data;
+};
+
+export const updateReview = async (id, data) => {
+  const res = await api.put(`/reviews/${id}`, data);
+  return res.data;
+};
+
+export const deleteReview = async (id) => {
+  const res = await api.delete(`/reviews/${id}`);
+  return res.data;
+};
 
 // Blogs
-export const fetchBlogs = () => api.get("/blogs");
-export const createBlog = (data) => api.post("/blogs", data);
-export const updateBlog = (id, data) => api.put(`/blogs/${id}`, data);
-export const deleteBlog = (id) => api.delete(`/blogs/${id}`);
+export const fetchBlogs = async () => {
+  const res = await api.get("/blogs");
+  return res.data;
+};
+
+export const createBlog = async (data) => {
+  const res = await api.post("/blogs", data);
+  return res.data;
+};
+
+export const updateBlog = async (id, data) => {
+  const res = await api.put(`/blogs/${id}`, data);
+  return res.data;
+};
+
+export const deleteBlog = async (id) => {
+  const res = await api.delete(`/blogs/${id}`);
+  return res.data;
+};
 
 // Contacts
-export const fetchContacts = () => api.get("/contacts");
-export const createContact = (data) => api.post("/contacts", data);
-export const deleteContact = (id) => api.delete(`/contacts/${id}`);
+export const fetchContacts = async () => {
+  const res = await api.get("/contacts");
+  return res.data;
+};
+
+export const createContact = async (data) => {
+  const res = await api.post("/contacts", data);
+  return res.data;
+};
+
+export const deleteContact = async (id) => {
+  const res = await api.delete(`/contacts/${id}`);
+  return res.data;
+};
 
 // Orders
-export const fetchOrders = () => api.get("/orders");
-export const fetchOrderById = (id) => api.get(`/orders/${id}`);
-export const createOrder = (data) => api.post("/orders", data);
-export const updateOrder = (id, data) => api.put(`/orders/${id}`, data);
-export const deleteOrder = (id) => api.delete(`/orders/${id}`);
+export const fetchOrders = async () => {
+  const res = await api.get("/orders");
+  return res.data;
+};
+
+export const fetchOrderById = async (id) => {
+  const res = await api.get(`/orders/${id}`);
+  return res.data;
+};
+
+export const createOrder = async (data) => {
+  const res = await api.post("/orders", data);
+  return res.data;
+};
+
+export const updateOrder = async (id, data) => {
+  const res = await api.put(`/orders/${id}`, data);
+  return res.data;
+};
+
+export const deleteOrder = async (id) => {
+  const res = await api.delete(`/orders/${id}`);
+  return res.data;
+};
 
 // Vouchers
-export const fetchVouchers = () => api.get("/vouchers");
-export const createVoucher = (data) => api.post("/vouchers", data);
-export const updateVoucher = (id, data) => api.put(`/vouchers/${id}`, data);
-export const deleteVoucher = (id) => api.delete(`/vouchers/${id}`);
+export const fetchVouchers = async () => {
+  const res = await api.get("/vouchers");
+  return res.data;
+};
+
+export const createVoucher = async (data) => {
+  const res = await api.post("/vouchers", data);
+  return res.data;
+};
+
+export const updateVoucher = async (id, data) => {
+  const res = await api.put(`/vouchers/${id}`, data);
+  return res.data;
+};
+
+export const deleteVoucher = async (id) => {
+  const res = await api.delete(`/vouchers/${id}`);
+  return res.data;
+};
 
 // Cart
-export const fetchCart = () => api.get("/carts");
-export const addToCart = (data) => api.post("/carts", data);
-export const updateCart = (id, data) => api.put(`/carts/${id}`, data);
-export const deleteCart = (id) => api.delete(`/carts/${id}`);
+export const fetchCart = async () => {
+  const res = await api.get("/carts");
+  return res.data;
+};
+
+export const addToCart = async (data) => {
+  const res = await api.post("/carts", data);
+  return res.data;
+};
+
+export const updateCart = async (id, data) => {
+  const res = await api.put(`/carts/${id}`, data);
+  return res.data;
+};
+
+export const deleteCart = async (id) => {
+  const res = await api.delete(`/carts/${id}`);
+  return res.data;
+};
 
 // Profile/User
-export const fetchUserProfile = () => api.get("/user");
-export const updateUserProfile = (data) => api.put("/user", data);
+export const fetchUserProfile = async () => {
+  const res = await api.get("/user");
+  return res.data;
+};
+
+export const updateUserProfile = async (data) => {
+  const res = await api.put("/user", data);
+  return res.data;
+};
 
 // Auth
-export const login = (data) => api.post("/login", data);
-export const register = (data) => api.post("/register", data);
-export const logout = () => api.post("/logout");
-export const resetPassword = (data) => api.post("/password/reset", data);
+export const login = async (data) => {
+  const res = await api.post("/login", data);
+  return res.data;
+};
+
+export const register = async (data) => {
+  const res = await api.post("/register", data);
+  return res.data;
+};
+
+export const logout = async () => {
+  const res = await api.post("/logout");
+  return res.data;
+};
+
+export const resetPassword = async (data) => {
+  const res = await api.post("/password/reset", data);
+  return res.data;
+};
 
 // Media
-export const uploadMedia = (data) => api.post("/media/upload", data);
+export const uploadMedia = async (data) => {
+  const res = await api.post("/media/upload", data);
+  return res.data;
+};

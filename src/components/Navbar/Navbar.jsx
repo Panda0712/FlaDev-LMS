@@ -1,10 +1,13 @@
 import { Search } from "lucide-react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { menuList } from "~/components/Navbar/constants";
 import Logo from "/logo.jpg";
+import UserProfile from "~/components/UserProfile/UserProfile";
 
 const Navbar = () => {
   const location = useLocation();
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <nav className="relative px-28 flex items-center h-[72px] justify-between gap-28 border-b border-slate-200">
@@ -28,14 +31,19 @@ const Navbar = () => {
         ))}
       </ul>
       <div className="flex items-center gap-5">
-        <Link to="/auth">
-          <p className="font-semibold transition hover:opacity-80">
-            Đăng nhập / Đăng ký
-          </p>
-        </Link>
-        <div className="w-[48px] h-[48px] rounded-full flex items-center justify-center border-2 border-[#ff782d]">
-          <Search size={20} className="text-[#ff782d]" />
-        </div>
+        {!user && (
+          <>
+            <Link to="/auth">
+              <p className="font-semibold transition hover:opacity-80">
+                Đăng nhập / Đăng ký
+              </p>
+            </Link>
+            <div className="w-[48px] h-[48px] rounded-full flex items-center justify-center border-2 border-[#ff782d]">
+              <Search size={20} className="text-[#ff782d]" />
+            </div>
+          </>
+        )}
+        {user && <UserProfile currentUser={user} />}
       </div>
     </nav>
   );
