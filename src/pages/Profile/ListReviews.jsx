@@ -1,5 +1,3 @@
-import { Ellipsis } from "lucide-react";
-import Star from "~/components/Star/Star";
 import ReviewCard from "~/pages/Profile/ReviewCard/ReviewCard";
 
 const listReviews = [

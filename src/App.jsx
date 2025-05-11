@@ -17,22 +17,36 @@ import Course from "~/pages/Courses/Course/Course";
 import CourseLearning from "~/pages/Courses/CourseLearning/CourseLearning";
 import Courses from "~/pages/Courses/Courses";
 // import NotFound from "~/pages/404/NotFound";
+import Admin from "~/pages/Admin/Admin";
+import AdminBlogs from "~/pages/Admin/Blogs";
+import AdminContacts from "~/pages/Admin/Contacts";
+import AdminCourses from "~/pages/Admin/Courses";
+import Dashboard from "~/pages/Admin/Dashboard";
+import AdminModules from "~/pages/Admin/Modules";
+import AdminOrders from "~/pages/Admin/Orders";
+import AdminVouchers from "~/pages/Admin/Vouchers";
 import Homepage from "~/pages/Homepage/Homepage";
 import NotFound from "~/pages/NotFound/NotFound";
 import Order from "~/pages/Order/Order";
 import Profile from "~/pages/Profile/Profile";
 // import { selectCurrentUser } from "~/redux/activeUser/activeUserSlice";
+import { useSelector } from "react-redux";
+import { ACCOUNT_ROLES } from "~/utils/constants";
 
-const ProtectedRoutes = ({ user }) => {
-  if (!user) return <Navigate to="/login" replace={true} />;
+const ProtectedRoutes = () => {
+  const user = useSelector((state) => state.auth.user);
+  if (!user) return <Navigate to="/auth/login" replace={true} />;
+
+  if (user?.role === ACCOUNT_ROLES.ADMIN) return <Navigate to="/admin" />;
   return <Outlet />;
 };
 
-// const AdminRoutes = ({ user }) => {
-//   if (!user || user.role !== ACCOUNT_ROLES.ADMIN)
-//     return <Navigate to="/" replace={true} />;
-//   return <Outlet />;
-// };
+const AdminRoutes = () => {
+  const user = useSelector((state) => state.auth.user);
+  if (!user || user.role !== ACCOUNT_ROLES.ADMIN)
+    return <Navigate to="/" replace={true} />;
+  return <Outlet />;
+};
 
 const App = () => {
   // const currentUser = useSelector(selectCurrentUser);
@@ -41,12 +55,28 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* Admin Routes */}
-        {/* <Route element={<AdminRoutes user={currentUser} />}>
+        <Route element={<AdminRoutes />}>
           <Route path="/admin" element={<Admin />}>
-            <Route index element={<Admin />} />
-            <Route path="dashboard" element={<Homepage />} />
+            <Route index element={<Dashboard />} />
+            <Route path="courses" element={<AdminCourses />} />
+            {/* <Route
+              path="courses/:hotelId"
+              element={<HotelDetailsManagement />}
+            /> */}
+            <Route path="contact" element={<AdminContacts />} />
+            <Route path="vouchers" element={<AdminVouchers />} />
+            <Route path="orders" element={<AdminOrders />} />
+            {/* <Route
+              path="booking/:bookingId"
+              element={<BookingDetailsManagement />}
+            /> */}
+            <Route path="blogs" element={<AdminBlogs />} />
+            {/* <Route path="blogs/:blogId" element={<BlogDetailsManagement />} /> */}
+            {/* <Route path="blogs/create" element={<BlogFormPage />} /> */}
+            {/* <Route path="blogs/create/:blogId" element={<BlogFormPage />} /> */}
+            <Route path="lessons" element={<AdminModules />} />
           </Route>
-        </Route> */}
+        </Route>
         {/* User Routes */}
         <Route
           element={
@@ -57,47 +87,46 @@ const App = () => {
             </div>
           }
         >
-          {/* <Route element={<ProtectedRoutes user={null} />}> */}
-          {/* Homepage */}
-          <Route path="/" element={<Homepage />} />
+          <Route element={<ProtectedRoutes />}>
+            {/* Homepage */}
+            <Route path="/" element={<Homepage />} />
 
-          {/* Contact */}
-          <Route path="/contact" element={<Contact />} />
+            {/* Contact */}
+            <Route path="/contact" element={<Contact />} />
 
-          {/* Blog */}
-          <Route path="/blog" element={<Blog />} />
+            {/* Blog */}
+            <Route path="/blog" element={<Blog />} />
 
-          {/* Courses */}
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/courses/:courseId" element={<Course />} />
-          <Route
-            path="/courses/:courseId/learning"
-            element={<CourseLearning />}
-          />
+            {/* Courses */}
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:courseId" element={<Course />} />
+            <Route
+              path="/courses/:courseId/learning"
+              element={<CourseLearning />}
+            />
 
-          {/* Cart */}
-          <Route path="/cart" element={<Cart />} />
+            {/* Cart */}
+            <Route path="/cart" element={<Cart />} />
 
-          {/* Order */}
-          <Route path="/order/complete" element={<Order />} />
-          <Route path="/order/checkout" element={<Order />} />
+            {/* Order */}
+            <Route path="/order/complete" element={<Order />} />
+            <Route path="/order/checkout" element={<Order />} />
 
-          {/* Profile */}
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/list_courses" element={<Profile />} />
-          <Route path="/profile/list_teachers" element={<Profile />} />
-          <Route path="/profile/list_reviews" element={<Profile />} />
+            {/* Profile */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/list_courses" element={<Profile />} />
+            <Route path="/profile/list_teachers" element={<Profile />} />
+            <Route path="/profile/list_reviews" element={<Profile />} />
 
-          {/* Authentication */}
-          <Route path="/auth/login" element={<Auth />} />
-          <Route path="/auth/register" element={<Auth />} />
-          <Route path="/auth/verification" element={<Verification />} />
+            {/* Authentication */}
+            <Route path="/auth/login" element={<Auth />} />
+            <Route path="/auth/register" element={<Auth />} />
+            <Route path="/auth/verification" element={<Verification />} />
 
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Route>
-
-        {/* </Route>
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
