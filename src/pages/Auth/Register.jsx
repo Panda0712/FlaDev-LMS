@@ -19,7 +19,7 @@ const Register = () => {
   const inputStyle =
     "w-full px-4 py-2 border border-[#9d9d9d] rounded-md font-medium focus:outline-none focus:ring-1 focus:ring-slate-200";
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (password !== passwordConfirmation) {
@@ -29,29 +29,34 @@ const Register = () => {
 
     dispatch(loginStart());
 
-    try {
-      const response = await register({
-        username: name,
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
+    toast
+      .promise(
+        register({
+          username: name,
+          email,
+          password,
+          password_confirmation: passwordConfirmation,
+        }),
+        {
+          pending: "Đang đăng ký...",
+        }
+      )
+      .then((res) => {
+        navigate("/auth/login");
+        dispatch(
+          loginSuccess({
+            user: res.user,
+            token: res.access_token,
+          })
+        );
+        toast.success("Đăng ký tài khoản thành công!!!");
+      })
+      .catch((error) => {
+        const errorMsg = error.response?.data?.errors || "Registration failed";
+        setError(errorMsg);
+        toast.error(errorMsg);
+        dispatch(loginFailure(errorMsg));
       });
-
-      dispatch(
-        loginSuccess({
-          user: response.data.user,
-          token: response.data.access_token,
-        })
-      );
-
-      navigate("/auth/login");
-      toast.success("Đăng ký tài khoản thành công!!!");
-    } catch (err) {
-      const errorMsg = err.response?.data?.errors || "Registration failed";
-      setError(errorMsg);
-      toast.error(errorMsg);
-      dispatch(loginFailure(errorMsg));
-    }
   };
 
   return (

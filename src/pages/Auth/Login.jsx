@@ -17,32 +17,30 @@ const Login = () => {
   const inputStyle =
     "w-full px-4 py-2 border border-[#9d9d9d] rounded-md font-medium focus:outline-none focus:ring-1 focus:ring-slate-200";
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginStart());
 
-    try {
-      const response = await login({
-        email,
-        password,
+    toast
+      .promise(login({ email, password }), {
+        pending: "Đang đăng nhập...",
+      })
+      .then((res) => {
+        navigate("/");
+        dispatch(
+          loginSuccess({
+            user: res.user,
+            token: res.access_token,
+          })
+        );
+        toast.success("Đăng nhập thành công!");
+      })
+      .catch((error) => {
+        const errorMsg = error.response?.data?.message || "Login failed";
+        setError(errorMsg);
+        toast.error(errorMsg);
+        dispatch(loginFailure(errorMsg));
       });
-
-      dispatch(
-        loginSuccess({
-          user: response.data.user,
-          token: response.data.access_token,
-        })
-      );
-
-      // Redirect or do something after successful login
-      navigate("/");
-      toast.success("Đăng nhập thành công!");
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || "Login failed";
-      setError(errorMsg);
-      toast.error(errorMsg);
-      dispatch(loginFailure(errorMsg));
-    }
   };
 
   return (

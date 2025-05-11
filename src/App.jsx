@@ -9,14 +9,12 @@ import {
 import Footer from "~/components/Footer/Footer";
 import Navbar from "~/components/Navbar/Navbar";
 import Auth from "~/pages/Auth/Auth";
-import Verification from "~/pages/Auth/Verification";
 import Blog from "~/pages/Blog/Blog";
 import Cart from "~/pages/Cart/Cart";
 import Contact from "~/pages/Contact/Contact";
 import Course from "~/pages/Courses/Course/Course";
 import CourseLearning from "~/pages/Courses/CourseLearning/CourseLearning";
 import Courses from "~/pages/Courses/Courses";
-// import NotFound from "~/pages/404/NotFound";
 import Admin from "~/pages/Admin/Admin";
 import AdminBlogs from "~/pages/Admin/Blogs";
 import AdminContacts from "~/pages/Admin/Contacts";
@@ -29,7 +27,6 @@ import Homepage from "~/pages/Homepage/Homepage";
 import NotFound from "~/pages/NotFound/NotFound";
 import Order from "~/pages/Order/Order";
 import Profile from "~/pages/Profile/Profile";
-// import { selectCurrentUser } from "~/redux/activeUser/activeUserSlice";
 import { useSelector } from "react-redux";
 import { ACCOUNT_ROLES } from "~/utils/constants";
 
@@ -49,8 +46,6 @@ const AdminRoutes = () => {
 };
 
 const App = () => {
-  // const currentUser = useSelector(selectCurrentUser);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -111,6 +106,7 @@ const App = () => {
             {/* Order */}
             <Route path="/order/complete" element={<Order />} />
             <Route path="/order/checkout" element={<Order />} />
+            <Route path="/order/history" element={<Order />} />
 
             {/* Profile */}
             <Route path="/profile" element={<Profile />} />
@@ -118,14 +114,12 @@ const App = () => {
             <Route path="/profile/list_teachers" element={<Profile />} />
             <Route path="/profile/list_reviews" element={<Profile />} />
 
-            {/* Authentication */}
-            <Route path="/auth/login" element={<Auth />} />
-            <Route path="/auth/register" element={<Auth />} />
-            <Route path="/auth/verification" element={<Verification />} />
-
             {/* 404 */}
             <Route path="*" element={<NotFound />} />
           </Route>
+          {/* Authentication */}
+          <Route path="/auth/login" element={<Auth />} />
+          <Route path="/auth/register" element={<Auth />} />
         </Route>
 
         {/* 404 */}

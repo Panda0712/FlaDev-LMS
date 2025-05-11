@@ -1,9 +1,12 @@
 import { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { logout } from "~/apis/endpoints";
 // import { toast } from "react-toastify";
 import Button from "~/components/Button/Button";
 import Modal from "~/components/Modal/Modal";
+import { logout as logoutRedux } from "~/redux/authSlice";
 // import {
 //   logoutUserAPI,
 //   selectCurrentUser,
@@ -14,18 +17,27 @@ const AdminHeader = () => {
   const [openAdminProfile, setOpenAdminProfile] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  //   const currentUser = useSelector(selectCurrentUser);
-  //   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
+  const dispatch = useDispatch();
 
   const handleToggleOpenAdminProfile = () =>
     setOpenAdminProfile(!openAdminProfile);
 
   const handleLogout = () => {
-    // toast
-    //   .promise(dispatch(logoutUserAPI(true)), {
-    //     pending: "Đang đăng xuất",
-    //   })
-    //   .then(() => setOpenModal(false));
+    toast
+      .promise(logout(), {
+        pending: "Đang đăng xuất",
+      })
+      .then(() => {
+        setOpenModal(false);
+        dispatch(logoutRedux());
+        toast.success("Đăng xuất thành công");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => setOpenModal(false));
   };
 
   const handleCloseModal = () => setOpenModal(false);
@@ -57,7 +69,7 @@ const AdminHeader = () => {
         </div>
 
         {openAdminProfile && (
-          <ul className="absolute z-99 shadow-sm bottom-[-100px] rounded-lg bg-gray-200 left-0 py-3 px-4 w-[180px]">
+          <ul className="absolute z-99 shadow-sm bottom-[-100px] rounded-lg bg-gray-200 right-0 py-3 px-4 w-[180px]">
             <Link to="/admin/profile">
               <li className={profileItemStyle}>Thông tin cá nhân</li>
             </Link>
