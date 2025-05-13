@@ -22,6 +22,33 @@ import TeacherCard from "~/pages/Profile/TeacherCard/TeacherCard";
 //   teacherList,
 // };
 
+const courseModules = [
+  {
+    title: "Basics of User-Centered Design",
+    description:
+      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
+    lessons: [
+      {
+        name: "Introduction to UX Design",
+        video_url: "https://youtube.com/watch?wQ",
+      },
+    ],
+    duration: "1 hour",
+  },
+  {
+    title: "Basics of User-Centered Design",
+    description:
+      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
+    lessons: [
+      {
+        name: "Introduction to UX Design",
+        video_url: "https://youtube.com/watch?wQ",
+      },
+    ],
+    duration: "1 hour",
+  },
+];
+
 const listCourses = [
   {
     thumbnail:
@@ -39,11 +66,6 @@ const listCourses = [
     discount: 0,
     courseModule: [
       { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
       { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
       { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
     ],

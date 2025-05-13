@@ -1,168 +1,457 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Spin } from "antd";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import AdminTable from "~/components/AdminTable/AdminTable";
+import DeleteConfirmationModal from "~/components/DeleteConfirmationModal/DeleteConfirmationModal";
+import FormModal from "~/components/FormModal/FormModal";
+import Input from "~/components/Input/Input";
+import useCourseTable from "~/hooks/useCourseTable";
 import {
   fetchCourses,
   createCourse,
   updateCourse,
   deleteCourse,
 } from "../../apis/endpoints";
+import InputV2 from "~/components/InputV2/InputV2";
 
 const AdminCourses = () => {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [newCourse, setNewCourse] = useState({ title: "", description: "" });
-  const [editingCourse, setEditingCourse] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
 
-  const loadCourses = async () => {
-    setLoading(true);
-    try {
-      const res = await fetchCourses();
-      setCourses(res.data);
-      setError(null);
-    } catch {
-      setError("Failed to fetch courses");
-    }
-    setLoading(false);
-  };
+  const {
+    openModal,
+    editing,
+    deleting,
+    loading,
+    openOptions,
+    totalPages,
+    currentCourses,
+    currentPage,
+    modules,
+    lessons,
+    video,
+    image,
+    setImage,
+    handleImageChange,
+    handleVideoChange,
+    onSubmit,
+    paginate,
+    toggleOpenModal,
+    handleReset,
+    handleToggle,
+    handleDeleteCourse,
+    addModule,
+    updateModule,
+    removeModule,
+    addLesson,
+    updateLesson,
+    removeLesson,
+    setModules,
+    setLessons,
+  } = useCourseTable({
+    fetchDataFn: fetchCourses,
+    createDataFn: createCourse,
+    updateDataFn: updateCourse,
+    deleteDataFn: deleteCourse,
+    imageKey: "course-thumbnails",
+    videoKey: "course-videos",
+    currentImageFormData: getValues("thumbnail") || null,
+    resetFn: reset,
+  });
 
   useEffect(() => {
-    loadCourses();
-  }, []);
-
-  const handleCreate = async () => {
-    try {
-      await createCourse(newCourse);
-      setNewCourse({ title: "", description: "" });
-      loadCourses();
-    } catch {
-      setError("Failed to create course");
+    if (editing.edit && editing.data) {
+      reset({
+        name: editing.data.name || "",
+        thumbnail: editing.data.thumbnail || null,
+        instructorRole: editing.data.instructorRole || "",
+        instructorDescription: editing.data.instructorDescription || "",
+        description: editing.data.description || "",
+        duration: editing.data.duration || 0,
+        price: editing.data.price || "",
+        discount: editing.data.discount || "",
+        courseModules: editing.data.courseModules || [],
+      });
+      setModules(editing.data.courseModules || []);
+      setLessons(
+        (editing.data.courseModules || []).reduce((acc, mod, idx) => {
+          acc[idx] = mod.lessons || [];
+          return acc;
+        }, {})
+      );
+      setImage(editing.data.thumbnail || null);
+    } else {
+      reset({
+        name: "",
+        thumbnail: null,
+        instructorRole: "",
+        instructorDescription: "",
+        description: "",
+        duration: "",
+        price: "",
+        discount: 0,
+        courseModules: [],
+      });
+      setModules([]);
+      setLessons({});
+      setImage(null);
     }
-  };
+  }, [editing, reset]);
 
-  const handleUpdate = async () => {
-    try {
-      await updateCourse(editingCourse.id, editingCourse);
-      setEditingCourse(null);
-      loadCourses();
-    } catch {
-      setError("Failed to update course");
-    }
-  };
+  console.log(lessons);
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteCourse(id);
-      loadCourses();
-    } catch {
-      setError("Failed to delete course");
-    }
-  };
+  const headerList = [
+    { label: "Ảnh", width: "w-[200px]" },
+    { label: "Tên khoá học", width: "w-[200px]" },
+    { label: "Mô tả" },
+    { label: "Thời lượng", width: "w-[100px]" },
+    { label: "Giá", width: "w-[100px]" },
+    { label: "Giảm giá", width: "w-[100px]" },
+    { label: "Giảng viên", width: "w-[150px]" },
+    { label: "Ngày tạo" },
+    { label: "", width: "w-[100px]" },
+  ];
+
+  const tHeadStyle =
+    "font-medium border border-gray-200 px-4 py-2 md:text-[18px] sm:text-[16px] text-[14px] break-words whitespace-normal";
+  const optionStyle =
+    "py-[12px] px-[16px] transition hover:bg-slate-100 cursor-pointer";
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center">
+        <Spin size="large" />
+      </div>
+    );
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Courses Management</h2>
-      <div className="bg-white rounded shadow p-4 mb-6">
-        <h3 className="font-semibold mb-2">Add New Course</h3>
-        <input
-          className="border p-2 mr-2"
-          placeholder="Title"
-          value={newCourse.title}
-          onChange={(e) =>
-            setNewCourse({ ...newCourse, title: e.target.value })
-          }
-        />
-        <input
-          className="border p-2 mr-2"
-          placeholder="Description"
-          value={newCourse.description}
-          onChange={(e) =>
-            setNewCourse({ ...newCourse, description: e.target.value })
-          }
-        />
+    <div className="flex flex-col max-[900px]:overflow-auto min-h-screen">
+      <DeleteConfirmationModal
+        isOpen={deleting.delete}
+        onClose={handleReset}
+        onConfirm={handleDeleteCourse}
+        title="Xóa khoá học"
+        message="Bạn có chắc chắn muốn xóa khoá học không? Sau khi xóa không thể hoàn tác!"
+        confirmButtonText="Xóa"
+        cancelButtonText="Trở lại"
+        modalStyle="w-[450px]"
+      />
+
+      <FormModal
+        isOpen={openModal && !deleting.delete}
+        onClose={handleReset}
+        handleSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
+        title={editing.edit ? "Chỉnh sửa khoá học" : "Thêm khoá học mới"}
+        submitButtonText={editing.edit ? "Chỉnh sửa" : "Thêm mới"}
+        modalStyle="w-[600px]"
+      >
+        <div className="flex flex-col gap-1">
+          <label htmlFor="name" className="font-medium">
+            Tên khoá học
+          </label>
+          <Input
+            name="name"
+            content="Nhập tên khoá học"
+            {...register("name", { required: "Vui lòng nhập tên khoá học" })}
+            error={errors?.name}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="thumbnail" className="font-medium">
+            Ảnh bìa
+          </label>
+          <InputV2
+            type="file"
+            image={image}
+            handleImageChange={handleImageChange}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="description" className="font-medium">
+            Mô tả
+          </label>
+          <Input
+            name="description"
+            content="Nhập mô tả khoá học"
+            type="textarea"
+            style="pt-3"
+            {...register("description")}
+            error={errors?.description}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="instructorRole" className="font-medium">
+            Vị trí giảng viên
+          </label>
+          <Input
+            name="instructorRole"
+            content="Nhập vị trí giảng viên"
+            type="textarea"
+            style="pt-3"
+            {...register("instructorRole")}
+            error={errors?.instructorRole}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="instructorDescription" className="font-medium">
+            Mô tả giảng viên
+          </label>
+          <Input
+            name="instructorDescription"
+            content="Nhập mô tả giảng viên"
+            type="textarea"
+            style="pt-3"
+            {...register("instructorDescription")}
+            error={errors?.instructorDescription}
+          />
+        </div>
+
+        <div className="flex flex-row gap-2">
+          <div className="flex flex-col gap-1 w-1/2">
+            <label htmlFor="duration" className="font-medium">
+              Thời lượng (giờ)
+            </label>
+            <Input
+              name="duration"
+              content="Nhập thời lượng"
+              type="number"
+              {...register("duration", {
+                required: "Vui lòng nhập thời lượng",
+              })}
+              error={errors?.duration}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1 w-1/2">
+            <label htmlFor="price" className="font-medium">
+              Giá (VNĐ)
+            </label>
+            <Input
+              name="price"
+              content="Nhập giá khoá học"
+              type="number"
+              {...register("price", { required: "Vui lòng nhập giá" })}
+              error={errors?.price}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-row gap-2">
+          <div className="flex flex-col gap-1 w-1/2">
+            <label htmlFor="discount" className="font-medium">
+              Giảm giá (%)
+            </label>
+            <Input
+              name="discount"
+              content="Nhập phần trăm giảm giá"
+              type="number"
+              {...register("discount")}
+              error={errors?.discount}
+            />
+          </div>
+        </div>
+        {/* Modules động */}
+        <div className="mt-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-semibold">Danh sách Modules</span>
+            <button
+              type="button"
+              className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+              onClick={() =>
+                addModule({ title: "", description: "", duration: "" })
+              }
+            >
+              Thêm Module
+            </button>
+          </div>
+          {modules.length === 0 && (
+            <div className="text-gray-500 text-sm">Chưa có module nào</div>
+          )}
+          {modules.map((mod, idx) => (
+            <div key={idx} className="border rounded p-3 mb-2 bg-gray-50">
+              <div className="flex flex-col gap-2 mb-2">
+                <Input
+                  name={`module-title-${idx}`}
+                  content="Tên module"
+                  value={mod.title}
+                  onChange={(e) =>
+                    updateModule(idx, { ...mod, title: e.target.value })
+                  }
+                  error={null}
+                />
+                <Input
+                  name={`module-duration-${idx}`}
+                  content="Thời lượng (giờ)"
+                  type="number"
+                  value={mod.duration}
+                  onChange={(e) =>
+                    updateModule(idx, { ...mod, duration: e.target.value })
+                  }
+                  error={null}
+                />
+                <Input
+                  name={`module-desc-${idx}`}
+                  content="Mô tả module"
+                  type="textarea"
+                  value={mod.description}
+                  onChange={(e) =>
+                    updateModule(idx, { ...mod, description: e.target.value })
+                  }
+                  error={null}
+                />
+                <button
+                  type="button"
+                  className="bg-red-500 hover:bg-red-600 text-white px-2 rounded text-xs h-8 mt-5"
+                  onClick={() => removeModule(idx)}
+                >
+                  Xoá
+                </button>
+              </div>
+              {/* Lessons động cho module này */}
+              <div className="mt-2">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-medium text-sm">Lessons</span>
+                  <button
+                    type="button"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-0.5 rounded text-xs"
+                    onClick={() => {
+                      addLesson(idx, { name: "", video_url: "" });
+                    }}
+                  >
+                    Thêm Lesson
+                  </button>
+                </div>
+                {(lessons[idx] || []).length === 0 && (
+                  <div className="text-gray-400 text-xs">
+                    Chưa có lesson nào
+                  </div>
+                )}
+                {(lessons[idx] || []).map((lesson, lidx) => {
+                  const videoKey = `${idx}-${lidx}`;
+                  const currentVideo = video[videoKey] || null;
+
+                  return (
+                    <div key={lidx} className="flex flex-col gap-2 mb-1">
+                      <Input
+                        name={`lesson-name-${idx}-${lidx}`}
+                        content="Tên lesson"
+                        value={lesson.name}
+                        onChange={(e) =>
+                          updateLesson(idx, lidx, {
+                            ...lesson,
+                            name: e.target.value,
+                          })
+                        }
+                        error={null}
+                      />
+                      <InputV2
+                        key={`video-input-${idx}-${lidx}-${!!currentVideo}`}
+                        type="video"
+                        video={currentVideo || lesson?.video_url || null}
+                        handleVideoChange={(event) =>
+                          handleVideoChange(event, idx, lidx)
+                        }
+                        inputId={`video_input_${idx}_${lidx}`}
+                      />
+                      <button
+                        type="button"
+                        className="bg-red-400 hover:bg-red-500 text-white px-2 rounded text-xs h-8"
+                        onClick={() => removeLesson(idx, lidx)}
+                      >
+                        Xoá
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </FormModal>
+
+      <div className="flex sm:flex-nowrap flex-wrap gap-5 items-center justify-between">
+        <h3 className="lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px] font-medium">
+          Quản lý khoá học
+        </h3>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={handleCreate}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow text-[14px]"
+          onClick={toggleOpenModal}
         >
-          Add
+          Thêm khoá học mới
         </button>
       </div>
-      {editingCourse && (
-        <div className="bg-yellow-100 rounded shadow p-4 mb-6">
-          <h3 className="font-semibold mb-2">Edit Course</h3>
-          <input
-            className="border p-2 mr-2"
-            placeholder="Title"
-            value={editingCourse.title}
-            onChange={(e) =>
-              setEditingCourse({ ...editingCourse, title: e.target.value })
-            }
-          />
-          <input
-            className="border p-2 mr-2"
-            placeholder="Description"
-            value={editingCourse.description}
-            onChange={(e) =>
-              setEditingCourse({
-                ...editingCourse,
-                description: e.target.value,
-              })
-            }
-          />
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-            onClick={handleUpdate}
-          >
-            Save
-          </button>
-          <button
-            className="bg-gray-400 text-white px-4 py-2 rounded"
-            onClick={() => setEditingCourse(null)}
-          >
-            Cancel
-          </button>
+
+      <AdminTable
+        headers={headerList}
+        data={currentCourses}
+        renderRow={(course) => (
+          <>
+            <td className={`${tHeadStyle}`}>
+              <img
+                src={course?.thumbnail}
+                className="object-cover md:w-[200px] md:h-[150px] sm:w-[150px] sm:h-[100px] 
+                  w-[120px] h-[80px] mx-auto rounded-sm"
+                alt=""
+              />
+            </td>
+            <td className={tHeadStyle}>{course?.name}</td>
+            <td className={tHeadStyle}>{course?.description}</td>
+            <td className={tHeadStyle}>{course?.duration}</td>
+            <td className={tHeadStyle}>{course?.price}</td>
+            <td className={tHeadStyle}>{course?.discount}</td>
+            <td className={tHeadStyle}>{course?.instructor}</td>
+            <td className={tHeadStyle}>
+              {course?.created_at
+                ? new Date(course.created_at).toLocaleDateString()
+                : ""}
+            </td>
+          </>
+        )}
+        openOptions={openOptions}
+        handleToggleOptions={(idx) => handleToggle("options", idx)}
+        optionItems={[
+          {
+            label: "Chỉnh sửa",
+            onClick: (course) => handleToggle("edit", course),
+          },
+          {
+            label: "Xoá khoá học",
+            onClick: (course) => handleToggle("delete", course?.id),
+          },
+        ]}
+        tHeadStyle={tHeadStyle}
+        optionStyle={optionStyle}
+        responsiveStyle="max-[900px]:min-w-[900px]"
+      />
+
+      {totalPages > 1 && (
+        <div className="flex justify-center my-4 gap-2">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={`px-3 py-1 rounded-md border text-[14px] ${
+                currentPage === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-blue-600 border-blue-600"
+              }`}
+              onClick={() => paginate(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       )}
-      <div className="bg-white rounded shadow p-4">
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p className="text-red-500">{error}</p>
-        ) : (
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="text-left">ID</th>
-                <th className="text-left">Title</th>
-                <th className="text-left">Description</th>
-                <th className="text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.map((course) => (
-                <tr key={course.id}>
-                  <td>{course.id}</td>
-                  <td>{course.title}</td>
-                  <td>{course.description}</td>
-                  <td>
-                    <button
-                      className="bg-yellow-400 px-2 py-1 rounded mr-2"
-                      onClick={() => setEditingCourse(course)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => handleDelete(course.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
     </div>
   );
 };

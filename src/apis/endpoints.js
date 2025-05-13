@@ -1,3 +1,4 @@
+import { API_ROOT } from "~/utils/constants";
 import api from "./api";
 
 // Courses
@@ -208,5 +209,41 @@ export const resetPassword = async (data) => {
 // Media
 export const uploadMedia = async (data) => {
   const res = await api.post("/media/upload", data);
+  return res.data;
+};
+
+export const uploadBlogImageAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/blogs/uploads`, data);
+  return res.data;
+};
+
+export const uploadCourseImageAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/courses/uploads`, data);
+  return res.data;
+};
+
+export const uploadCourseVideoAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/courses/uploads-videos`, data);
+  return res.data;
+};
+
+// Lessons
+export const fetchLessons = async () => {
+  const res = await api.get("/lessons");
+  return res.data;
+};
+
+export const createLesson = async (data) => {
+  const res = await api.post("/lessons", data);
+  return res.data;
+};
+
+export const updateLesson = async (id, data) => {
+  const res = await api.put(`/lessons/${id}`, data);
+  return res.data;
+};
+
+export const deleteLesson = async (id) => {
+  const res = await api.delete(`/lessons/${id}`);
   return res.data;
 };

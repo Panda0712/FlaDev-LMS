@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "~/apis/endpoints";
 import Button from "~/components/Button/Button";
@@ -94,6 +94,10 @@ const Login = () => {
           style="w-full font-light py-3 shadow-none"
           type="submit"
         />
+
+        <p className="pt-5">
+          Chưa có tài khoản? <Link to="/auth/register">Đăng ký ngay</Link>
+        </p>
 
         <p className="mt-7 text-md text-[16px] font-medium cursor-pointer hover:underline">
           Quên mật khẩu?
