@@ -1,7 +1,7 @@
 import {
-  Bell,
+  BookOpenCheck,
   FileUser,
-  House,
+  GraduationCap,
   LayoutDashboard,
   PencilLine,
   Sheet,
@@ -9,16 +9,15 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { menuAdminList } from "~/pages/Admin/AdminSidebar/constants";
-import MeoLogo from "/panda-logo.png";
+import MeoLogo from "/logo.jpg";
 
 const iconMap = {
   contact: <FileUser size={24} />,
-  courses: <House size={24} />,
+  courses: <GraduationCap size={24} />,
   dashboard: <LayoutDashboard size={24} />,
   orders: <Sheet size={24} />,
   voucher: <TicketPercent size={24} />,
   blog: <PencilLine size={24} />,
-  lessons: <Bell size={24} />,
 };
 
 const AdminSidebar = () => {

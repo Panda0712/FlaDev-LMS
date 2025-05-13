@@ -48,7 +48,7 @@ const AdminHeader = () => {
   return (
     <div className="flex items-center justify-between p-[24px] bg-white shadow-sm">
       <h1 className="font-medium lg:text-[24px] md:text-[20px] sm:text-[18px] text-[16px]">
-        Quản trị <span className="text-blue-600">Meo</span>Station.
+        Quản trị <span className="text-blue-600">Fla</span>Dev.
       </h1>
       <div
         onClick={handleToggleOpenAdminProfile}

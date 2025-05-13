@@ -14,6 +14,9 @@ export const ACCOUNT_ROLES = {
   CLIENT: "CLIENT",
 };
 
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_ITEMS_PER_PAGE = 8;
+
 let apiRoot = "http://localhost:8017";
 // if (process.env.BUILD_MODE === "dev") {
 //   apiRoot = "http://localhost:8017";

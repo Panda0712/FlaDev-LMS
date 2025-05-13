@@ -1,161 +1,258 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Spin } from "antd";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import AdminTable from "~/components/AdminTable/AdminTable";
+import DeleteConfirmationModal from "~/components/DeleteConfirmationModal/DeleteConfirmationModal";
+import FormModal from "~/components/FormModal/FormModal";
+import Input from "~/components/Input/Input";
+import InputV2 from "~/components/InputV2/InputV2";
+import useBlogTable from "~/hooks/useBlogTable";
 import {
-  fetchBlogs,
   createBlog,
-  updateBlog,
   deleteBlog,
+  fetchBlogs,
+  updateBlog,
 } from "../../apis/endpoints";
 
 const AdminBlogs = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [newBlog, setNewBlog] = useState({ title: "", content: "" });
-  const [editingBlog, setEditingBlog] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm();
 
-  const loadBlogs = async () => {
-    setLoading(true);
-    try {
-      const res = await fetchBlogs();
-      setBlogs(res.data);
-      setError(null);
-    } catch {
-      setError("Failed to fetch blogs");
-    }
-    setLoading(false);
-  };
+  const {
+    openModal,
+    editing,
+    deleting,
+    loading,
+    openOptions,
+    totalPages,
+    currentBookings,
+    currentPage,
+    image,
+    onSubmit,
+    paginate,
+    toggleOpenModal,
+    handleReset,
+    handleToggle,
+    handleDeleteBlog,
+    handleImageChange,
+    setImage,
+  } = useBlogTable({
+    fetchDataFn: fetchBlogs,
+    createDataFn: createBlog,
+    updateDataFn: updateBlog,
+    deleteDataFn: deleteBlog,
+    imageKey: "blog-covers",
+    currentImageFormData: getValues("coverImage") || null,
+    resetFn: reset,
+  });
 
   useEffect(() => {
-    loadBlogs();
-  }, []);
+    if (editing.edit && editing.data) {
+      reset({
+        title: editing.data.title || "",
+        summary: editing.data.summary || "",
+        content: editing.data.content || "",
+        coverImage: editing.data.coverImage || null,
+        tags: editing.data.tags?.map((u) => u).join(", ") || "",
+      });
 
-  const handleCreate = async () => {
-    try {
-      await createBlog(newBlog);
-      setNewBlog({ title: "", content: "" });
-      loadBlogs();
-    } catch {
-      setError("Failed to create blog");
-    }
-  };
+      setImage(editing.data.coverImage || null);
+    } else {
+      reset({
+        title: "",
+        summary: "",
+        content: "",
+        coverImage: null,
+        tags: "",
+      });
 
-  const handleUpdate = async () => {
-    try {
-      await updateBlog(editingBlog.id, editingBlog);
-      setEditingBlog(null);
-      loadBlogs();
-    } catch {
-      setError("Failed to update blog");
+      setImage(null);
     }
-  };
+  }, [editing, reset]);
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteBlog(id);
-      loadBlogs();
-    } catch {
-      setError("Failed to delete blog");
-    }
-  };
+  const headerList = [
+    {
+      label: "Hình ảnh",
+      width: "w-[200px]",
+    },
+    { label: "Tiêu đề", width: "w-[180px]" },
+    { label: "Tóm tắt" },
+    { label: "Tác giả", width: "w-[120px]" },
+    { label: "Tags", width: "w-[180px]" },
+    { label: "Ngày tạo" },
+    { label: "", width: "w-[100px]" },
+  ];
+
+  const tHeadStyle =
+    "font-medium border border-gray-200 px-4 py-2 md:text-[18px] sm:text-[16px] text-[14px] break-words whitespace-normal";
+  const optionStyle =
+    "py-[12px] px-[16px] transition hover:bg-slate-100 cursor-pointer";
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center">
+        <Spin size="large" />
+      </div>
+    );
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Blogs Management</h2>
-      <div className="bg-white rounded shadow p-4 mb-6">
-        <h3 className="font-semibold mb-2">Add New Blog</h3>
-        <input
-          className="border p-2 mr-2"
-          placeholder="Title"
-          value={newBlog.title}
-          onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
-        />
-        <input
-          className="border p-2 mr-2"
-          placeholder="Content"
-          value={newBlog.content}
-          onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
-        />
+    <div className="flex flex-col max-[900px]:overflow-auto min-h-screen">
+      <DeleteConfirmationModal
+        isOpen={deleting.delete}
+        onClose={handleReset}
+        onConfirm={handleDeleteBlog}
+        title="Xóa bài viết"
+        message="Bạn có chắc chắn muốn xóa bài viết không? Sau khi xóa không thể hoàn tác!"
+        confirmButtonText="Xóa"
+        cancelButtonText="Trở lại"
+        modalStyle="w-[450px]"
+      />
+
+      <FormModal
+        isOpen={openModal && !deleting.delete}
+        onClose={handleReset}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        title={editing.edit ? "Chỉnh sửa bài viết" : "Thêm bài viết mới"}
+        submitButtonText={editing.edit ? "Chỉnh sửa" : "Thêm mới"}
+        modalStyle="w-[500px]"
+      >
+        <div className="flex flex-col gap-1">
+          <label htmlFor="title" className="font-medium">
+            Tiêu đề
+          </label>
+          <Input
+            name="title"
+            content="Nhập tiêu đề bài viết"
+            {...register("title", { required: "Vui lòng nhập tiêu đề" })}
+            error={errors?.title}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="summary" className="font-medium">
+            Tóm tắt
+          </label>
+          <Input
+            name="summary"
+            content="Nhập tóm tắt bài viết"
+            {...register("summary")}
+            error={errors?.summary}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="content" className="font-medium">
+            Nội dung
+          </label>
+          <Input
+            name="content"
+            content="Nhập nội dung bài viết"
+            type="textarea"
+            style="pt-3"
+            {...register("content", { required: "Vui lòng nhập nội dung" })}
+            error={errors?.content}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="tags" className="font-medium">
+            Tags (phân cách bằng dấu phẩy)
+          </label>
+          <Input
+            name="tags"
+            content="Ví dụ: react, javascript, frontend"
+            {...register("tags")}
+            error={errors?.tags}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="coverImage" className="font-medium">
+            Ảnh bìa
+          </label>
+          <InputV2
+            type="file"
+            image={image}
+            handleImageChange={handleImageChange}
+          />
+        </div>
+      </FormModal>
+
+      <div className="flex sm:flex-nowrap flex-wrap gap-5 items-center justify-between">
+        <h3 className="lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px] font-medium">
+          Quản lý bài viết
+        </h3>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={handleCreate}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow text-[14px]"
+          onClick={toggleOpenModal}
         >
-          Add
+          Thêm bài viết mới
         </button>
       </div>
-      {editingBlog && (
-        <div className="bg-yellow-100 rounded shadow p-4 mb-6">
-          <h3 className="font-semibold mb-2">Edit Blog</h3>
-          <input
-            className="border p-2 mr-2"
-            placeholder="Title"
-            value={editingBlog.title}
-            onChange={(e) =>
-              setEditingBlog({ ...editingBlog, title: e.target.value })
-            }
-          />
-          <input
-            className="border p-2 mr-2"
-            placeholder="Content"
-            value={editingBlog.content}
-            onChange={(e) =>
-              setEditingBlog({ ...editingBlog, content: e.target.value })
-            }
-          />
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-            onClick={handleUpdate}
-          >
-            Save
-          </button>
-          <button
-            className="bg-gray-400 text-white px-4 py-2 rounded"
-            onClick={() => setEditingBlog(null)}
-          >
-            Cancel
-          </button>
+
+      <AdminTable
+        headers={headerList}
+        data={currentBookings}
+        renderRow={(blog) => (
+          <>
+            <td className={`${tHeadStyle}`}>
+              <img
+                src={blog?.coverImage}
+                className="object-cover md:w-[200px] md:h-[150px] sm:w-[150px] sm:h-[100px] 
+                  w-[120px] h-[80px] mx-auto rounded-sm"
+                alt=""
+              />
+            </td>
+            <td className={tHeadStyle}>{blog?.title}</td>
+            <td className={tHeadStyle}>{blog?.summary}</td>
+            <td className={tHeadStyle}>{blog?.author}</td>
+            <td className={tHeadStyle}>
+              {Array.isArray(blog?.tags) ? blog.tags.join(", ") : ""}
+            </td>
+            <td className={tHeadStyle}>
+              {blog?.created_at
+                ? new Date(blog.created_at).toLocaleDateString()
+                : ""}
+            </td>
+          </>
+        )}
+        openOptions={openOptions}
+        handleToggleOptions={(idx) => handleToggle("options", idx)}
+        optionItems={[
+          {
+            label: "Chỉnh sửa",
+            onClick: (blog) => handleToggle("edit", blog),
+          },
+          {
+            label: "Xóa bài viết",
+            onClick: (blog) => handleToggle("delete", blog?.id),
+          },
+        ]}
+        tHeadStyle={tHeadStyle}
+        optionStyle={optionStyle}
+        responsiveStyle="max-[900px]:min-w-[900px]"
+      />
+
+      {totalPages > 1 && (
+        <div className="flex justify-center my-4 gap-2">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={`px-3 py-1 rounded-md border text-[14px] ${
+                currentPage === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-blue-600 border-blue-600"
+              }`}
+              onClick={() => paginate(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       )}
-      <div className="bg-white rounded shadow p-4">
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p className="text-red-500">{error}</p>
-        ) : (
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th className="text-left">ID</th>
-                <th className="text-left">Title</th>
-                <th className="text-left">Content</th>
-                <th className="text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {blogs.map((blog) => (
-                <tr key={blog.id}>
-                  <td>{blog.id}</td>
-                  <td>{blog.title}</td>
-                  <td>{blog.content}</td>
-                  <td>
-                    <button
-                      className="bg-yellow-400 px-2 py-1 rounded mr-2"
-                      onClick={() => setEditingBlog(blog)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => handleDelete(blog.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
     </div>
   );
 };

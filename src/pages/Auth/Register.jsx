@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register } from "~/apis/endpoints";
 import Button from "~/components/Button/Button";
@@ -119,6 +119,10 @@ const Register = () => {
             👁️
           </span>
         </div>
+
+        <p className="py-5">
+          Đã có tài khoản? <Link to="/auth/login">Đăng nhập ngay</Link>
+        </p>
 
         <Button
           title="Đăng ký"

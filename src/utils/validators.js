@@ -23,3 +23,79 @@ export const singleFileValidator = (file) => {
   }
   return null;
 };
+
+export const LIMIT_VIDEO_FILE_SIZE = 104857600; // byte = 100 MB
+export const ALLOW_VIDEO_FILE_TYPES = [
+  "video/mp4",
+  "video/webm",
+  "video/ogg",
+  "video/avi",
+  "video/mov",
+  "video/quicktime",
+  "video/x-ms-wmv",
+  "video/x-msvideo",
+];
+export const singleVideoValidator = (file) => {
+  if (!file || !file.name || !file.size || !file.type) {
+    return "File video không được để trống";
+  }
+
+  if (file.size > LIMIT_VIDEO_FILE_SIZE) {
+    return "Quá giới hạn dung lượng file video. (100MB)";
+  }
+
+  if (!ALLOW_VIDEO_FILE_TYPES.includes(file.type)) {
+    return "File video không hỗ trợ. Chỉ chấp nhận mp4, webm, ogg, avi, mov, wmv";
+  }
+
+  return null;
+};
+
+export const multipleVideoValidator = (files, maxFiles = 5) => {
+  if (!files || files.length === 0) {
+    return "Vui lòng chọn ít nhất 1 file video";
+  }
+
+  if (files.length > maxFiles) {
+    return `Chỉ được phép upload tối đa ${maxFiles} video`;
+  }
+
+  // Kiểm tra từng file
+  for (let i = 0; i < files.length; i++) {
+    const error = singleVideoValidator(files[i]);
+    if (error) {
+      return `Video ${i + 1}: ${error}`;
+    }
+  }
+
+  return null;
+};
+
+// Validator cho duration video (nếu cần)
+export const videoWithDurationValidator = (file, maxDuration = 600) => {
+  // Kiểm tra file trước
+  const fileError = singleVideoValidator(file);
+  if (fileError) return fileError;
+
+  // Kiểm tra duration - cần thực hiện async
+  return new Promise((resolve) => {
+    const video = document.createElement("video");
+    const url = URL.createObjectURL(file);
+
+    video.src = url;
+    video.onloadedmetadata = () => {
+      URL.revokeObjectURL(url);
+
+      if (video.duration > maxDuration) {
+        resolve(`Video quá dài. Tối đa ${maxDuration / 60} phút`);
+      } else {
+        resolve(null);
+      }
+    };
+
+    video.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve("Không thể đọc thông tin video");
+    };
+  });
+};
