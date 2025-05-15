@@ -153,7 +153,7 @@ const AdminVouchers = () => {
           <label htmlFor="name" className="font-medium">
             Tên voucher
           </label>
-          <InputV2
+          <Input
             name="name"
             content="Nhập tên voucher"
             {...register("name", {
@@ -175,7 +175,7 @@ const AdminVouchers = () => {
           <label htmlFor="discount" className="font-medium">
             Giảm giá (%)
           </label>
-          <InputV2
+          <Input
             name="discount"
             type="number"
             content="Nhập giảm giá"
@@ -196,12 +196,12 @@ const AdminVouchers = () => {
 
         <div className="flex flex-col gap-1">
           <label htmlFor="courseIds" className="font-medium">
-            Áp dụng cho các phòng
+            Áp dụng cho các khóa
           </label>
-          <InputV2
+          <Input
             name="courseIds"
             disabled
-            content="Danh sách phòng (lựa chọn các phòng tương ứng ở menu bên dưới)"
+            content="Danh sách khóa (lựa chọn các khóa tương ứng ở menu bên dưới)"
             type="textarea"
             style="pt-3"
             {...register("courseIds", {
@@ -221,7 +221,7 @@ const AdminVouchers = () => {
 
         <div className="flex flex-col gap-1">
           <label htmlFor="courseIds" className="font-medium">
-            Lựa chọn phòng
+            Lựa chọn khóa
           </label>
           <select
             value={listCourseFields[currentSelectIndex]}
@@ -241,7 +241,7 @@ const AdminVouchers = () => {
           <label htmlFor="code" className="font-medium">
             Mã voucher
           </label>
-          <InputV2
+          <Input
             name="code"
             content="Nhập mã voucher"
             type="textarea"
@@ -265,7 +265,7 @@ const AdminVouchers = () => {
           <label htmlFor="usageLimit" className="font-medium">
             Giới hạn sử dụng
           </label>
-          <InputV2
+          <Input
             name="usageLimit"
             content="Nhập giới hạn sử dụng"
             type="number"
@@ -284,7 +284,7 @@ const AdminVouchers = () => {
           <label htmlFor="minOrderValue" className="font-medium">
             Giá áp dụng tối thiểu
           </label>
-          <InputV2
+          <Input
             name="minOrderValue"
             content="Nhập giá áp dụng tối thiểu"
             type="number"
@@ -303,7 +303,7 @@ const AdminVouchers = () => {
           <label htmlFor="expiredAt" className="font-medium">
             Thời hạn
           </label>
-          <InputV2
+          <Input
             name="expiredAt"
             content="Nhập thời hạn"
             type="date"

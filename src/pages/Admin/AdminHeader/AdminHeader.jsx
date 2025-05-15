@@ -3,15 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logout } from "~/apis/endpoints";
-// import { toast } from "react-toastify";
 import Button from "~/components/Button/Button";
 import Modal from "~/components/Modal/Modal";
 import { logout as logoutRedux } from "~/redux/authSlice";
-// import {
-//   logoutUserAPI,
-//   selectCurrentUser,
-// } from "~/redux/activeUser/activeUserSlice";
-// import { capitalizeWords } from "~/utils/formatters";
 
 const AdminHeader = () => {
   const [openAdminProfile, setOpenAdminProfile] = useState(false);

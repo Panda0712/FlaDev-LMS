@@ -117,8 +117,6 @@ const useVoucherTable = ({
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
-
     const apiData = {
       ...data,
       discount: Number(data.discount),
