@@ -27,13 +27,20 @@ const Input = ({
 
   if (type === "textarea") {
     return (
-      <textarea
-        name={name}
-        placeholder={content}
-        type={type}
-        className={`${globalStyle} h-[110px] ${style}`}
-        {...props}
-      />
+      <>
+        <textarea
+          name={name}
+          placeholder={content}
+          type={type}
+          className={`${globalStyle} h-[110px] ${style}`}
+          {...props}
+        />
+        {error && (
+          <p className="text-red-500 text-left max-w-[300px] text-[14px] my-1">
+            {error.message}
+          </p>
+        )}
+      </>
     );
   }
 

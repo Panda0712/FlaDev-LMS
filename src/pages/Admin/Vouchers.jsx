@@ -125,6 +125,13 @@ const AdminVouchers = () => {
       </div>
     );
 
+  if (currentVouchers.length === 0)
+    return (
+      <div className="flex items-center justify-center">
+        <h2>Hiện chưa có voucher nào!!!</h2>
+      </div>
+    );
+
   console.log(currentVouchers);
 
   return (
