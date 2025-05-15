@@ -22,7 +22,7 @@ const FormModal = ({
         {children}
 
         <div className="flex justify-end mt-5">
-          <Button title={submitButtonText} />
+          <Button title={submitButtonText} type="submit" />
         </div>
       </form>
     </Modal>

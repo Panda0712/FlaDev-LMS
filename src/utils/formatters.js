@@ -5,6 +5,24 @@ export function capitalizeWords(str) {
     .join(" "); // Join words back into a sentence
 }
 
+export const formatDateV1 = (timestamp) => {
+  if (!timestamp) return "";
+
+  const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Tháng bắt đầu từ 0
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`; // Định dạng DD-MM-YYYY
+};
+
+export const formatDateV2 = (timestamp) => {
+  if (!timestamp) return "";
+
+  const date = new Date(timestamp);
+  return date.toISOString().split("T")[0]; // dạng "YYYY-MM-DD"
+};
+
 export const interceptorLoadingElements = (calling) => {
   // DOM lấy ra toàn bộ phần tử trên page hiện tại có className là 'interceptor-loading'
   const elements = document.querySelectorAll(".interceptor-loading");
