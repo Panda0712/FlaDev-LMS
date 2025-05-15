@@ -3,8 +3,45 @@ import PhoneIcon from "~/assets/images/phone.png";
 import MailIcon from "~/assets/images/mail.png";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { createContact } from "~/apis/endpoints";
+import {
+  EMAIL_RULE,
+  EMAIL_RULE_MESSAGE,
+  FIELD_REQUIRED_MESSAGE,
+  PHONE_RULE,
+  PHONE_RULE_MESSAGE,
+} from "~/utils/validators";
+import { useSelector } from "react-redux";
 
 const Contact = () => {
+  const user = useSelector((state) => state.auth.user);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: user?.email,
+    },
+  });
+
+  const onSubmit = (data) => {
+    toast
+      .promise(createContact(data), {
+        pending: "Đang gửi liên hệ...",
+      })
+      .then((res) => {
+        if (!res.error) {
+          toast.success("Gửi liên hệ thành công!!!");
+          reset();
+        }
+      });
+  };
+
   return (
     <section>
       <NavigationText placeTo="Liên hệ" />
@@ -61,22 +98,68 @@ const Contact = () => {
             dấu *
           </p>
 
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center basis-[100%] gap-[20px] w-full">
               <Input
                 name="name"
                 content="Tên của bạn*"
+                {...register("name", {
+                  required: FIELD_REQUIRED_MESSAGE,
+                  minLength: {
+                    value: 5,
+                    message: "Tên tối thiểu 5 ký tự!",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Tên tối đa 50 ký tự!",
+                  },
+                })}
+                error={errors?.name}
                 style="basis-[calc(50%-10px)]"
               />
               <Input
                 name="email"
+                type="email"
                 content="Email*"
+                {...register("email", {
+                  required: FIELD_REQUIRED_MESSAGE,
+                  pattern: {
+                    value: EMAIL_RULE,
+                    message: EMAIL_RULE_MESSAGE,
+                  },
+                })}
+                error={errors?.email}
                 style="basis-[calc(50%-10px)]"
               />
             </div>
             <Input
-              name="comment"
+              name="phone"
+              content="Số điện thoại "
+              {...register("phone", {
+                required: FIELD_REQUIRED_MESSAGE,
+                pattern: {
+                  value: PHONE_RULE,
+                  message: PHONE_RULE_MESSAGE,
+                },
+              })}
+              error={errors?.phone}
+              style="w-full"
+            />
+            <Input
+              name="message"
               content="Nội dung"
+              {...register("message", {
+                required: FIELD_REQUIRED_MESSAGE,
+                minLength: {
+                  value: 10,
+                  message: "Nội dung tối thiểu 10 ký tự!",
+                },
+                maxLength: {
+                  value: 200,
+                  message: "Nội dung tối đa 200 ký tự!!!",
+                },
+              })}
+              error={errors?.message}
               style="w-full"
               type="textarea"
             />

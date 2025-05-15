@@ -7,6 +7,10 @@ export const PASSWORD_RULE = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d\W]{8,256}$/;
 export const PASSWORD_RULE_MESSAGE =
   "Mật khẩu phải bao gồm tối thiểu 1 ký tự chữ, 1 chữ số, và tối thiểu 8 ký tự.";
 export const PASSWORD_CONFIRMATION_MESSAGE = "Mật khẩu nhập lại không đúng!!";
+export const PHONE_RULE =
+  /^(0|\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$/;
+export const PHONE_RULE_MESSAGE =
+  "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng!";
 
 // Liên quan đến Validate File
 export const LIMIT_COMMON_FILE_SIZE = 10485760; // byte = 10 MB

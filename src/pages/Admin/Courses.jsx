@@ -104,8 +104,6 @@ const AdminCourses = () => {
     }
   }, [editing, reset]);
 
-  console.log(lessons);
-
   const headerList = [
     { label: "Ảnh", width: "w-[200px]" },
     { label: "Tên khoá học", width: "w-[200px]" },
@@ -127,6 +125,13 @@ const AdminCourses = () => {
     return (
       <div className="flex justify-center items-center">
         <Spin size="large" />
+      </div>
+    );
+
+  if (currentCourses.length === 0)
+    return (
+      <div className="flex items-center justify-center">
+        <h2>Hiện chưa có khóa học nào!!!</h2>
       </div>
     );
 

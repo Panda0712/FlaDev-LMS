@@ -168,7 +168,10 @@ const useVoucherTable = ({
   };
 
   const handleAfterCUDNewData = () => {
-    fetchDataFn().then(updateStateData);
+    setLoading(true);
+    fetchDataFn()
+      .then(updateStateData)
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {

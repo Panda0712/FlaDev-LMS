@@ -101,6 +101,13 @@ const AdminBlogs = () => {
       </div>
     );
 
+  if (currentBookings.length === 0)
+    return (
+      <div className="flex items-center justify-center">
+        <h2>Hiện chưa có bài viết nào!!!</h2>
+      </div>
+    );
+
   return (
     <div className="flex flex-col max-[900px]:overflow-auto min-h-screen">
       <DeleteConfirmationModal
@@ -233,7 +240,7 @@ const AdminBlogs = () => {
         ]}
         tHeadStyle={tHeadStyle}
         optionStyle={optionStyle}
-        responsiveStyle="max-[900px]:min-w-[900px]"
+        responsiveStyle="max-[900px]:min-w-[1200px]"
       />
 
       {totalPages > 1 && (
