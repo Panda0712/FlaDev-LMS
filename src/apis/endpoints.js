@@ -174,6 +174,13 @@ export const deleteCart = async (id) => {
   return res.data;
 };
 
+export const findCartByUserAndCourse = async (userId, courseId) => {
+  const res = await api.get(`/carts/find-by-user-and-course`, {
+    params: { userId, courseId },
+  });
+  return res.data;
+};
+
 // Profile/User
 export const fetchUserProfile = async () => {
   const res = await api.get("/user");

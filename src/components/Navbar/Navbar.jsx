@@ -1,13 +1,19 @@
-import { Search } from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { menuList } from "~/components/Navbar/constants";
-import Logo from "/logo.jpg";
 import UserProfile from "~/components/UserProfile/UserProfile";
+import useCart from "~/hooks/useCart";
+import Logo from "/logo.jpg";
 
 const Navbar = () => {
+  const { carts } = useCart();
+
   const location = useLocation();
+  const navigate = useNavigate();
+
   const user = useSelector((state) => state.auth.user);
+  const cartRedux = useSelector((state) => state.cart.cart);
 
   return (
     <nav className="relative px-28 flex items-center h-[72px] justify-between gap-28 border-b border-slate-200">
@@ -31,6 +37,23 @@ const Navbar = () => {
         ))}
       </ul>
       <div className="flex items-center gap-5">
+        {user && (
+          <div
+            onClick={() => navigate("/cart")}
+            className="relative flex items-center justify-center cursor-pointer mr-16"
+          >
+            <ShoppingCart size={24} />
+            <div
+              className="rounded-full absolute right-[-12px] top-[-9px]
+              border p-2 w-[18px] h-[18px] bg-amber-100 border-slate-300 
+            flex items-center justify-center"
+            >
+              <span className="text-[10px]">
+                {cartRedux?.length || carts?.length}
+              </span>
+            </div>
+          </div>
+        )}
         {!user && (
           <>
             <Link to="/auth">

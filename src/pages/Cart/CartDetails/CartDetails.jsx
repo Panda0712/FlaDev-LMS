@@ -1,9 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import Button from "~/components/Button/Button";
+import { formatVND } from "~/utils/formatters";
 
-const CartDetails = () => {
+const CartDetails = ({ carts }) => {
+  const navigate = useNavigate();
+
   const mediumTextStyle = "text-[18px] font-semibold";
   const greyTextStyle = "text-[18px] text-[#555555] font-medium";
   const largeTextStyle = "text-[22px] font-semibold";
+
+  const totalPrice = carts.reduce((acc, cart) => acc + cart.totalPrice, 0);
 
   return (
     <div className="relative flex flex-col gap-4 basis-[calc(25%-24px)]">
@@ -12,24 +18,21 @@ const CartDetails = () => {
         <div className="bg-[#f8fafc] border-2 border-slate-200 rounded-[8px] p-[16px] w-full">
           <div className="flex items-center justify-between gap-4">
             <span className={greyTextStyle}>Giá</span>
-            <span className={mediumTextStyle}>300.000đ</span>
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <span className={greyTextStyle}>Khuyến mãi</span>
-            <span className={mediumTextStyle}>-100.000đ</span>
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <span className={greyTextStyle}>Thuế</span>
-            <span className={mediumTextStyle}>20.000đ</span>
+            <span className={mediumTextStyle}>{formatVND(totalPrice)}đ</span>
           </div>
           <div className="w-full h-[2px] bg-slate-200 my-[16px]" />
           <div className="flex items-center justify-between gap-4">
             <span className={largeTextStyle}>Tổng</span>
-            <span className={largeTextStyle}>220.000đ</span>
+            <span className={largeTextStyle}>{formatVND(totalPrice)}đ</span>
           </div>
         </div>
       </div>
-      <Button title="Tiếp tục mua hàng" type="cart" style="mt-2" />
+      <Button
+        onClick={() => navigate("/order/checkout")}
+        title="Tiếp tục mua hàng"
+        type="cart"
+        style="mt-2"
+      />
     </div>
   );
 };
