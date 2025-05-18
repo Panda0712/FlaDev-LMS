@@ -395,42 +395,48 @@ const AdminCourses = () => {
         </button>
       </div>
 
-      <AdminTable
-        headers={headerList}
-        data={currentCourses}
-        renderRow={(course) => (
-          <>
-            <td className={`${tHeadStyle}`}>
-              <img
-                src={course?.thumbnail}
-                className="object-cover md:w-[200px] md:h-[150px] sm:w-[150px] sm:h-[100px] 
+      {currentCourses?.length ? (
+        <AdminTable
+          headers={headerList}
+          data={currentCourses}
+          renderRow={(course) => (
+            <>
+              <td className={`${tHeadStyle}`}>
+                <img
+                  src={course?.thumbnail}
+                  className="object-cover md:w-[200px] md:h-[150px] sm:w-[150px] sm:h-[100px] 
                   w-[120px] h-[80px] mx-auto rounded-sm"
-                alt=""
-              />
-            </td>
-            <td className={tHeadStyle}>{course?.name}</td>
-            <td className={tHeadStyle}>{course?.description}</td>
-            <td className={tHeadStyle}>{course?.duration}</td>
-            <td className={tHeadStyle}>{course?.price}</td>
-            <td className={tHeadStyle}>{course?.discount}</td>
-          </>
-        )}
-        openOptions={openOptions}
-        handleToggleOptions={(idx) => handleToggle("options", idx)}
-        optionItems={[
-          {
-            label: "Chỉnh sửa",
-            onClick: (course) => handleToggle("edit", course),
-          },
-          {
-            label: "Xoá khoá học",
-            onClick: (course) => handleToggle("delete", course?.id),
-          },
-        ]}
-        tHeadStyle={tHeadStyle}
-        optionStyle={optionStyle}
-        responsiveStyle="max-[900px]:min-w-[900px]"
-      />
+                  alt=""
+                />
+              </td>
+              <td className={tHeadStyle}>{course?.name}</td>
+              <td className={tHeadStyle}>{course?.description}</td>
+              <td className={tHeadStyle}>{course?.duration}</td>
+              <td className={tHeadStyle}>{course?.price}</td>
+              <td className={tHeadStyle}>{course?.discount}</td>
+            </>
+          )}
+          openOptions={openOptions}
+          handleToggleOptions={(idx) => handleToggle("options", idx)}
+          optionItems={[
+            {
+              label: "Chỉnh sửa",
+              onClick: (course) => handleToggle("edit", course),
+            },
+            {
+              label: "Xoá khoá học",
+              onClick: (course) => handleToggle("delete", course?.id),
+            },
+          ]}
+          tHeadStyle={tHeadStyle}
+          optionStyle={optionStyle}
+          responsiveStyle="max-[900px]:min-w-[900px]"
+        />
+      ) : (
+        <div className="flex my-12 items-center justify-center">
+          <h2>Hiện chưa có khóa học nào!!!</h2>
+        </div>
+      )}
 
       {totalPages > 1 && (
         <div className="flex justify-center my-4 gap-2">
