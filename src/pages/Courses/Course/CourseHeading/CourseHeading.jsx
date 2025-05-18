@@ -1,14 +1,20 @@
-import ExampleAvatar from "~/assets/images/example-avatar.png";
 import Social from "~/assets/images/social.png";
 import Button from "~/components/Button/Button";
 import Star from "~/components/Star/Star";
+import Logo from "/logo.jpg";
+import { formatVND } from "~/utils/formatters";
 
 const CourseHeading = ({ courseInfo }) => {
+  const totalLessons = courseInfo?.courseModules?.reduce(
+    (acc, module) => acc + module?.lessons?.length,
+    0
+  );
+
   return (
     <div className="relative px-28 py-16 flex bg-[#f8fafc]">
       <div>
         <h3 className="text-[32px] font-semibold max-w-[70%] mb-3">
-          {courseInfo?.courseName}
+          {courseInfo?.name}
         </h3>
         <p className="max-w-[70%] text-[#555555] font-medium">
           {courseInfo?.description}
@@ -18,15 +24,18 @@ const CourseHeading = ({ courseInfo }) => {
           <div className="flex items-center gap-3">
             <div className="text-[20px] flex items-center gap-2">
               <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
-                4.6
+                {courseInfo?.star || 5}
               </p>
-              <Star value={4.6} />
-              <p className="text-[14px] mt-[1px]">(651 đánh giá)</p>
+              <Star value={courseInfo?.star || 5} />
+              <p className="text-[14px] mt-[1px]">
+                {courseInfo?.reviews || 0} đánh giá
+              </p>
             </div>
 
             <div className="mt-[1.5px] border-l-2 border-slate-500 pl-3">
               <p className="text-[#555555] text-[16px]">
-                22 Total Hours. 155 Lectures. All levels
+                {courseInfo?.duration} giờ. {totalLessons} bài học. Tất cả trình
+                độ
               </p>
             </div>
           </div>
@@ -34,8 +43,8 @@ const CourseHeading = ({ courseInfo }) => {
 
         <div className="py-[24px] flex items-center gap-3">
           <img
-            src={ExampleAvatar}
-            className="w-[40px] h-[40px] object-cover"
+            src={Logo}
+            className="w-[40px] h-[40px] rounded-full object-cover"
             alt=""
           />
           <p className="text-[#555555] font-medium">
@@ -55,7 +64,7 @@ const CourseHeading = ({ courseInfo }) => {
             alt=""
           />
           <p className="text-[24px] font-semibold pt-[28px] pb-[12px]">
-            {courseInfo?.price}đ
+            {formatVND(courseInfo?.price)}đ
           </p>
 
           <div className="flex flex-col gap-4">

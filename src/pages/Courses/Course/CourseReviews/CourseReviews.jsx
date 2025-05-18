@@ -13,40 +13,42 @@ const CourseReviews = ({ courseInfo }) => {
             <div className="flex items-center gap-2">
               <img src={StarImg} className="w-[20px] h-[20px]" alt="" />
               <span className="text-[20px] leading-1 mt-[2px] font-semibold">
-                4.6
+                {courseInfo?.rating || 5}
               </span>
             </div>
             <p className="text-[18px] leading-1 mt-[4px] font-semibold text-[#555555]">
-              100.000 đánh giá
+              {courseInfo?.rating || 0} đánh giá
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Star value={5} />
+            <Star value={courseInfo?.rating || 5} />
             <p className="text-[18px] font-medium leading-1 mt-[4px] text-[#555555]">
-              90%
+              {courseInfo?.percent || 0}%
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Star value={4} />
             <p className="text-[18px] font-medium leading-1 mt-[4px] text-[#555555]">
-              85%
+              {courseInfo?.percent || 0}%
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Star value={3} />
             <p className="text-[18px] font-medium leading-1 mt-[4px] text-[#555555]">
-              40%
+              {courseInfo?.percent || 0}%
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Star value={2} />
             <p className="text-[18px] font-medium leading-1 mt-[4px] text-[#555555]">
-              10%
+              {courseInfo?.percent || 0}%
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Star value={1} />
-            <p className="text-[18px] font-medium text-[#555555]">5%</p>
+            <p className="text-[18px] font-medium text-[#555555]">
+              {courseInfo?.percent || 0}%
+            </p>
           </div>
         </div>
 

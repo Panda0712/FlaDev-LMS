@@ -5,6 +5,10 @@ export function capitalizeWords(str) {
     .join(" "); // Join words back into a sentence
 }
 
+export const formatVND = (price = 0) => {
+  return price.toLocaleString("vi-VN");
+};
+
 export const formatDateV1 = (timestamp) => {
   if (!timestamp) return "";
 

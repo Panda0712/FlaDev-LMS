@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ExampleAvatar from "~/assets/images/example-avatar-2.png";
+import Logo from "/logo.jpg";
 import CourseContent from "~/pages/Courses/Course/CourseContent/CourseContent";
 import CourseInstructor from "~/pages/Courses/Course/CourseInstructor/CourseInstructor";
 import CourseLinkBox from "~/pages/Courses/Course/CourseLinkBox/CourseLinkBox";
@@ -145,7 +145,7 @@ const courseInfo = {
   ],
   reviews: [
     {
-      avatar: ExampleAvatar,
+      avatar: Logo,
       name: "John Doe",
       reviewedAt: "22/3/2024",
       rating: 5,
@@ -153,7 +153,7 @@ const courseInfo = {
         "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
     },
     {
-      avatar: ExampleAvatar,
+      avatar: Logo,
       name: "John Doe",
       reviewedAt: "22/3/2024",
       rating: 5,
@@ -161,7 +161,7 @@ const courseInfo = {
         "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
     },
     {
-      avatar: ExampleAvatar,
+      avatar: Logo,
       name: "John Doe",
       reviewedAt: "22/3/2024",
       rating: 5,

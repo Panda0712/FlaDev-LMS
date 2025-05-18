@@ -1,13 +1,15 @@
 import { Search } from "lucide-react";
 import Input from "~/components/Input/Input";
 
-const CoursesSearch = () => {
+const CoursesSearch = ({ searchQuery, handleChangeSearchValue }) => {
   return (
     <div className="flex items-center justify-between gap-5 mb-[32px]">
       <h3 className="text-[32px] font-semibold">Tất cả khóa học</h3>
       <div className="relative">
         <Input
           name="search"
+          value={searchQuery}
+          onChange={handleChangeSearchValue}
           content="Tìm kiếm"
           style="pr-16"
           icon={
