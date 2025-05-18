@@ -148,6 +148,13 @@ export const updateVoucher = async (id, data) => {
   return res.data;
 };
 
+export const fetchVoucherByName = async ({ code, courseId }) => {
+  const res = await api.get("/vouchers/find-by-name", {
+    params: { code, courseId },
+  });
+  return res.data;
+};
+
 export const deleteVoucher = async (id) => {
   const res = await api.delete(`/vouchers/${id}`);
   return res.data;
@@ -252,5 +259,17 @@ export const updateLesson = async (id, data) => {
 
 export const deleteLesson = async (id) => {
   const res = await api.delete(`/lessons/${id}`);
+  return res.data;
+};
+
+// Momo Payment
+export const momoPaymentAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/payment/momo`, data);
+  return res.data;
+};
+
+// Zalopay Payment
+export const zaloPaymentAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/payment/zalopay`, data);
   return res.data;
 };

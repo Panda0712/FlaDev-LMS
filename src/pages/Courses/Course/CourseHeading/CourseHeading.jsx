@@ -2,30 +2,96 @@
 import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addToCart, fetchCart } from "~/apis/endpoints";
+import {
+  addToCart,
+  fetchCart,
+  fetchOrders,
+  fetchVouchers,
+} from "~/apis/endpoints";
 import Social from "~/assets/images/social.png";
 import Button from "~/components/Button/Button";
+import Input from "~/components/Input/Input";
 import Star from "~/components/Star/Star";
+import { addToCart as addToCartRedux, updateCart } from "~/redux/cartSlice";
 import { formatVND } from "~/utils/formatters";
 import Logo from "/logo.jpg";
-import { updateCart, addToCart as addToCartRedux } from "~/redux/cartSlice";
 
 const CourseHeading = ({ courseInfo }) => {
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
   const [carts, setCarts] = useState([]);
+  const [voucherList, setVoucherList] = useState([]);
+  const [voucher, setVoucher] = useState(null);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [orders, setOrders] = useState([]);
 
   const totalLessons = courseInfo?.courseModules?.reduce(
     (acc, module) => acc + module?.lessons?.length,
     0
   );
   const discountValue = Math.ceil(
-    (courseInfo?.price * courseInfo?.discount) / 100
+    (courseInfo?.price * courseInfo?.discount) / 100 || 0
   );
-  const totalPrice = courseInfo?.price - discountValue;
+  const voucherValue =
+    Math.ceil(courseInfo?.price * voucher?.discount) / 100 || 0;
+  const totalPrice = courseInfo?.price - discountValue - voucherValue;
 
   const currentUser = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleChangeVoucherCode = (e) => setVoucherCode(e.target.value);
+
+  const handleVoucherCode = () => {
+    if (!voucherCode) {
+      toast.error("Vui lòng nhập mã voucher!!!");
+      return;
+    }
+
+    setLoadingButton(true);
+    const foundVoucher = voucherList?.find(
+      (voucher) =>
+        voucher.code === voucherCode &&
+        voucher.courseIds.includes(courseInfo?.id) &&
+        new Date() < new Date(voucher.expiredAt)
+    );
+
+    if (!foundVoucher) {
+      toast.error("Voucher không hợp lệ!!!");
+      setLoadingButton(false);
+      return;
+    }
+
+    setVoucher(foundVoucher);
+    setLoadingButton(false);
+  };
+
+  const handleNavigate = () => {
+    const foundOrder = orders.find(
+      (order) =>
+        order.userId === currentUser?.id && order.courseId === courseInfo?.id
+    );
+    if (foundOrder) {
+      toast.error("Bạn đã mua khóa học này rồi!!!");
+      return;
+    }
+
+    const orderData = {
+      userId: currentUser?.id,
+      userEmail: currentUser?.email,
+      userName: currentUser?.username,
+      courseId: courseInfo?.id,
+      courseName: courseInfo?.name,
+      courseThumbnail: courseInfo?.thumbnail,
+      instructor: courseInfo?.instructor,
+      totalPrice,
+    };
+    localStorage.setItem("order-data", JSON.stringify(orderData));
+    if (voucher) localStorage.setItem("voucher", JSON.stringify(voucher));
+    navigate("/order/checkout");
+  };
 
   const handleAddCart = async () => {
     setLoading(true);
@@ -89,9 +155,35 @@ const CourseHeading = ({ courseInfo }) => {
       .finally(() => setLoading(false));
   };
 
+  const handleGetVouchers = () => {
+    fetchVouchers()
+      .then((res) => {
+        setVoucherList(res || []);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message);
+      });
+  };
+
+  const handleGetOrders = () => {
+    fetchOrders()
+      .then((res) => {
+        setOrders(res || []);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message);
+      });
+  };
+
   useEffect(() => {
     handleGetCarts();
+    handleGetVouchers();
+    handleGetOrders();
   }, []);
+
+  console.log(orders);
 
   return (
     <div className="relative px-28 py-16 flex bg-[#f8fafc]">
@@ -139,16 +231,28 @@ const CourseHeading = ({ courseInfo }) => {
         </div>
       </div>
 
-      <div className="absolute right-8 rounded-[16px] max-w-[400px] max-h-[588px] shadow-sm">
+      <div className="absolute right-8 rounded-[16px] max-w-[400px] max-h-[788px] z-1000 shadow-sm">
         <div className="p-[20px] pb-[32px]">
           <img
             src={courseInfo?.thumbnail}
             className="w-full h-[200px] object-cover rounded-[16px]"
             alt=""
           />
-          <p className="text-[24px] font-semibold pt-[28px] pb-[12px]">
-            {formatVND(courseInfo?.price)}đ
-          </p>
+          <div className="flex items-center gap-2">
+            <p
+              className={`text-[24px] font-semibold pt-[28px] pb-[12px] ${
+                courseInfo?.price !== totalPrice &&
+                "line-through text-slate-400 font-normal"
+              }`}
+            >
+              {formatVND(courseInfo?.price)}đ
+            </p>
+            {courseInfo?.price !== totalPrice && (
+              <p className="text-[32px] font-semibold pt-[28px] pb-[12px]">
+                {formatVND(totalPrice)}đ
+              </p>
+            )}
+          </div>
 
           <div className="flex flex-col gap-4">
             <Button
@@ -158,8 +262,39 @@ const CourseHeading = ({ courseInfo }) => {
               type="cart"
               style={`${loading ? "bg-opacity-50" : "bg-opacity-100"}`}
             />
-            <Button title="Mua ngay" type="secondary" style="py-3" />
+            <Button
+              onClick={handleNavigate}
+              title="Mua ngay"
+              type="secondary"
+              style="py-3"
+            />
           </div>
+
+          <div className="flex items-center mt-5">
+            <Input
+              name="voucher"
+              value={voucherCode}
+              content="Nhập mã voucher"
+              onChange={handleChangeVoucherCode}
+              style="sm:w-full w-full md:text-[16px]! text-[14px]!
+                 rounded-tr-none rounded-br-none outline-none"
+            />
+            <Button
+              title={loadingButton ? <Spin size="small" /> : "Áp dụng"}
+              disabled={loadingButton}
+              onClick={handleVoucherCode}
+              style="h-[50px] md:text-[16px]! text-[14px]! 
+                text-center py-0! px-2! w-[40%] rounded-tl-none rounded-bl-none"
+            />
+          </div>
+
+          {voucher && (
+            <p className="text-[18px] font-medium mt-2">
+              Bạn đã giảm được{" "}
+              <span className="font-semibold">{formatVND(voucherValue)}đ</span>{" "}
+              với voucher "{voucher.code}"
+            </p>
+          )}
         </div>
 
         <div className="p-[20px] border-t border-slate-300">

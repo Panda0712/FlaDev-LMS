@@ -55,13 +55,6 @@ const AdminContacts = () => {
       </div>
     );
 
-  if (currentContacts.length === 0)
-    return (
-      <div className="flex items-center justify-center">
-        <h2>Hiện chưa có liên hệ nào!!!</h2>
-      </div>
-    );
-
   return (
     <div className="flex flex-col max-[900px]:overflow-auto min-h-screen">
       <DeleteConfirmationModal
@@ -79,32 +72,38 @@ const AdminContacts = () => {
         Quản lý liên hệ
       </h3>
 
-      <AdminTable
-        headers={headerList}
-        data={currentContacts}
-        renderRow={(contact) => (
-          <>
-            <td className={`${tHeadStyle}`}>{contact?.name}</td>
-            <td className={`${tHeadStyle}`}>{contact?.email}</td>
-            <td className={`${tHeadStyle}`}>{contact?.phone}</td>
-            <td className={`${tHeadStyle}`}>{contact?.message}</td>
-          </>
-        )}
-        openOptions={openOptions}
-        handleToggleOptions={(idx) => handleToggleOptions(idx)}
-        optionItems={[
-          {
-            label: "Xóa liên hệ",
-            onClick: (contact) => {
-              setOpenModal(true);
-              setCurrentId(contact.id);
+      {currentContacts?.length ? (
+        <AdminTable
+          headers={headerList}
+          data={currentContacts}
+          renderRow={(contact) => (
+            <>
+              <td className={`${tHeadStyle}`}>{contact?.name}</td>
+              <td className={`${tHeadStyle}`}>{contact?.email}</td>
+              <td className={`${tHeadStyle}`}>{contact?.phone}</td>
+              <td className={`${tHeadStyle}`}>{contact?.message}</td>
+            </>
+          )}
+          openOptions={openOptions}
+          handleToggleOptions={(idx) => handleToggleOptions(idx)}
+          optionItems={[
+            {
+              label: "Xóa liên hệ",
+              onClick: (contact) => {
+                setOpenModal(true);
+                setCurrentId(contact.id);
+              },
             },
-          },
-        ]}
-        tHeadStyle={tHeadStyle}
-        optionStyle={optionStyle}
-        responsiveStyle="max-[900px]:min-w-[1050px]"
-      />
+          ]}
+          tHeadStyle={tHeadStyle}
+          optionStyle={optionStyle}
+          responsiveStyle="max-[900px]:min-w-[1050px]"
+        />
+      ) : (
+        <div className="flex my-12 items-center justify-center">
+          <h2>Hiện chưa có liên hệ nào!!!</h2>
+        </div>
+      )}
 
       {totalPages > 1 && (
         <div className="flex justify-center my-4 gap-2">

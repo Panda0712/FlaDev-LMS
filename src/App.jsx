@@ -20,7 +20,6 @@ import AdminBlogs from "~/pages/Admin/Blogs";
 import AdminContacts from "~/pages/Admin/Contacts";
 import AdminCourses from "~/pages/Admin/Courses";
 import Dashboard from "~/pages/Admin/Dashboard";
-import AdminModules from "~/pages/Admin/Modules";
 import AdminOrders from "~/pages/Admin/Orders";
 import AdminVouchers from "~/pages/Admin/Vouchers";
 import Homepage from "~/pages/Homepage/Homepage";
@@ -69,7 +68,6 @@ const App = () => {
             {/* <Route path="blogs/:blogId" element={<BlogDetailsManagement />} /> */}
             {/* <Route path="blogs/create" element={<BlogFormPage />} /> */}
             {/* <Route path="blogs/create/:blogId" element={<BlogFormPage />} /> */}
-            <Route path="lessons" element={<AdminModules />} />
           </Route>
         </Route>
         {/* User Routes */}

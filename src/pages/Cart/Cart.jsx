@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { fetchOrders } from "~/apis/endpoints";
 import Loading from "~/components/Loading/Loading";
 import NavigationText from "~/components/NavigationText/NavigationText";
 import useCart from "~/hooks/useCart";
@@ -5,7 +8,24 @@ import CartCard from "~/pages/Cart/CartCard/CartCard";
 import CartDetails from "~/pages/Cart/CartDetails/CartDetails";
 
 const Cart = () => {
+  const [orders, setOrders] = useState([]);
+
   const { loading, setCarts, carts } = useCart();
+
+  const handleGetOrders = () => {
+    fetchOrders()
+      .then((res) => {
+        setOrders(res || []);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message);
+      });
+  };
+
+  useEffect(() => {
+    handleGetOrders();
+  }, []);
 
   if (loading) return <Loading />;
 
@@ -31,7 +51,7 @@ const Cart = () => {
             </h4>
           )}
 
-          <CartDetails carts={carts} />
+          <CartDetails carts={carts} orders={orders} />
         </div>
       </div>
     </section>

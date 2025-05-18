@@ -125,15 +125,6 @@ const AdminVouchers = () => {
       </div>
     );
 
-  if (currentVouchers.length === 0)
-    return (
-      <div className="flex items-center justify-center">
-        <h2>Hiện chưa có voucher nào!!!</h2>
-      </div>
-    );
-
-  console.log(currentVouchers);
-
   return (
     <div className="flex flex-col max-[900px]:overflow-auto min-h-screen">
       <DeleteConfirmationModal
@@ -337,42 +328,48 @@ const AdminVouchers = () => {
         />
       </div>
 
-      <AdminTable
-        headers={headerList}
-        data={currentVouchers}
-        renderRow={(voucher) => (
-          <>
-            <td className={`${tHeadStyle}`}>{voucher?.name}</td>
-            <td className={`${tHeadStyle}`}>{voucher?.discount}</td>
-            <td className={`${tHeadStyle}`}>{voucher?.code}</td>
-            <td className={`${tHeadStyle}`}>{voucher?.usageLimit}</td>
-            <td className={`${tHeadStyle}`}>{voucher?.usedCount}</td>
-            <td className={`${tHeadStyle}`}>{voucher?.minOrderValue}</td>
-            <td className={`${tHeadStyle}`}>
-              {formatDateV1(voucher?.expiredAt)}
-            </td>
-          </>
-        )}
-        openOptions={openOptions}
-        handleToggleOptions={(idx) => handleToggle("options", idx)}
-        optionItems={[
-          {
-            label: "Xem thông tin",
-            onClick: () => {},
-          },
-          {
-            label: "Chỉnh sửa",
-            onClick: (voucher) => handleToggle("edit", voucher),
-          },
-          {
-            label: "Xóa voucher",
-            onClick: (voucher) => handleToggle("delete", voucher?.id),
-          },
-        ]}
-        tHeadStyle={tHeadStyle}
-        optionStyle={optionStyle}
-        responsiveStyle="max-[900px]:min-w-[1100px]"
-      />
+      {currentVouchers?.length ? (
+        <AdminTable
+          headers={headerList}
+          data={currentVouchers}
+          renderRow={(voucher) => (
+            <>
+              <td className={`${tHeadStyle}`}>{voucher?.name}</td>
+              <td className={`${tHeadStyle}`}>{voucher?.discount}</td>
+              <td className={`${tHeadStyle}`}>{voucher?.code}</td>
+              <td className={`${tHeadStyle}`}>{voucher?.usageLimit}</td>
+              <td className={`${tHeadStyle}`}>{voucher?.usedCount}</td>
+              <td className={`${tHeadStyle}`}>{voucher?.minOrderValue}</td>
+              <td className={`${tHeadStyle}`}>
+                {formatDateV1(voucher?.expiredAt)}
+              </td>
+            </>
+          )}
+          openOptions={openOptions}
+          handleToggleOptions={(idx) => handleToggle("options", idx)}
+          optionItems={[
+            {
+              label: "Xem thông tin",
+              onClick: () => {},
+            },
+            {
+              label: "Chỉnh sửa",
+              onClick: (voucher) => handleToggle("edit", voucher),
+            },
+            {
+              label: "Xóa voucher",
+              onClick: (voucher) => handleToggle("delete", voucher?.id),
+            },
+          ]}
+          tHeadStyle={tHeadStyle}
+          optionStyle={optionStyle}
+          responsiveStyle="max-[900px]:min-w-[1100px]"
+        />
+      ) : (
+        <div className="flex my-12 items-center justify-center">
+          <h2>Hiện chưa có voucher nào!!!</h2>
+        </div>
+      )}
 
       {totalPages > 1 && (
         <div className="flex justify-center my-4 gap-2">

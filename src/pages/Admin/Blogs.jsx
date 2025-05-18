@@ -101,13 +101,6 @@ const AdminBlogs = () => {
       </div>
     );
 
-  if (currentBookings.length === 0)
-    return (
-      <div className="flex items-center justify-center">
-        <h2>Hiện chưa có bài viết nào!!!</h2>
-      </div>
-    );
-
   return (
     <div className="flex flex-col max-[900px]:overflow-auto min-h-screen">
       <DeleteConfirmationModal
@@ -200,48 +193,54 @@ const AdminBlogs = () => {
         </button>
       </div>
 
-      <AdminTable
-        headers={headerList}
-        data={currentBookings}
-        renderRow={(blog) => (
-          <>
-            <td className={`${tHeadStyle}`}>
-              <img
-                src={blog?.coverImage}
-                className="object-cover md:w-[200px] md:h-[150px] sm:w-[150px] sm:h-[100px] 
+      {currentBookings?.length ? (
+        <AdminTable
+          headers={headerList}
+          data={currentBookings}
+          renderRow={(blog) => (
+            <>
+              <td className={`${tHeadStyle}`}>
+                <img
+                  src={blog?.coverImage}
+                  className="object-cover md:w-[200px] md:h-[150px] sm:w-[150px] sm:h-[100px] 
                   w-[120px] h-[80px] mx-auto rounded-sm"
-                alt=""
-              />
-            </td>
-            <td className={tHeadStyle}>{blog?.title}</td>
-            <td className={tHeadStyle}>{blog?.summary}</td>
-            <td className={tHeadStyle}>{blog?.author}</td>
-            <td className={tHeadStyle}>
-              {Array.isArray(blog?.tags) ? blog.tags.join(", ") : ""}
-            </td>
-            <td className={tHeadStyle}>
-              {blog?.created_at
-                ? new Date(blog.created_at).toLocaleDateString()
-                : ""}
-            </td>
-          </>
-        )}
-        openOptions={openOptions}
-        handleToggleOptions={(idx) => handleToggle("options", idx)}
-        optionItems={[
-          {
-            label: "Chỉnh sửa",
-            onClick: (blog) => handleToggle("edit", blog),
-          },
-          {
-            label: "Xóa bài viết",
-            onClick: (blog) => handleToggle("delete", blog?.id),
-          },
-        ]}
-        tHeadStyle={tHeadStyle}
-        optionStyle={optionStyle}
-        responsiveStyle="max-[900px]:min-w-[1200px]"
-      />
+                  alt=""
+                />
+              </td>
+              <td className={tHeadStyle}>{blog?.title}</td>
+              <td className={tHeadStyle}>{blog?.summary}</td>
+              <td className={tHeadStyle}>{blog?.author}</td>
+              <td className={tHeadStyle}>
+                {Array.isArray(blog?.tags) ? blog.tags.join(", ") : ""}
+              </td>
+              <td className={tHeadStyle}>
+                {blog?.created_at
+                  ? new Date(blog.created_at).toLocaleDateString()
+                  : ""}
+              </td>
+            </>
+          )}
+          openOptions={openOptions}
+          handleToggleOptions={(idx) => handleToggle("options", idx)}
+          optionItems={[
+            {
+              label: "Chỉnh sửa",
+              onClick: (blog) => handleToggle("edit", blog),
+            },
+            {
+              label: "Xóa bài viết",
+              onClick: (blog) => handleToggle("delete", blog?.id),
+            },
+          ]}
+          tHeadStyle={tHeadStyle}
+          optionStyle={optionStyle}
+          responsiveStyle="max-[900px]:min-w-[1200px]"
+        />
+      ) : (
+        <div className="flex my-12 items-center justify-center">
+          <h2>Hiện chưa có bài viết nào!!!</h2>
+        </div>
+      )}
 
       {totalPages > 1 && (
         <div className="flex justify-center my-4 gap-2">

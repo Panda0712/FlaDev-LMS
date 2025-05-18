@@ -1,9 +1,63 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Button from "~/components/Button/Button";
 import { formatVND } from "~/utils/formatters";
 
-const CartDetails = ({ carts }) => {
+const CartDetails = ({ carts, orders }) => {
+  const currentUser = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+
+  const checkOrder = (cartItem) =>
+    orders.find(
+      (order) =>
+        order.userId === cartItem.userId && order.courseId === cartItem.courseId
+    );
+
+  const handleNavigate = () => {
+    if (!carts.length) {
+      toast.error("Vui lòng chọn khóa học trước khi mua!!");
+      return;
+    }
+
+    let isInOrder = null;
+    carts.forEach((cart) => {
+      if (checkOrder(cart)) isInOrder = { ...cart };
+    });
+
+    if (isInOrder) {
+      toast.error(`Khóa ${isInOrder.courseName} đã được mua rồi!!!`);
+      return;
+    }
+    let orderData = null;
+    if (carts.length < 2) {
+      orderData = {
+        userId: carts[0]?.userId,
+        userEmail: carts[0]?.userEmail || currentUser?.email,
+        userName: currentUser?.username || currentUser?.username,
+        courseId: carts[0]?.courseId,
+        courseName: carts[0]?.courseName,
+        courseThumbnail: carts[0]?.courseThumbnail,
+        instructor: carts[0]?.instructor,
+        totalPrice,
+      };
+      localStorage.setItem("order-data", JSON.stringify(orderData));
+    } else {
+      const orderMapData = carts.map((cart) => ({
+        userId: cart?.userId,
+        userEmail: cart?.userEmail || currentUser?.email,
+        userName: currentUser?.username || currentUser?.username,
+        courseId: cart?.courseId,
+        courseName: cart?.courseName,
+        courseThumbnail: cart?.courseThumbnail,
+        instructor: cart?.instructor,
+        totalPrice: cart?.totalPrice,
+      }));
+      orderData = [...orderMapData];
+      localStorage.setItem("order-data", JSON.stringify(orderData));
+    }
+    navigate("/order/checkout");
+  };
 
   const mediumTextStyle = "text-[18px] font-semibold";
   const greyTextStyle = "text-[18px] text-[#555555] font-medium";
@@ -28,7 +82,7 @@ const CartDetails = ({ carts }) => {
         </div>
       </div>
       <Button
-        onClick={() => navigate("/order/checkout")}
+        onClick={handleNavigate}
         title="Tiếp tục mua hàng"
         type="cart"
         style="mt-2"
