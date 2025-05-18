@@ -105,14 +105,12 @@ const AdminCourses = () => {
   }, [editing, reset]);
 
   const headerList = [
-    { label: "Ảnh", width: "w-[200px]" },
-    { label: "Tên khoá học", width: "w-[200px]" },
-    { label: "Mô tả" },
-    { label: "Thời lượng", width: "w-[100px]" },
-    { label: "Giá", width: "w-[100px]" },
+    { label: "Ảnh", width: "w-[180px]" },
+    { label: "Tên khoá học", width: "w-[150px]" },
+    { label: "Mô tả", width: "w-[250px]" },
+    { label: "Thời lượng", width: "w-[110px]" },
+    { label: "Giá", width: "w-[110px]" },
     { label: "Giảm giá", width: "w-[100px]" },
-    { label: "Giảng viên", width: "w-[150px]" },
-    { label: "Ngày tạo" },
     { label: "", width: "w-[100px]" },
   ];
 
@@ -415,12 +413,6 @@ const AdminCourses = () => {
             <td className={tHeadStyle}>{course?.duration}</td>
             <td className={tHeadStyle}>{course?.price}</td>
             <td className={tHeadStyle}>{course?.discount}</td>
-            <td className={tHeadStyle}>{course?.instructor}</td>
-            <td className={tHeadStyle}>
-              {course?.created_at
-                ? new Date(course.created_at).toLocaleDateString()
-                : ""}
-            </td>
           </>
         )}
         openOptions={openOptions}

@@ -28,7 +28,7 @@ export const singleFileValidator = (file) => {
   return null;
 };
 
-export const LIMIT_VIDEO_FILE_SIZE = 104857600; // byte = 100 MB
+export const LIMIT_VIDEO_FILE_SIZE = 262144000; // byte = 250 MB
 export const ALLOW_VIDEO_FILE_TYPES = [
   "video/mp4",
   "video/webm",

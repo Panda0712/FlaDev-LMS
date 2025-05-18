@@ -1,7 +1,7 @@
 import AwardImg from "~/assets/images/award.png";
-import ExampleAvatar from "~/assets/images/example-avatar.png";
 import GraduationImg from "~/assets/images/graduation.png";
 import PlayImg from "~/assets/images/play.png";
+import Logo from "/logo.jpg";
 
 const CourseInstructor = ({ courseInfo }) => {
   return (
@@ -18,7 +18,7 @@ const CourseInstructor = ({ courseInfo }) => {
       </div>
       <div className="mt-5 flex items-center gap-5">
         <img
-          src={ExampleAvatar}
+          src={Logo}
           className="w-[120px] h-[120px] object-cover rounded-full"
           alt=""
         />
@@ -26,19 +26,19 @@ const CourseInstructor = ({ courseInfo }) => {
           <div className="flex items-center gap-2">
             <img src={AwardImg} className="w-[24px] h-[24px]" alt="" />
             <p className="text-[16px] text-[#555555] font-medium">
-              40,445 đánh giá
+              {courseInfo?.reviews || 0} đánh giá
             </p>
           </div>
           <div className="flex items-center gap-2">
             <img src={GraduationImg} className="w-[24px] h-[24px]" alt="" />
             <p className="text-[16px] text-[#555555] font-medium">
-              500 học sinh
+              {courseInfo?.students || 0} học sinh
             </p>
           </div>
           <div className="flex items-center gap-2">
             <img src={PlayImg} className="w-[24px] h-[24px]" alt="" />
             <p className="text-[16px] text-[#555555] font-medium">
-              15 khóa học
+              {courseInfo?.courses || 0} khóa học
             </p>
           </div>
         </div>
