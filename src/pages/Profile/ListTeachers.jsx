@@ -1,57 +1,34 @@
 import { ChevronDown, FilterIcon, Search } from "lucide-react";
-import ExampleAvatar from "~/assets/images/example-avatar-2.png";
 import Input from "~/components/Input/Input";
 import TeacherCard from "~/pages/Profile/TeacherCard/TeacherCard";
-
-const listTeachers = [
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-  {
-    avatar: ExampleAvatar,
-    name: "John Doe",
-    role: "Software Engineer",
-  },
-];
+import { useEffect, useState } from "react";
+import { fetchUserProfile } from "~/apis/endpoints";
+import Loading from "~/components/Loading/Loading";
+import { ACCOUNT_ROLES } from "~/utils/constants";
 
 const ListTeachers = () => {
+  const [adminProfile, setAdminProfile] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const admin = adminProfile.find((user) => user.role === ACCOUNT_ROLES.ADMIN);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchUserProfile()
+      .then((res) => {
+        console.log(res);
+        setAdminProfile(res || []);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <Loading />;
+
   return (
     <section className="w-full pb-[90px]">
       <div className="flex items-center gap-3 mb-4">
         <h3 className="text-[24px] font-semibold">Giảng viên</h3>
-        <span className="text-[18px] font-semibold">(12)</span>
+        <span className="text-[18px] font-semibold">(1)</span>
       </div>
       <div className="flex items-center justify-between gap-5">
         <div className="relative">
@@ -80,9 +57,7 @@ const ListTeachers = () => {
       </div>
 
       <div className="relative mt-5 grid grid-cols-4 gap-[20px]">
-        {listTeachers.map((teacher, index) => (
-          <TeacherCard key={index} teacher={teacher} />
-        ))}
+        <TeacherCard teacher={admin} />
       </div>
     </section>
   );

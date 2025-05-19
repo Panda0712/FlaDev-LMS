@@ -4,7 +4,7 @@ import EducationImg from "~/assets/images/education.png";
 import Star from "~/components/Star/Star";
 import { formatVND } from "~/utils/formatters";
 
-const CourseCard = ({ course, type = "primary" }) => {
+const CourseCard = ({ course, type = "primary", learning }) => {
   const navigate = useNavigate();
 
   if (type === "secondary") {
@@ -12,10 +12,16 @@ const CourseCard = ({ course, type = "primary" }) => {
       <div
         className="relative p-[16px] rounded-[16px] shadow-md 
         cursor-pointer transition transform hover:translate-y-[-4px]"
-        onClick={() => navigate(`/courses/${course?.id}`)}
+        onClick={() =>
+          navigate(
+            learning
+              ? `/courses/${course?.courseId}/learning`
+              : `/courses/${course?.id}`
+          )
+        }
       >
         <img
-          src={course?.thumbnail}
+          src={course?.thumbnail || course?.courseThumbnail}
           className="w-full h-[145px] object-cover rounded-[8px]"
           alt=""
         />
@@ -35,7 +41,13 @@ const CourseCard = ({ course, type = "primary" }) => {
 
   return (
     <div
-      onClick={() => navigate(`/courses/${course?.id}`)}
+      onClick={() =>
+        navigate(
+          learning
+            ? `/courses/${course?.courseId}/learning`
+            : `/courses/${course?.id}`
+        )
+      }
       className="rounded-[20px] cursor-pointer transform transition hover:translate-y-[-20px] hover:shadow-xl hover:border-0"
     >
       <img
