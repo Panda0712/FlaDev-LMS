@@ -1,323 +1,42 @@
 import { ChevronDown, FilterIcon, Search } from "lucide-react";
-import ExampleAvatar from "~/assets/images/example-avatar.png";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { fetchOrders } from "~/apis/endpoints";
 import CourseCard from "~/components/CourseCard/CourseCard";
 import Input from "~/components/Input/Input";
-
-const listCourses = [
-  {
-    thumbnail:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-    instructor: "John Smilga",
-    instructorRole: "Software Engineer",
-    instructorDescription:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-    description:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    duration: "20.5 hours",
-    students: 19387,
-    price: 1949000,
-    discount: 0,
-    courseModule: [
-      { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
-      { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
-      { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
-    ],
-    reviews: [
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-    ],
-  },
-  {
-    thumbnail:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-    instructor: "John Smilga",
-    instructorRole: "Software Engineer",
-    instructorDescription:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-    description:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    duration: "20.5 hours",
-    students: 19387,
-    price: 1949000,
-    discount: 0,
-    courseModule: [
-      { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
-      { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
-      { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
-    ],
-    reviews: [
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-    ],
-  },
-  {
-    thumbnail:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-    instructor: "John Smilga",
-    instructorRole: "Software Engineer",
-    instructorDescription:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-    description:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    duration: "20.5 hours",
-    students: 19387,
-    price: 1949000,
-    discount: 0,
-    courseModule: [
-      { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
-      { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
-      { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
-    ],
-    reviews: [
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-    ],
-  },
-  {
-    thumbnail:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-    instructor: "John Smilga",
-    instructorRole: "Software Engineer",
-    instructorDescription:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-    description:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    duration: "20.5 hours",
-    students: 19387,
-    price: 1949000,
-    discount: 0,
-    courseModule: [
-      { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
-      { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
-      { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
-    ],
-    reviews: [
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-    ],
-  },
-  {
-    thumbnail:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-    instructor: "John Smilga",
-    instructorRole: "Software Engineer",
-    instructorDescription:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-    description:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    duration: "20.5 hours",
-    students: 19387,
-    price: 1949000,
-    discount: 0,
-    courseModule: [
-      { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
-      { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
-      { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
-    ],
-    reviews: [
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-    ],
-  },
-  {
-    thumbnail:
-      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZdgcqM3lVd1LrdxnV-0NAsHPJO3hGXhTIIvWDenmqOJJ5Y80A1z_x8tSqcim-ht-21Oum43KXU0QgEGFelh9jZOpJpHwhRvwaJW7Jt5t0yMvGeqlEbcGkYYu7W17gS8XdXr8yjH-U0mOCd3BMOTKncpI9B8i0ZB83gJhzq0spVVqqgtVTmhd71jau/s320-rw/4406786_4821_2.jpg",
-    instructor: "John Smilga",
-    instructorRole: "Software Engineer",
-    instructorDescription:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    courseName: "MERN Stack Course 2023 - MongoDB, Express, React and NodeJS",
-    description:
-      "This course is meticulously crafted to provide you with a foundational understanding of the principles, methodologies, and tools that drive exceptional user experiences in the digital landscape.",
-    duration: "20.5 hours",
-    students: 19387,
-    price: 1949000,
-    discount: 0,
-    courseModule: [
-      { title: "Introduction to UX Design", lessons: 5, duration: "1 hour" },
-      {
-        title: "Basics of User-Centered Design",
-        lessons: 5,
-        duration: "1 hour",
-      },
-      { title: "Elements of User Experience", lessons: 5, duration: "1 hour" },
-      { title: "Visual Design Principles", lessons: 5, duration: "1 hour" },
-    ],
-    reviews: [
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-      {
-        avatar: ExampleAvatar,
-        name: "John Doe",
-        reviewedAt: "22/3/2024",
-        rating: 5,
-        content:
-          "I was initially apprehensive, having no prior design experience. But the instructor, John Doe, did an amazing job of breaking down complex concepts into easily digestible modules. The video lectures were engaging, and the real-world examples really helped solidify my understanding.",
-      },
-    ],
-  },
-];
+import Loading from "~/components/Loading/Loading";
 
 const ListCourses = () => {
+  const [orderedCourses, setOrderedCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const currentUser = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchOrders()
+      .then((res) => {
+        setOrderedCourses(
+          res?.filter((order) => String(order.userId) === currentUser?.id) || []
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message);
+      })
+      .finally(() => setLoading(false));
+  }, [currentUser]);
+
+  if (loading) return <Loading />;
+
   return (
     <section className="w-full pb-[90px]">
       <div className="flex items-center gap-3 mb-4">
         <h3 className="text-[24px] font-semibold">Danh sách khóa học</h3>
-        <span className="text-[18px] font-semibold">(12)</span>
+        <span className="text-[18px] font-semibold">
+          ({orderedCourses?.length})
+        </span>
       </div>
       <div className="flex items-center justify-between gap-5">
         <div className="relative">
@@ -346,9 +65,15 @@ const ListCourses = () => {
       </div>
 
       <div className="relative mt-5 grid grid-cols-3 gap-[30px]">
-        {listCourses.map((course, index) => (
-          <CourseCard key={index} course={course} type="secondary" />
-        ))}
+        {!orderedCourses?.length && (
+          <p className="text-[18px] font-medium">
+            Hiện chưa có khóa học nào!!!
+          </p>
+        )}
+        {orderedCourses?.length > 0 &&
+          orderedCourses.map((course, index) => (
+            <CourseCard key={index} course={course} type="secondary" learning />
+          ))}
       </div>
     </section>
   );

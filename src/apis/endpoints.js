@@ -262,6 +262,27 @@ export const deleteLesson = async (id) => {
   return res.data;
 };
 
+// Progress
+export const fetchCourseProgress = async (courseId, userId) => {
+  const res = await api.get(`/progress/${courseId}`, { params: { userId } });
+  return res.data;
+};
+
+export const fetchAllProgress = async (userId) => {
+  const res = await api.get("/progress", { params: { userId } });
+  return res.data;
+};
+
+export const updateLessonProgress = async (data) => {
+  const res = await api.post("/progress/update-lesson", data);
+  return res.data;
+};
+
+export const initCourseProgress = async (data) => {
+  const res = await api.post("/progress/init", data);
+  return res.data;
+};
+
 // Momo Payment
 export const momoPaymentAPI = async (data) => {
   const res = await api.post(`${API_ROOT}/v1/payment/momo`, data);
