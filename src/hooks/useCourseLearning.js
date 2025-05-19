@@ -7,10 +7,12 @@ const useCourseLearning = ({
   courseId,
   fetchProgressFn,
   fetchCourseById,
+  fetchOrderFn,
   updateProgressFn,
   initProgressFn,
 }) => {
   const [courseInfo, setCourseInfo] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openItemList, setOpenItemList] = useState([]);
   const [currentActiveLesson, setCurrentActiveLesson] = useState(null);
@@ -20,6 +22,10 @@ const useCourseLearning = ({
   const [lessonDurations, setLessonDurations] = useState({});
 
   const currentUser = useSelector((state) => state.auth.user);
+  const isCourseOrdered = orders.some(
+    (order) =>
+      order.userId === currentUser?.id && order.courseId === courseInfo?.id
+  );
 
   const findCurrentLesson = () => {
     if (!courseInfo || !currentActiveLesson) return null;
@@ -141,9 +147,14 @@ const useCourseLearning = ({
 
   useEffect(() => {
     setLoading(true);
-    fetchCourseById(courseId)
-      .then((res) => {
-        handleSetData(res);
+    Promise.all([fetchOrderFn(), fetchCourseById(courseId)])
+      .then(([orderRes, courseRes]) => {
+        setOrders(orderRes || []);
+        handleSetData(courseRes);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message);
       })
       .finally(() => setLoading(false));
   }, [courseId]);
@@ -163,6 +174,7 @@ const useCourseLearning = ({
     progressInfo,
     progressPercent,
     lessonDurations,
+    isCourseOrdered,
     handleChangeActiveLesson,
     handleToggleList,
     handleVideoComplete,

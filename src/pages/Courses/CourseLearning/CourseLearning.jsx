@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchCourseById,
   fetchCourseProgress,
+  fetchOrders,
   initCourseProgress,
   updateLessonProgress,
 } from "~/apis/endpoints";
@@ -17,6 +19,7 @@ import CourseVideo from "~/pages/Courses/CourseLearning/CourseVideo/CourseVideo"
 
 const CourseLearning = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   const {
     courseInfo,
@@ -27,6 +30,7 @@ const CourseLearning = () => {
     progressInfo,
     progressPercent,
     lessonDurations,
+    isCourseOrdered,
     handleChangeActiveLesson,
     handleToggleList,
     handleVideoComplete,
@@ -35,9 +39,14 @@ const CourseLearning = () => {
     courseId,
     fetchProgressFn: fetchCourseProgress,
     fetchCourseById,
+    fetchOrderFn: fetchOrders,
     updateProgressFn: updateLessonProgress,
     initProgressFn: initCourseProgress,
   });
+
+  useEffect(() => {
+    if (!loading && !isCourseOrdered && courseInfo) navigate("/");
+  }, [navigate, loading, isCourseOrdered, courseInfo]);
 
   if (loading) return <Loading />;
 
