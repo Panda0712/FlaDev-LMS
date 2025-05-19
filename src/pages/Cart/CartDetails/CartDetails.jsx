@@ -56,6 +56,7 @@ const CartDetails = ({ carts, orders }) => {
       orderData = [...orderMapData];
       localStorage.setItem("order-data", JSON.stringify(orderData));
     }
+    localStorage.setItem("is-cart", JSON.stringify(true));
     navigate("/order/checkout");
   };
 

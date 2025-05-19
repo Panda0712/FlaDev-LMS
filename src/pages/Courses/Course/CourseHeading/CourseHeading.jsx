@@ -17,6 +17,7 @@ import Star from "~/components/Star/Star";
 import { addToCart as addToCartRedux, updateCart } from "~/redux/cartSlice";
 import { formatVND } from "~/utils/formatters";
 import Logo from "/logo.jpg";
+import Loading from "~/components/Loading/Loading";
 
 const CourseHeading = ({ courseInfo }) => {
   const [loading, setLoading] = useState(false);
@@ -71,7 +72,8 @@ const CourseHeading = ({ courseInfo }) => {
   const handleNavigate = () => {
     const foundOrder = orders.find(
       (order) =>
-        order.userId === currentUser?.id && order.courseId === courseInfo?.id
+        String(order.userId) === String(currentUser?.id) &&
+        String(order.courseId) === String(courseInfo?.id)
     );
     if (foundOrder) {
       toast.error("Bạn đã mua khóa học này rồi!!!");
@@ -100,6 +102,17 @@ const CourseHeading = ({ courseInfo }) => {
       (cart) =>
         cart.courseId === courseInfo?.id && cart.userId === currentUser?.id
     );
+    const isInOrder = orders?.find(
+      (order) =>
+        String(order.userId) === String(currentUser?.id) &&
+        String(order.courseId) === String(courseInfo?.id)
+    );
+
+    if (isInOrder) {
+      toast.error("Bạn đã mua khóa học này rồi!!!");
+      setLoading(false);
+      return;
+    }
 
     if (findCartItem) {
       toast.info("Bạn đã thêm khóa học này vào giỏ hàng rồi!!!");
@@ -183,7 +196,7 @@ const CourseHeading = ({ courseInfo }) => {
     handleGetOrders();
   }, []);
 
-  console.log(orders);
+  if (loading || loadingButton) return <Loading />;
 
   return (
     <div className="relative px-28 py-16 flex bg-[#f8fafc]">
