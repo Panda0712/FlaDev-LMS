@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Search, ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -5,15 +6,23 @@ import { menuList } from "~/components/Navbar/constants";
 import UserProfile from "~/components/UserProfile/UserProfile";
 import useCart from "~/hooks/useCart";
 import Logo from "/logo.jpg";
+import { useEffect } from "react";
 
 const Navbar = () => {
-  const { carts } = useCart();
+  const { carts, setCarts } = useCart();
 
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isOrderComplete = location.pathname === "/order/complete";
   const user = useSelector((state) => state.auth.user);
   const cartRedux = useSelector((state) => state.cart.cart);
+
+  useEffect(() => {
+    if (!cartRedux.length && isOrderComplete) {
+      setCarts([]);
+    }
+  }, [isOrderComplete]);
 
   return (
     <nav className="relative px-28 flex items-center h-[72px] justify-between gap-28 border-b border-slate-200">
@@ -49,7 +58,9 @@ const Navbar = () => {
             flex items-center justify-center"
             >
               <span className="text-[10px]">
-                {cartRedux?.length || carts?.length}
+                {!!cartRedux.length && isOrderComplete
+                  ? 0
+                  : cartRedux?.length || carts?.length}
               </span>
             </div>
           </div>

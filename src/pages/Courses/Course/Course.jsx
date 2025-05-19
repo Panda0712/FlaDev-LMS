@@ -2,7 +2,6 @@ import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCourseById } from "~/apis/endpoints";
-import ExampleAvatar from "~/assets/images/example-avatar.png";
 import NavigationText from "~/components/NavigationText/NavigationText";
 import CourseContent from "~/pages/Courses/Course/CourseContent/CourseContent";
 import CourseHeading from "~/pages/Courses/Course/CourseHeading/CourseHeading";
