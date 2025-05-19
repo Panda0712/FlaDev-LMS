@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Spin } from "antd";
+import { Spin, Tooltip } from "antd";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AdminTable from "~/components/AdminTable/AdminTable";
@@ -14,6 +14,7 @@ import {
   deleteCourse,
 } from "../../apis/endpoints";
 import InputV2 from "~/components/InputV2/InputV2";
+import { formatVND } from "~/utils/formatters";
 
 const AdminCourses = () => {
   const {
@@ -106,10 +107,10 @@ const AdminCourses = () => {
 
   const headerList = [
     { label: "Ảnh", width: "w-[180px]" },
-    { label: "Tên khoá học", width: "w-[150px]" },
+    { label: "Tên khoá học", width: "w-[180px]" },
     { label: "Mô tả", width: "w-[250px]" },
     { label: "Thời lượng", width: "w-[110px]" },
-    { label: "Giá", width: "w-[110px]" },
+    { label: "Giá", width: "w-[120px]" },
     { label: "Giảm giá", width: "w-[100px]" },
     { label: "", width: "w-[100px]" },
   ];
@@ -410,9 +411,17 @@ const AdminCourses = () => {
                 />
               </td>
               <td className={tHeadStyle}>{course?.name}</td>
-              <td className={tHeadStyle}>{course?.description}</td>
+              <td className={`${tHeadStyle}`}>
+                <Tooltip title={course?.description} placement="topLeft">
+                  <div>
+                    {course?.description?.length > 150
+                      ? course?.description?.slice(0, 150) + "..."
+                      : course?.description}
+                  </div>
+                </Tooltip>
+              </td>
               <td className={tHeadStyle}>{course?.duration}</td>
-              <td className={tHeadStyle}>{course?.price}</td>
+              <td className={tHeadStyle}>{formatVND(course?.price)}đ</td>
               <td className={tHeadStyle}>{course?.discount}</td>
             </>
           )}
