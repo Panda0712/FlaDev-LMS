@@ -340,9 +340,7 @@ const AdminVouchers = () => {
               <td className={`${tHeadStyle}`}>{voucher?.usageLimit}</td>
               <td className={`${tHeadStyle}`}>{voucher?.usedCount}</td>
               <td className={`${tHeadStyle}`}>{voucher?.minOrderValue}</td>
-              <td className={`${tHeadStyle}`}>
-                {formatDateV1(voucher?.expiredAt)}
-              </td>
+              <td className={`${tHeadStyle}`}>{voucher?.expiredAt}</td>
             </>
           )}
           openOptions={openOptions}
