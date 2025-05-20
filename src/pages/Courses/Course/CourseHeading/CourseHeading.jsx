@@ -19,7 +19,8 @@ import { formatVND } from "~/utils/formatters";
 import Logo from "/logo.jpg";
 import Loading from "~/components/Loading/Loading";
 
-const CourseHeading = ({ courseInfo }) => {
+const CourseHeading = ({ reviews, courseInfo }) => {
+  const [reviewsList, setReviewsList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
   const [carts, setCarts] = useState([]);
@@ -27,6 +28,12 @@ const CourseHeading = ({ courseInfo }) => {
   const [voucher, setVoucher] = useState(null);
   const [voucherCode, setVoucherCode] = useState("");
   const [orders, setOrders] = useState([]);
+
+  const totalRating =
+    reviewsList.reduce((acc, review) => acc + review.rating, 0) || 0;
+  const averageRating = Math.floor(
+    totalRating / reviewsList?.length || 5
+  ).toFixed(1);
 
   const totalLessons = courseInfo?.courseModules?.reduce(
     (acc, module) => acc + module?.lessons?.length,
@@ -196,6 +203,15 @@ const CourseHeading = ({ courseInfo }) => {
     handleGetOrders();
   }, []);
 
+  useEffect(() => {
+    const courseReviews =
+      reviews?.filter((review) => review?.courseId === courseInfo?.id) || [];
+
+    if (courseReviews?.length) {
+      setReviewsList(courseReviews);
+    }
+  }, [courseInfo?.id, reviews]);
+
   if (loading || loadingButton) return <Loading />;
 
   return (
@@ -212,11 +228,11 @@ const CourseHeading = ({ courseInfo }) => {
           <div className="flex items-center gap-3">
             <div className="text-[20px] flex items-center gap-2">
               <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
-                {courseInfo?.star || 5}
+                {averageRating || 5}
               </p>
-              <Star value={courseInfo?.star || 5} />
+              <Star value={averageRating || 5} />
               <p className="text-[14px] mt-[1px]">
-                {courseInfo?.reviews || 0} đánh giá
+                {reviewsList?.length || 0} đánh giá
               </p>
             </div>
 

@@ -1,8 +1,8 @@
 import {
-  BookOpenCheck,
   FileUser,
   GraduationCap,
   LayoutDashboard,
+  MessageCircle,
   PencilLine,
   Sheet,
   TicketPercent,
@@ -17,6 +17,7 @@ const iconMap = {
   dashboard: <LayoutDashboard size={24} />,
   orders: <Sheet size={24} />,
   voucher: <TicketPercent size={24} />,
+  review: <MessageCircle size={24} />,
   blog: <PencilLine size={24} />,
 };
 

@@ -4,5 +4,6 @@ export const menuAdminList = [
   { name: "Đơn mua khóa", type: "orders", path: "/admin/orders" },
   { name: "Voucher", type: "voucher", path: "/admin/vouchers" },
   { name: "Liên hệ", type: "contact", path: "/admin/contact" },
+  { name: "Đánh giá", type: "review", path: "/admin/review" },
   { name: "Bài viết", type: "blog", path: "/admin/blogs" },
 ];

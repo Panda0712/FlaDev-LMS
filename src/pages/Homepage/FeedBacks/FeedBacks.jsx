@@ -1,6 +1,6 @@
 import RatingCard from "~/components/RatingCard/RatingCard";
 
-const FeedBacks = () => {
+const FeedBacks = ({ reviews }) => {
   return (
     <section className="my-[45px] px-28">
       <div className="text-center leading-[1.7] mb-[50px]">
@@ -11,9 +11,9 @@ const FeedBacks = () => {
       </div>
 
       <div className="flex items-center gap-[16px]">
-        <RatingCard />
-        <RatingCard />
-        <RatingCard />
+        {reviews?.slice(0, 3).map((review) => (
+          <RatingCard key={review?.id} review={review} />
+        ))}
       </div>
     </section>
   );

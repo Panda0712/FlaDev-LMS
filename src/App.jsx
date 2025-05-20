@@ -1,4 +1,5 @@
 // import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   BrowserRouter,
   Navigate,
@@ -8,6 +9,14 @@ import {
 } from "react-router-dom";
 import Footer from "~/components/Footer/Footer";
 import Navbar from "~/components/Navbar/Navbar";
+import Admin from "~/pages/Admin/Admin";
+import AdminBlogs from "~/pages/Admin/Blogs";
+import AdminContacts from "~/pages/Admin/Contacts";
+import AdminCourses from "~/pages/Admin/Courses";
+import Dashboard from "~/pages/Admin/Dashboard";
+import AdminOrders from "~/pages/Admin/Orders";
+import AdminReviews from "~/pages/Admin/Reviews";
+import AdminVouchers from "~/pages/Admin/Vouchers";
 import Auth from "~/pages/Auth/Auth";
 import Blog from "~/pages/Blog/Blog";
 import Cart from "~/pages/Cart/Cart";
@@ -15,18 +24,10 @@ import Contact from "~/pages/Contact/Contact";
 import Course from "~/pages/Courses/Course/Course";
 import CourseLearning from "~/pages/Courses/CourseLearning/CourseLearning";
 import Courses from "~/pages/Courses/Courses";
-import Admin from "~/pages/Admin/Admin";
-import AdminBlogs from "~/pages/Admin/Blogs";
-import AdminContacts from "~/pages/Admin/Contacts";
-import AdminCourses from "~/pages/Admin/Courses";
-import Dashboard from "~/pages/Admin/Dashboard";
-import AdminOrders from "~/pages/Admin/Orders";
-import AdminVouchers from "~/pages/Admin/Vouchers";
 import Homepage from "~/pages/Homepage/Homepage";
 import NotFound from "~/pages/NotFound/NotFound";
 import Order from "~/pages/Order/Order";
 import Profile from "~/pages/Profile/Profile";
-import { useSelector } from "react-redux";
 import { ACCOUNT_ROLES } from "~/utils/constants";
 
 const ProtectedRoutes = () => {
@@ -65,6 +66,7 @@ const App = () => {
               element={<BookingDetailsManagement />}
             /> */}
             <Route path="blogs" element={<AdminBlogs />} />
+            <Route path="review" element={<AdminReviews />} />
             {/* <Route path="blogs/:blogId" element={<BlogDetailsManagement />} /> */}
             {/* <Route path="blogs/create" element={<BlogFormPage />} /> */}
             {/* <Route path="blogs/create/:blogId" element={<BlogFormPage />} /> */}
