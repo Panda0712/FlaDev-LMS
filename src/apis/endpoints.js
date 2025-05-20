@@ -190,12 +190,12 @@ export const findCartByUserAndCourse = async (userId, courseId) => {
 
 // Profile/User
 export const fetchUserProfile = async () => {
-  const res = await api.get("/user");
+  const res = await api.get("/users");
   return res.data;
 };
 
-export const updateUserProfile = async (data) => {
-  const res = await api.put("/user", data);
+export const updateUserProfile = async (id, data) => {
+  const res = await api.put(`/users/${id}`, data);
   return res.data;
 };
 
@@ -223,6 +223,11 @@ export const resetPassword = async (data) => {
 // Media
 export const uploadMedia = async (data) => {
   const res = await api.post("/media/upload", data);
+  return res.data;
+};
+
+export const uploadUserImage = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/users/uploads`, data);
   return res.data;
 };
 
