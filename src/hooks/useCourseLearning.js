@@ -8,11 +8,13 @@ const useCourseLearning = ({
   fetchProgressFn,
   fetchCourseById,
   fetchOrderFn,
+  fetchReviewFn,
   updateProgressFn,
   initProgressFn,
 }) => {
   const [courseInfo, setCourseInfo] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openItemList, setOpenItemList] = useState([]);
   const [currentActiveLesson, setCurrentActiveLesson] = useState(null);
@@ -147,10 +149,11 @@ const useCourseLearning = ({
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([fetchOrderFn(), fetchCourseById(courseId)])
-      .then(([orderRes, courseRes]) => {
+    Promise.all([fetchOrderFn(), fetchCourseById(courseId), fetchReviewFn()])
+      .then(([orderRes, courseRes, reviewRes]) => {
         setOrders(orderRes || []);
         handleSetData(courseRes);
+        setReviews(reviewRes || []);
       })
       .catch((error) => {
         console.log(error);
@@ -166,7 +169,9 @@ const useCourseLearning = ({
   }, [courseInfo]);
 
   return {
+    reviews,
     courseInfo,
+    currentUser,
     loading,
     openItemList,
     currentActiveLesson,
@@ -176,6 +181,7 @@ const useCourseLearning = ({
     lessonDurations,
     isCourseOrdered,
     handleChangeActiveLesson,
+    setReviews,
     handleToggleList,
     handleVideoComplete,
     handleDuration,

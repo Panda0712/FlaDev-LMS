@@ -1,8 +1,91 @@
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { createReview, deleteReview } from "~/apis/endpoints";
 import StarImg from "~/assets/images/star.png";
 import Button from "~/components/Button/Button";
 import Star from "~/components/Star/Star";
 
-const CourseReviews = ({ courseInfo }) => {
+const CourseReviews = ({ currentUser, reviews, courseInfo }) => {
+  const [reviewsList, setReviewsList] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [reviewValue, setReviewValue] = useState("");
+  const [ratingValue, setRatingValue] = useState(5);
+  const [editingReviewId, setEditingReviewId] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReview, setSelectedReview] = useState(null);
+
+  const handleSubmit = async () => {
+    if (!reviewValue.trim()) {
+      toast.error("Vui lòng nhập đánh giá!!!");
+      return;
+    }
+
+    setSubmitting(true);
+
+    const newReview = {
+      userId: currentUser?.id,
+      userAvatar:
+        currentUser?.avatar ||
+        "https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
+      userName: currentUser?.username,
+      courseId: courseInfo?.id,
+      content: reviewValue,
+      rating: ratingValue,
+    };
+
+    toast
+      .promise(createReview(newReview), {
+        pending: "Đang tạo đánh giá....",
+      })
+      .then((res) => {
+        if (!res.error) {
+          toast.success("Thêm đánh giá thành công!!!");
+          setReviewsList((prev) => [res, ...prev]);
+        }
+        setReviewValue("");
+        setRatingValue(5);
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          error?.message ||
+            "Có lỗi xảy ra khi thêm đánh giá!! Vui lòng thử lại sau!!"
+        );
+      });
+  };
+
+  const showDeleteModal = (review) => {
+    setSelectedReview(review);
+    setModalVisible(true);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedReview) return;
+
+    const reviewId = selectedReview?.id;
+    setReviewsList((prev) => prev.filter((review) => review.id !== reviewId));
+
+    toast
+      .promise(deleteReview(reviewId), {
+        pending: "Đang xóa đánh giá...",
+      })
+      .then((res) => {
+        if (!res.error) {
+          toast.success("Xóa đánh giá thành công!!!");
+        }
+      });
+  };
+
+  useEffect(() => {
+    const courseReviews =
+      reviews.filter((review) => review?.courseId === courseInfo?.id) || [];
+
+    if (courseReviews?.length) {
+      setReviewsList(courseReviews);
+    }
+  }, [courseInfo?.id, reviews]);
+
   return (
     <section className="py-[32px]">
       <h3 className="text-[20px] font-semibold">Đánh giá học viên</h3>

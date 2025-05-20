@@ -4,6 +4,7 @@ import {
   fetchCourseById,
   fetchCourseProgress,
   fetchOrders,
+  fetchReviews,
   initCourseProgress,
   updateLessonProgress,
 } from "~/apis/endpoints";
@@ -22,6 +23,8 @@ const CourseLearning = () => {
   const navigate = useNavigate();
 
   const {
+    reviews,
+    currentUser,
     courseInfo,
     loading,
     openItemList,
@@ -40,6 +43,7 @@ const CourseLearning = () => {
     fetchProgressFn: fetchCourseProgress,
     fetchCourseById,
     fetchOrderFn: fetchOrders,
+    fetchReviewFn: fetchReviews,
     updateProgressFn: updateLessonProgress,
     initProgressFn: initCourseProgress,
   });
@@ -107,7 +111,11 @@ const CourseLearning = () => {
 
       <CourseSuggestion style="bg-white" />
 
-      <CourseReviews courseInfo={courseInfo} />
+      <CourseReviews
+        currentUser={currentUser}
+        reviews={reviews}
+        courseInfo={courseInfo}
+      />
     </section>
   );
 };

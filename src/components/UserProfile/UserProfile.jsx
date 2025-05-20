@@ -51,7 +51,10 @@ const UserProfile = ({ currentUser }) => {
       onClick={toggleOpenProfile}
       className="relative flex group items-center gap-3 cursor-pointer"
     >
-      <div className="flex items-center justify-center w-8 h-8 transition hover:opacity-90 border-[2px] border-blue-400 rounded-full overflow-hidden">
+      <div
+        className="flex items-center justify-center w-8 h-8 transition 
+      hover:opacity-90 border-[2px] border-blue-400 rounded-full overflow-hidden"
+      >
         <img
           src={currentUser?.avatar || NoUser}
           className="w-full h-full"
@@ -66,20 +69,18 @@ const UserProfile = ({ currentUser }) => {
       </div>
 
       <div
-        className={`absolute z-100 shadow-sm bg-gray-200 py-1 px-2 rounded-lg bottom-[-35px] left-0 group-hover:block opacity-0 transition-opacity ${
-          !openProfile && "group-hover:opacity-100 duration-200"
-        } `}
+        className={`absolute z-100 shadow-sm bg-gray-200 py-1 px-2 rounded-lg bottom-[-35px] 
+          left-0 group-hover:block opacity-0 transition-opacity ${
+            !openProfile && "group-hover:opacity-100 duration-200"
+          } `}
       >
         <p className="text-[13px]">Tài khoản</p>
       </div>
 
       {openProfile && (
-        <ul className="absolute z-99 shadow-sm bottom-[-135px] rounded-lg bg-gray-200 left-0 py-3 px-4">
+        <ul className="absolute z-99 shadow-sm bottom-[-100px] rounded-lg bg-gray-200 left-0 py-3 px-4">
           <Link to="/profile">
             <li className={profileItemStyle}>Thông tin cá nhân</li>
-          </Link>
-          <Link to="/order/history">
-            <li className={profileItemStyle}>Lịch sử mua hàng</li>
           </Link>
           <li onClick={() => setOpenModal(true)} className={profileItemStyle}>
             Đăng xuất
