@@ -9,3 +9,16 @@ body {
   width: 100%;
   overflow-x: hidden;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+  background: #07275a;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #60a5fa;
+  border-radius: 4px;
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #60a5fa #07275a;
+}

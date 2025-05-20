@@ -1,7 +1,8 @@
 import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchCourseById } from "~/apis/endpoints";
+import { toast } from "react-toastify";
+import { fetchCourseById, fetchReviews } from "~/apis/endpoints";
 import NavigationText from "~/components/NavigationText/NavigationText";
 import CourseContent from "~/pages/Courses/Course/CourseContent/CourseContent";
 import CourseHeading from "~/pages/Courses/Course/CourseHeading/CourseHeading";
@@ -13,15 +14,21 @@ import CourseSuggestion from "~/pages/Courses/Course/CourseSuggestion/CourseSugg
 
 const Course = () => {
   const [course, setCourse] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const courseId = useParams().courseId;
 
   useEffect(() => {
     setLoading(true);
-    fetchCourseById(courseId)
-      .then((res) => {
-        setCourse(res || {});
+    Promise.all([fetchCourseById(courseId), fetchReviews()])
+      .then(([courseRes, reviewRes]) => {
+        setCourse(courseRes || {});
+        setReviews(reviewRes || []);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message);
       })
       .finally(() => setLoading(false));
   }, [courseId]);
@@ -36,7 +43,7 @@ const Course = () => {
   return (
     <section>
       <NavigationText placeTo="MERN Stack" />
-      <CourseHeading courseInfo={course} />
+      <CourseHeading reviews={reviews} courseInfo={course} />
 
       <div className="px-28">
         <CourseLinkBox />
@@ -47,7 +54,11 @@ const Course = () => {
 
         <CourseLessons courseInfo={course} />
 
-        <CourseReviews courseInfo={course} />
+        <CourseReviews
+          reviews={reviews}
+          loading={loading}
+          courseInfo={course}
+        />
 
         <CourseSuggestion style="bg-white" />
       </div>

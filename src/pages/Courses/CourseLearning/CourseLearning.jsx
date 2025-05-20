@@ -112,6 +112,7 @@ const CourseLearning = () => {
       <CourseSuggestion style="bg-white" />
 
       <CourseReviews
+        loading={loading}
         currentUser={currentUser}
         reviews={reviews}
         courseInfo={courseInfo}

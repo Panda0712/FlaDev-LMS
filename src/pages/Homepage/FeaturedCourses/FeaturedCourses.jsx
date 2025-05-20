@@ -1,29 +1,7 @@
-import { Spin } from "antd";
-import { useEffect, useState } from "react";
-import { fetchCourses } from "~/apis/endpoints";
 import Button from "~/components/Button/Button";
 import CourseCard from "~/components/CourseCard/CourseCard";
 
-const FeaturedCourses = () => {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    fetchCourses()
-      .then((res) => {
-        setCourses(res || []);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading)
-    return (
-      <div className="flex items-center my-24 justify-center">
-        <Spin size="large" />
-      </div>
-    );
-
+const FeaturedCourses = ({ courses }) => {
   return (
     <section className="my-[90px] px-28 relative">
       <div className="flex items-center justify-between gap-5 mb-[34px]">
