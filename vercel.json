@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/((?!static|assets|.*\\..*).*)",
-      "destination": "/"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
