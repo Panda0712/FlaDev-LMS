@@ -27,6 +27,7 @@ import Courses from "~/pages/Courses/Courses";
 import Homepage from "~/pages/Homepage/Homepage";
 import NotFound from "~/pages/NotFound/NotFound";
 import Order from "~/pages/Order/Order";
+import OrderComplete from "~/pages/Order/OrderComplete";
 import Profile from "~/pages/Profile/Profile";
 import { ACCOUNT_ROLES } from "~/utils/constants";
 
@@ -104,7 +105,7 @@ const App = () => {
             <Route path="/cart" element={<Cart />} />
 
             {/* Order */}
-            <Route path="/order/complete" element={<Order />} />
+            <Route path="/order/complete" element={<OrderComplete />} />
             <Route path="/order/checkout" element={<Order />} />
             <Route path="/order/history" element={<Order />} />
 
