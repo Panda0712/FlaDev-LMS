@@ -17,7 +17,7 @@ export const ACCOUNT_ROLES = {
 export const DEFAULT_PAGE = 1;
 export const DEFAULT_ITEMS_PER_PAGE = 8;
 
-let apiRoot = "http://localhost:8017";
+let apiRoot = "https://file-payment-lms-backend.onrender.com";
 // if (process.env.BUILD_MODE === "dev") {
 //   apiRoot = "http://localhost:8017";
 // }
