@@ -47,7 +47,7 @@ const AdminRoutes = () => {
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         {/* Admin Routes */}
         <Route element={<AdminRoutes />}>
