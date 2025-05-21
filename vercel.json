@@ -12,8 +12,13 @@
       "dest": "/public/$1"
     },
     {
-      "src": "/(.*\\.\\w+)",
+      "src": "/(.*.\\w+)",
       "dest": "/$1"
+    },
+    {
+      "src": "/order/complete",
+      "dest": "/index.html",
+      "status": 200
     },
     {
       "src": "/(.*)",
