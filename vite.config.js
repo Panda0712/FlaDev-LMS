@@ -1,45 +1,14 @@
-import tailwindcss from "@tailwindcss/vite";
-import react from "@vitejs/plugin-react";
-import fs from "fs";
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-
-// Đọc template HTML tùy chỉnh
-const indexHtml = fs.readFileSync("./index-template.html", "utf-8");
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    svgr(),
-    {
-      name: "html-transform",
-      transformIndexHtml() {
-        return indexHtml;
-      },
-    },
-  ],
-  base: "/", // Đảm bảo sử dụng đường dẫn tuyệt đối
+  plugins: [react(), tailwindcss(), svgr()],
+  base: "./", // ✅ Sửa từ '/' thành './'
   resolve: {
     alias: [{ find: "~", replacement: "/src" }],
-  },
-  build: {
-    outDir: "dist",
-    assetsDir: "assets", // Thư mục chứa assets build
-    manifest: true, // Tạo file manifest.json
-    rollupOptions: {
-      output: {
-        // Đảm bảo assets sử dụng đường dẫn tuyệt đối
-        assetFileNames: "assets/[name]-[hash][extname]",
-        chunkFileNames: "assets/[name]-[hash].js",
-        entryFileNames: "assets/[name]-[hash].js",
-      },
-    },
-    // Đảm bảo các đường dẫn trong HTML sử dụng đường dẫn tuyệt đối
-    emptyOutDir: true,
-    cssCodeSplit: true,
-    sourcemap: false,
   },
 
   // Cấu hình public directory
