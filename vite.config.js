@@ -12,6 +12,10 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
-    assetsDir: "assets",
+    assetsDir: "assets", // Thư mục chứa assets build
+    manifest: true, // Tạo file manifest.json
   },
+
+  // Cấu hình public directory
+  publicDir: "public", // 👈 Thư mục public gốc
 });

@@ -1,20 +1,15 @@
 {
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/assets/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
       "dest": "/assets/$1"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/logo.jpg",
-      "dest": "/logo.jpg"
+      "src": "/public/(.*)",
+      "dest": "/public/$1"
     },
     {
       "src": "/(.*\\.\\w+)",
