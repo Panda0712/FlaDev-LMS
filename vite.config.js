@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), svgr()],
-  base: "/", // <--- Thêm dòng này
+  base: "./", // ✅ Sửa từ '/' thành './'
   resolve: {
     alias: [{ find: "~", replacement: "/src" }],
   },
