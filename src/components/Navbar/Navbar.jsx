@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Search, ShoppingCart } from "lucide-react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { menuList } from "~/components/Navbar/constants";
+import Notifications from "~/components/Notifications/Notifications";
 import UserProfile from "~/components/UserProfile/UserProfile";
 import useCart from "~/hooks/useCart";
 import Logo from "/logo.jpg";
-import { useEffect } from "react";
 
 const Navbar = () => {
   const { carts, setCarts } = useCart();
@@ -46,6 +47,7 @@ const Navbar = () => {
         ))}
       </ul>
       <div className="flex items-center gap-5">
+        <Notifications />
         {user && (
           <div
             onClick={() => navigate("/cart")}

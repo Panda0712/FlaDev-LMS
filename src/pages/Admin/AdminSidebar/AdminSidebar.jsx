@@ -1,4 +1,5 @@
 import {
+  Bell,
   FileUser,
   GraduationCap,
   LayoutDashboard,
@@ -17,6 +18,7 @@ const iconMap = {
   dashboard: <LayoutDashboard size={24} />,
   orders: <Sheet size={24} />,
   voucher: <TicketPercent size={24} />,
+  notification: <Bell />,
   review: <MessageCircle size={24} />,
   blog: <PencilLine size={24} />,
 };
