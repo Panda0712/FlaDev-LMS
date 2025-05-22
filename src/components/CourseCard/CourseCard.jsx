@@ -4,8 +4,26 @@ import EducationImg from "~/assets/images/education.png";
 import Star from "~/components/Star/Star";
 import { formatVND } from "~/utils/formatters";
 
-const CourseCard = ({ course, type = "primary", learning }) => {
+const CourseCard = ({
+  reviewsListCourses = [],
+  course,
+  type = "primary",
+  learning,
+}) => {
   const navigate = useNavigate();
+
+  console.log(reviewsListCourses);
+  const courseRating =
+    (reviewsListCourses?.length > 0 &&
+      reviewsListCourses.find(
+        (review) =>
+          review.courseId === course?.id || review.courseId === course?.courseId
+      )) ||
+    null;
+  const countRating = reviewsListCourses?.filter(
+    (review) =>
+      review.courseId === course?.id || review.courseId === course?.courseId
+  )?.length;
 
   if (type === "secondary") {
     return (
@@ -32,8 +50,8 @@ const CourseCard = ({ course, type = "primary", learning }) => {
           Giảng dạy bởi {course?.instructor}
         </p>
         <div className="flex items-center gap-3">
-          <Star value={5} />
-          <span>{course?.reviews || 0} đánh giá</span>
+          <Star value={courseRating?.averageRating || 0} />
+          <span>{countRating || 0} đánh giá</span>
         </div>
       </div>
     );

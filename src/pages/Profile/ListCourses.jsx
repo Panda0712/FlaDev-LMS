@@ -2,24 +2,49 @@ import { ChevronDown, FilterIcon, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { fetchOrders } from "~/apis/endpoints";
+import { fetchOrders, fetchReviews } from "~/apis/endpoints";
 import CourseCard from "~/components/CourseCard/CourseCard";
 import Input from "~/components/Input/Input";
 import Loading from "~/components/Loading/Loading";
 
 const ListCourses = () => {
   const [orderedCourses, setOrderedCourses] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const currentUser = useSelector((state) => state.auth.user);
 
+  const reviewsListCourses = reviews.map((review) => {
+    const foundCourse = orderedCourses.find(
+      (order) => String(order?.courseId) === review?.courseId
+    );
+    const totalRatingCount = reviews.filter(
+      (review) => review?.courseId === foundCourse?.courseId
+    )?.length;
+    const totalRatingValue = reviews.reduce(
+      (acc, review) =>
+        review?.courseId === foundCourse?.courseId ? acc + review?.rating : acc,
+      0
+    );
+    const averageRating = Math.floor(totalRatingValue / totalRatingCount) || 0;
+
+    return {
+      ...review,
+      courseName: foundCourse?.courseName,
+      averageRating,
+    };
+  });
+
   useEffect(() => {
     setLoading(true);
-    fetchOrders()
-      .then((res) => {
+    Promise.all([fetchOrders(), fetchReviews()])
+      .then(([ordersRes, reviewsRes]) => {
         setOrderedCourses(
-          res?.filter((order) => String(order.userId) === currentUser?.id) || []
+          ordersRes?.filter(
+            (order) => String(order.userId) === currentUser?.id
+          ) || []
         );
+        setReviews(reviewsRes || []);
       })
       .catch((error) => {
         console.log(error);
@@ -72,7 +97,13 @@ const ListCourses = () => {
         )}
         {orderedCourses?.length > 0 &&
           orderedCourses.map((course, index) => (
-            <CourseCard key={index} course={course} type="secondary" learning />
+            <CourseCard
+              key={index}
+              reviewsListCourses={reviewsListCourses}
+              course={course}
+              type="secondary"
+              learning
+            />
           ))}
       </div>
     </section>

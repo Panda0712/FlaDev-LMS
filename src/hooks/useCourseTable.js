@@ -35,6 +35,8 @@ const useCourseTable = ({
   const indexOfLast = currentPage * DEFAULT_ITEMS_PER_PAGE;
   const indexOfFirst = indexOfLast - DEFAULT_ITEMS_PER_PAGE;
   const currentCourses = dataCourses?.slice(indexOfFirst, indexOfLast);
+  const categoryList = dataCourses?.map((course) => course.category);
+  const uniqueCategories = [...new Set(categoryList)];
 
   const currentUser = useSelector((state) => state.auth.user);
 
@@ -337,6 +339,7 @@ const useCourseTable = ({
     videosList,
     image,
     lessons,
+    uniqueCategories,
     setVideo,
     handleVideoChange,
     handleReset,
