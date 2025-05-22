@@ -14,6 +14,7 @@ import AdminBlogs from "~/pages/Admin/Blogs";
 import AdminContacts from "~/pages/Admin/Contacts";
 import AdminCourses from "~/pages/Admin/Courses";
 import Dashboard from "~/pages/Admin/Dashboard";
+import AdminNotifications from "~/pages/Admin/Notifications";
 import AdminOrders from "~/pages/Admin/Orders";
 import AdminReviews from "~/pages/Admin/Reviews";
 import AdminVouchers from "~/pages/Admin/Vouchers";
@@ -26,6 +27,7 @@ import CourseLearning from "~/pages/Courses/CourseLearning/CourseLearning";
 import Courses from "~/pages/Courses/Courses";
 import Homepage from "~/pages/Homepage/Homepage";
 import NotFound from "~/pages/NotFound/NotFound";
+import Notifications from "~/pages/Notification/Notification";
 import Order from "~/pages/Order/Order";
 import Profile from "~/pages/Profile/Profile";
 import { ACCOUNT_ROLES } from "~/utils/constants";
@@ -61,6 +63,7 @@ const App = () => {
             <Route path="contact" element={<AdminContacts />} />
             <Route path="vouchers" element={<AdminVouchers />} />
             <Route path="orders" element={<AdminOrders />} />
+            <Route path="notifications" element={<AdminNotifications />} />
             {/* <Route
               path="booking/:bookingId"
               element={<BookingDetailsManagement />}
@@ -107,6 +110,9 @@ const App = () => {
             <Route path="/order/complete" element={<Order />} />
             <Route path="/order/checkout" element={<Order />} />
             <Route path="/order/history" element={<Order />} />
+
+            {/* Order */}
+            <Route path="/notifications" element={<Notifications />} />
 
             {/* Profile */}
             <Route path="/profile" element={<Profile />} />

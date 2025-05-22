@@ -299,3 +299,32 @@ export const zaloPaymentAPI = async (data) => {
   const res = await api.post(`${API_ROOT}/v1/payment/zalopay`, data);
   return res.data;
 };
+
+// Create new notification
+export const createNewNotificationAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/notifications`, data);
+  return res.data;
+};
+
+// Upload hotel notification image
+export const uploadLMSNotificationImageAPI = async (data) => {
+  const res = await api.post(`${API_ROOT}/v1/notifications/uploads`, data);
+  return res.data;
+};
+
+// Update notification
+export const updateNotificationAPI = async (notificationId, updateData) => {
+  const res = await api.put(
+    `${API_ROOT}/v1/notifications/${notificationId}`,
+    updateData
+  );
+  return res.data;
+};
+
+// Delete notification
+export const deleteNotificationAPI = async (notificationId) => {
+  const res = await api.delete(
+    `${API_ROOT}/v1/notifications/${notificationId}`
+  );
+  return res.data;
+};
