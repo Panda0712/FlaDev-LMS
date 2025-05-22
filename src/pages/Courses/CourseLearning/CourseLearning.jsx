@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchCourseById,
@@ -21,6 +21,18 @@ import CourseVideo from "~/pages/Courses/CourseLearning/CourseVideo/CourseVideo"
 const CourseLearning = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
+
+  const contentRef = useRef(null);
+  const instructorRef = useRef(null);
+  const lessonsRef = useRef(null);
+  const reviewsRef = useRef(null);
+
+  const handleScrollToSection = (index) => {
+    const refs = [contentRef, instructorRef, lessonsRef, reviewsRef];
+    const ref = refs[index];
+    if (ref && ref.current)
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const {
     reviews,
@@ -70,13 +82,20 @@ const CourseLearning = () => {
             handleDuration={handleDuration}
           />
 
-          <CourseLinkBox />
+          <CourseLinkBox onScrollToSection={handleScrollToSection} />
 
-          <CourseContent courseInfo={courseInfo} />
+          <div ref={contentRef}>
+            <CourseContent courseInfo={courseInfo} />
+          </div>
 
-          <CourseInstructor courseInfo={courseInfo} />
+          <div ref={instructorRef}>
+            <CourseInstructor courseInfo={courseInfo} />
+          </div>
         </div>
-        <div className="basis-[calc(30%-16px)] rounded-[16px] bg-[#faf8fc] py-[20px] pb-0 border-2 border-slate-200">
+        <div
+          ref={lessonsRef}
+          className="basis-[calc(30%-16px)] rounded-[16px] bg-[#faf8fc] py-[20px] pb-0 border-2 border-slate-200"
+        >
           <h3 className="text-[24px] font-semibold mt-2 mb-2 px-[20px]">
             Tiến độ hoàn thành
           </h3>
@@ -111,12 +130,14 @@ const CourseLearning = () => {
 
       <CourseSuggestion style="bg-white" />
 
-      <CourseReviews
-        loading={loading}
-        currentUser={currentUser}
-        reviews={reviews}
-        courseInfo={courseInfo}
-      />
+      <div ref={reviewsRef}>
+        <CourseReviews
+          loading={loading}
+          currentUser={currentUser}
+          reviews={reviews}
+          courseInfo={courseInfo}
+        />
+      </div>
     </section>
   );
 };

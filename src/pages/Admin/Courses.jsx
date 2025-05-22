@@ -6,15 +6,15 @@ import AdminTable from "~/components/AdminTable/AdminTable";
 import DeleteConfirmationModal from "~/components/DeleteConfirmationModal/DeleteConfirmationModal";
 import FormModal from "~/components/FormModal/FormModal";
 import Input from "~/components/Input/Input";
-import useCourseTable from "~/hooks/useCourseTable";
-import {
-  fetchCourses,
-  createCourse,
-  updateCourse,
-  deleteCourse,
-} from "../../apis/endpoints";
 import InputV2 from "~/components/InputV2/InputV2";
+import useCourseTable from "~/hooks/useCourseTable";
 import { formatVND } from "~/utils/formatters";
+import {
+  createCourse,
+  deleteCourse,
+  fetchCourses,
+  updateCourse,
+} from "../../apis/endpoints";
 
 const AdminCourses = () => {
   const {
@@ -38,6 +38,7 @@ const AdminCourses = () => {
     lessons,
     video,
     image,
+    uniqueCategories,
     setImage,
     handleImageChange,
     handleVideoChange,
@@ -74,6 +75,7 @@ const AdminCourses = () => {
         instructorRole: editing.data.instructorRole || "",
         instructorDescription: editing.data.instructorDescription || "",
         description: editing.data.description || "",
+        category: editing.data.category || "",
         duration: editing.data.duration || 0,
         price: editing.data.price || "",
         discount: editing.data.discount || "",
@@ -94,6 +96,7 @@ const AdminCourses = () => {
         instructorRole: "",
         instructorDescription: "",
         description: "",
+        category: "",
         duration: "",
         price: "",
         discount: 0,
@@ -191,6 +194,30 @@ const AdminCourses = () => {
             {...register("description")}
             error={errors?.description}
           />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="category" className="font-medium">
+            Danh mục
+          </label>
+          <Input
+            name="category"
+            content="Nhập danh mục khoá học"
+            style="pt-3"
+            {...register("category")}
+            error={errors?.category}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label htmlFor="categoryList" className="font-medium">
+            Các danh mục hiện có
+          </label>
+          <select id="categoryList" className="p-2 border border-slate-300">
+            {uniqueCategories?.map((category) => (
+              <option key={category}>{category}</option>
+            ))}
+          </select>
         </div>
 
         <div className="flex flex-col gap-1">
