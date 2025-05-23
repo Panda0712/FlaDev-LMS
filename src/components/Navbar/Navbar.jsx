@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Search, ShoppingCart } from "lucide-react";
+import { Heart, Search, ShoppingCart } from "lucide-react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -51,7 +51,7 @@ const Navbar = () => {
         {user && (
           <div
             onClick={() => navigate("/cart")}
-            className="relative flex items-center justify-center cursor-pointer mr-16"
+            className="relative flex items-center justify-center cursor-pointer"
           >
             <ShoppingCart size={24} />
             <div
@@ -65,6 +65,14 @@ const Navbar = () => {
                   : cartRedux?.length || carts?.length}
               </span>
             </div>
+          </div>
+        )}
+        {user && (
+          <div
+            onClick={() => navigate("/wishlist")}
+            className="relative flex items-center justify-center cursor-pointer ml-6 mr-16"
+          >
+            <Heart size={24} />
           </div>
         )}
         {!user && (

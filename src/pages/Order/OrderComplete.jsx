@@ -11,7 +11,7 @@ import { resetCart } from "~/redux/cartSlice";
 const OrderComplete = () => {
   const [expiredTime, setExpiredTime] = useState(15);
 
-  const { setCarts } = useCart();
+  const { carts, setCarts } = useCart();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -72,8 +72,8 @@ const OrderComplete = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       const isCart = JSON.parse(localStorage.getItem("is-cart"));
-      if (!!isCart && cartRedux.length > 0) {
-        handleDeleteCart(cartRedux);
+      if (!!isCart && (cartRedux.length > 0 || carts?.length > 0)) {
+        Promise.all([handleDeleteCart(cartRedux), handleDeleteCart(carts)]);
       }
     }, 0);
 

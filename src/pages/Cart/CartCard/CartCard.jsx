@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { deleteCart } from "~/apis/endpoints";
+import { addToWishlist, deleteCart } from "~/apis/endpoints";
 import Button from "~/components/Button/Button";
 import Star from "~/components/Star/Star";
 import { removeCart } from "~/redux/cartSlice";
@@ -8,6 +8,26 @@ import { formatVND } from "~/utils/formatters";
 
 const CartCard = ({ setCarts, cartItem }) => {
   const dispatch = useDispatch();
+
+  const handleWishlist = () => {
+    const wishListData = {
+      ...cartItem,
+    };
+
+    toast
+      .promise(addToWishlist(wishListData), {
+        pending: "Đang thêm khóa học vào wishlist...",
+      })
+      .then((res) => {
+        if (!res.error) {
+          toast.success("Thêm vào wishlist thành công!!!");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error?.message || "Lỗi khi thêm khóa học vào wishlist!!!");
+      });
+  };
 
   const handleDeleteCart = (id) => {
     toast
@@ -56,7 +76,12 @@ const CartCard = ({ setCarts, cartItem }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button title="Thêm vào wishlist" type="wishlist" style="py-1" />
+            <Button
+              onClick={handleWishlist}
+              title="Thêm vào wishlist"
+              type="wishlist"
+              style="py-1"
+            />
             <Button
               onClick={() => handleDeleteCart(cartItem?.id)}
               title="Xóa"

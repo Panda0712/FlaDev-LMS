@@ -10,6 +10,7 @@ import {
 import Footer from "~/components/Footer/Footer";
 import Navbar from "~/components/Navbar/Navbar";
 import Admin from "~/pages/Admin/Admin";
+import AdminBlogDetails from "~/pages/Admin/BlogDetails";
 import AdminBlogs from "~/pages/Admin/Blogs";
 import AdminContacts from "~/pages/Admin/Contacts";
 import AdminCourses from "~/pages/Admin/Courses";
@@ -20,6 +21,7 @@ import AdminReviews from "~/pages/Admin/Reviews";
 import AdminVouchers from "~/pages/Admin/Vouchers";
 import Auth from "~/pages/Auth/Auth";
 import Blog from "~/pages/Blog/Blog";
+import BlogDetails from "~/pages/Blog/BlogDetails";
 import Cart from "~/pages/Cart/Cart";
 import Contact from "~/pages/Contact/Contact";
 import Course from "~/pages/Courses/Course/Course";
@@ -30,6 +32,7 @@ import NotFound from "~/pages/NotFound/NotFound";
 import Notifications from "~/pages/Notification/Notification";
 import Order from "~/pages/Order/Order";
 import Profile from "~/pages/Profile/Profile";
+import Wishlist from "~/pages/Wishlist/Wishlist";
 import { ACCOUNT_ROLES } from "~/utils/constants";
 
 const ProtectedRoutes = () => {
@@ -70,7 +73,7 @@ const App = () => {
             /> */}
             <Route path="blogs" element={<AdminBlogs />} />
             <Route path="review" element={<AdminReviews />} />
-            {/* <Route path="blogs/:blogId" element={<BlogDetailsManagement />} /> */}
+            <Route path="blogs/:blogId" element={<AdminBlogDetails />} />
             {/* <Route path="blogs/create" element={<BlogFormPage />} /> */}
             {/* <Route path="blogs/create/:blogId" element={<BlogFormPage />} /> */}
           </Route>
@@ -94,6 +97,7 @@ const App = () => {
 
             {/* Blog */}
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:blogId" element={<BlogDetails />} />
 
             {/* Courses */}
             <Route path="/courses" element={<Courses />} />
@@ -105,6 +109,9 @@ const App = () => {
 
             {/* Cart */}
             <Route path="/cart" element={<Cart />} />
+
+            {/* Wishlist */}
+            <Route path="/wishlist" element={<Wishlist />} />
 
             {/* Order */}
             <Route path="/order/complete" element={<Order />} />

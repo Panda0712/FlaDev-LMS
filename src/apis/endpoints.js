@@ -75,6 +75,11 @@ export const fetchBlogs = async () => {
   return res.data;
 };
 
+export const fetchBlogById = async (id) => {
+  const res = await api.get(`/blogs/${id}`);
+  return res.data;
+};
+
 export const createBlog = async (data) => {
   const res = await api.post("/blogs", data);
   return res.data;
@@ -185,6 +190,27 @@ export const findCartByUserAndCourse = async (userId, courseId) => {
   const res = await api.get(`/carts/find-by-user-and-course`, {
     params: { userId, courseId },
   });
+  return res.data;
+};
+
+// Wishlist
+export const fetchWishlist = async () => {
+  const res = await api.get("/wishlist");
+  return res.data;
+};
+
+export const addToWishlist = async (data) => {
+  const res = await api.post("/wishlist", data);
+  return res.data;
+};
+
+export const updateWishlist = async (id, data) => {
+  const res = await api.put(`/wishlist/${id}`, data);
+  return res.data;
+};
+
+export const deleteWishlist = async (id) => {
+  const res = await api.delete(`/wishlist/${id}`);
   return res.data;
 };
 
