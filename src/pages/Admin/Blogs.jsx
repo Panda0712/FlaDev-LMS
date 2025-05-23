@@ -7,6 +7,7 @@ import DeleteConfirmationModal from "~/components/DeleteConfirmationModal/Delete
 import FormModal from "~/components/FormModal/FormModal";
 import Input from "~/components/Input/Input";
 import InputV2 from "~/components/InputV2/InputV2";
+import RichTextEditor from "~/components/RichTextEditor/RichTextEditor";
 import useBlogTable from "~/hooks/useBlogTable";
 import {
   createBlog,
@@ -149,13 +150,21 @@ const AdminBlogs = () => {
           <label htmlFor="content" className="font-medium">
             Nội dung
           </label>
-          <Input
-            name="content"
-            content="Nhập nội dung bài viết"
-            type="textarea"
-            style="pt-3"
-            {...register("content", { required: "Vui lòng nhập nội dung" })}
+          <RichTextEditor
+            value={getValues("content")}
+            onChange={(value) => {
+              // Update the form value
+              reset({
+                ...getValues(),
+                content: value,
+              });
+            }}
+            placeholder="Nhập nội dung bài viết..."
             error={errors?.content}
+          />
+          <input
+            type="hidden"
+            {...register("content", { required: "Vui lòng nhập nội dung" })}
           />
         </div>
         <div className="flex flex-col gap-1">
