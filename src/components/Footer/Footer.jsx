@@ -45,16 +45,16 @@ const Footer = () => {
           <Link to="/courses">
             <li className={listItemStyle}>Web Development</li>
           </Link>
-          <Link to="/blog">
+          <Link to="/courses">
             <li className={listItemStyle}>App Development</li>
           </Link>
-          <Link to="/contact">
+          <Link to="/courses">
             <li className={listItemStyle}>Java</li>
           </Link>
-          <Link to="/about">
+          <Link to="/courses">
             <li className={listItemStyle}>Python</li>
           </Link>
-          <Link to="/about">
+          <Link to="/courses">
             <li className={listItemStyle}>C++</li>
           </Link>
         </ul>
@@ -71,9 +71,15 @@ const Footer = () => {
           </li>
 
           <div className="flex items-center gap-3 mt-3">
-            <FacebookIcon className={`${iconStyle} fill-[#4267B2]`} />
-            <TwitterIcon className={`${iconStyle} fill-[#1DA1F2]`} />
-            <InstagramIcon className={`${iconStyle} fill-[#C13584]`} />
+            <Link to="https://www.facebook.com/">
+              <FacebookIcon className={`${iconStyle} fill-[#4267B2]`} />
+            </Link>
+            <Link to="https://www.x.com/">
+              <TwitterIcon className={`${iconStyle} fill-[#1DA1F2]`} />
+            </Link>
+            <Link to="https://www.instagram.com/">
+              <InstagramIcon className={`${iconStyle} fill-[#C13584]`} />
+            </Link>
           </div>
         </ul>
       </div>

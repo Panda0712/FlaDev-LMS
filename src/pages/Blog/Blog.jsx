@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { fetchBlogs } from "~/apis/endpoints";
 import { Spin } from "antd";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { fetchBlogs } from "~/apis/endpoints";
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -17,8 +17,8 @@ const Blog = () => {
         const response = await fetchBlogs();
         setBlogs(response || []);
       } catch (error) {
-        console.error("Error fetching blogs:", error);
-        toast.error("Failed to load blogs");
+        console.error("Lỗi tải dữ liệu bài viết:", error);
+        toast.error("Lỗi tải dữ liệu bài viết");
       } finally {
         setLoading(false);
       }
@@ -27,7 +27,6 @@ const Blog = () => {
     loadBlogs();
   }, []);
 
-  // Calculate pagination
   const totalPages = Math.ceil(blogs.length / blogsPerPage);
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
@@ -62,15 +61,14 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Blog</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Bài viết</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover insights, tutorials, and stories from our community
+            Khám phá góc nhìn, hướng dẫn và những câu chuyện hữu ích trong cộng
+            đồng
           </p>
         </div>
 
-        {/* Blog Grid */}
         {currentBlogs.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
@@ -79,7 +77,6 @@ const Blog = () => {
                   key={blog.id || blog._id}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
-                  {/* Blog Image */}
                   <div className="h-48 overflow-hidden">
                     <img
                       src={blog.coverImage || "/api/placeholder/400/300"}
@@ -88,9 +85,7 @@ const Blog = () => {
                     />
                   </div>
 
-                  {/* Blog Content */}
                   <div className="p-6">
-                    {/* Tags */}
                     {blog.tags && blog.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-3">
                         {blog.tags.slice(0, 2).map((tag, index) => (
@@ -109,17 +104,14 @@ const Blog = () => {
                       </div>
                     )}
 
-                    {/* Title */}
                     <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
                       {blog.title}
                     </h3>
 
-                    {/* Summary */}
                     <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                       {truncateText(blog.summary || blog.content)}
                     </p>
 
-                    {/* Author and Date */}
                     <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                       <span className="flex items-center">
                         <svg
@@ -133,7 +125,7 @@ const Blog = () => {
                             clipRule="evenodd"
                           />
                         </svg>
-                        {blog.author || "Anonymous"}
+                        {blog.author || "Ẩn danh"}
                       </span>
                       <span className="flex items-center">
                         <svg
@@ -147,16 +139,15 @@ const Blog = () => {
                             clipRule="evenodd"
                           />
                         </svg>
-                        {formatDate(blog.createdAt || blog.created_at)}
+                        {formatDate(blog.created_at || blog.createdAt)}
                       </span>
                     </div>
 
-                    {/* Read More Button */}
                     <Link
                       to={`/blog/${blog.id || blog._id}`}
                       className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors duration-200"
                     >
-                      Read More
+                      Đọc thêm
                       <svg
                         className="w-4 h-4 ml-1"
                         fill="none"
@@ -176,10 +167,8 @@ const Blog = () => {
               ))}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex justify-center items-center space-x-2">
-                {/* Previous Button */}
                 <button
                   onClick={() => paginate(currentPage - 1)}
                   disabled={currentPage === 1}
@@ -189,13 +178,11 @@ const Blog = () => {
                       : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
                   }`}
                 >
-                  Previous
+                  Trước
                 </button>
 
-                {/* Page Numbers */}
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                   (pageNumber) => {
-                    // Show first page, last page, current page, and pages around current
                     const showPage =
                       pageNumber === 1 ||
                       pageNumber === totalPages ||
@@ -236,7 +223,6 @@ const Blog = () => {
                   }
                 )}
 
-                {/* Next Button */}
                 <button
                   onClick={() => paginate(currentPage + 1)}
                   disabled={currentPage === totalPages}
@@ -246,7 +232,7 @@ const Blog = () => {
                       : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
                   }`}
                 >
-                  Next
+                  Sau
                 </button>
               </div>
             )}
@@ -268,10 +254,10 @@ const Blog = () => {
                 />
               </svg>
               <h3 className="mt-2 text-sm font-medium text-gray-900">
-                No blogs available
+                Chưa có bài viết nào
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                Check back later for new blog posts.
+                Hãy quay lại sau nhé!!
               </p>
             </div>
           </div>

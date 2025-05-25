@@ -33,6 +33,7 @@
     "react-quill": "^2.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.0",
+    "react-share": "^5.2.2",
     "react-stars": "^2.2.5",
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.3",

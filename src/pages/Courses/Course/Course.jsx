@@ -2,7 +2,7 @@ import { Spin } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { fetchCourseById, fetchReviews } from "~/apis/endpoints";
+import { fetchCourseById, fetchOrders, fetchReviews } from "~/apis/endpoints";
 import NavigationText from "~/components/NavigationText/NavigationText";
 import CourseContent from "~/pages/Courses/Course/CourseContent/CourseContent";
 import CourseHeading from "~/pages/Courses/Course/CourseHeading/CourseHeading";
@@ -15,6 +15,7 @@ import CourseSuggestion from "~/pages/Courses/Course/CourseSuggestion/CourseSugg
 const Course = () => {
   const [course, setCourse] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const courseId = useParams().courseId;
@@ -34,10 +35,11 @@ const Course = () => {
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([fetchCourseById(courseId), fetchReviews()])
-      .then(([courseRes, reviewRes]) => {
+    Promise.all([fetchCourseById(courseId), fetchReviews(), fetchOrders()])
+      .then(([courseRes, reviewRes, ordersRes]) => {
         setCourse(courseRes || {});
         setReviews(reviewRes || []);
+        setOrders(ordersRes || []);
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +67,11 @@ const Course = () => {
           <CourseContent courseInfo={course} />
         </div>
         <div ref={instructorRef}>
-          <CourseInstructor courseInfo={course} />
+          <CourseInstructor
+            reviews={reviews}
+            orders={orders}
+            courseInfo={course}
+          />
         </div>
         <div ref={lessonsRef}>
           <CourseLessons courseInfo={course} />
@@ -78,7 +84,7 @@ const Course = () => {
           />
         </div>
 
-        <CourseSuggestion style="bg-white" />
+        <CourseSuggestion reviews={reviews} style="bg-white" />
       </div>
     </section>
   );

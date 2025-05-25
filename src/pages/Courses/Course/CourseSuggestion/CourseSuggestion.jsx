@@ -2,8 +2,29 @@ import CourseCard from "~/components/CourseCard/CourseCard";
 import Loading from "~/components/Loading/Loading";
 import useCourses from "~/hooks/useCourses";
 
-const CourseSuggestion = ({ style }) => {
+const CourseSuggestion = ({ reviews = [], style }) => {
   const { loading, courses } = useCourses();
+
+  const reviewsListCourses = reviews.map((review) => {
+    const foundCourse = courses.find(
+      (course) => course?.id === review?.courseId
+    );
+    const totalRatingCount = reviews.filter(
+      (review) => review?.courseId === foundCourse?.id
+    )?.length;
+    const totalRatingValue = reviews.reduce(
+      (acc, review) =>
+        review?.courseId === foundCourse?.id ? acc + review?.rating : acc,
+      0
+    );
+    const averageRating = Math.floor(totalRatingValue / totalRatingCount) || 0;
+
+    return {
+      ...review,
+      courseName: foundCourse?.name,
+      averageRating,
+    };
+  });
 
   if (loading) return <Loading />;
 
@@ -15,7 +36,12 @@ const CourseSuggestion = ({ style }) => {
 
       <div className="grid grid-cols-4 gap-[30px] basis-[100%]">
         {courses.slice(0, 4).map((course, index) => (
-          <CourseCard key={index} course={course} type="secondary" />
+          <CourseCard
+            key={index}
+            reviewsListCourses={reviewsListCourses}
+            course={course}
+            type="secondary"
+          />
         ))}
       </div>
     </section>

@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import CheckImg from "~/assets/images/check.png";
 import ExploreImg from "~/assets/images/explore.png";
 import Button from "~/components/Button/Button";
 import { info } from "~/pages/Homepage/Explore/constants";
 
 const Explore = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="px-28 my-[90px] flex items-center gap-5 justify-between">
       <img src={ExploreImg} alt="" className="object-cover" />
@@ -27,7 +30,10 @@ const Explore = () => {
           ))}
         </div>
 
-        <Button title="Khám phá khóa học" />
+        <Button
+          onClick={() => navigate("/courses")}
+          title="Khám phá khóa học"
+        />
       </div>
     </section>
   );

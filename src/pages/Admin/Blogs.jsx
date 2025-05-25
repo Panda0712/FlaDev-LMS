@@ -2,6 +2,7 @@
 import { Spin } from "antd";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import AdminTable from "~/components/AdminTable/AdminTable";
 import DeleteConfirmationModal from "~/components/DeleteConfirmationModal/DeleteConfirmationModal";
 import FormModal from "~/components/FormModal/FormModal";
@@ -24,6 +25,8 @@ const AdminBlogs = () => {
     getValues,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
 
   const {
     openModal,
@@ -153,7 +156,6 @@ const AdminBlogs = () => {
           <RichTextEditor
             value={getValues("content")}
             onChange={(value) => {
-              // Update the form value
               reset({
                 ...getValues(),
                 content: value,
@@ -232,6 +234,10 @@ const AdminBlogs = () => {
           openOptions={openOptions}
           handleToggleOptions={(idx) => handleToggle("options", idx)}
           optionItems={[
+            {
+              label: "Xem chi tiết",
+              onClick: (blog) => navigate(`/admin/blogs/${blog?.id}`),
+            },
             {
               label: "Chỉnh sửa",
               onClick: (blog) => handleToggle("edit", blog),

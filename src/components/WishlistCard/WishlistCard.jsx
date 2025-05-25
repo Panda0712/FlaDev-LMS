@@ -43,11 +43,11 @@ const WishlistCard = ({ wishlistItem, handleAfterDelete }) => {
             <div className="flex items-center gap-3">
               <div className="text-[20px] flex items-center gap-2">
                 <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
-                  {wishlistItem?.rating || 5}
+                  {wishlistItem?.rating || 0}
                 </p>
-                <Star value={4.6} />
+                <Star value={wishlistItem?.rating || 0} />
                 <p className="text-[14px] mt-[1px] text-[#64748b]">
-                  ({wishlistItem?.reviews || 0} đánh giá)
+                  ({wishlistItem?.totalReviews || 0} đánh giá)
                 </p>
               </div>
             </div>

@@ -36,6 +36,7 @@ const CourseLearning = () => {
 
   const {
     reviews,
+    orders,
     currentUser,
     courseInfo,
     loading,
@@ -89,7 +90,11 @@ const CourseLearning = () => {
           </div>
 
           <div ref={instructorRef}>
-            <CourseInstructor courseInfo={courseInfo} />
+            <CourseInstructor
+              courseInfo={courseInfo}
+              reviews={reviews}
+              orders={orders}
+            />
           </div>
         </div>
         <div
@@ -128,7 +133,7 @@ const CourseLearning = () => {
         </div>
       </div>
 
-      <CourseSuggestion style="bg-white" />
+      <CourseSuggestion reviews={reviews} style="bg-white" />
 
       <div ref={reviewsRef}>
         <CourseReviews
