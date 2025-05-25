@@ -63,7 +63,12 @@ const ListReviews = () => {
       </div>
 
       <div className="flex flex-col gap-[16px]">
-        {currentReviews.map((review, index) => (
+        {!currentReviews?.length && (
+          <p className="text-[18px] font-medium">
+            Hiện chưa có đánh giá nào!!!
+          </p>
+        )}
+        {currentReviews?.map((review, index) => (
           <ReviewCard key={index} review={review} />
         ))}
         {currentPage < totalPages && (

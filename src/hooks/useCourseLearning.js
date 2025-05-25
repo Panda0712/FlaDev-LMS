@@ -170,6 +170,7 @@ const useCourseLearning = ({
 
   return {
     reviews,
+    orders,
     courseInfo,
     currentUser,
     loading,

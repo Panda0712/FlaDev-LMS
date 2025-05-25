@@ -3,6 +3,19 @@ import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  FacebookIcon,
+  FacebookMessengerIcon,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
+  FacebookShareCount,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterShareButton,
+  XIcon,
+} from "react-share";
 import { toast } from "react-toastify";
 import {
   addToCart,
@@ -10,14 +23,13 @@ import {
   fetchOrders,
   fetchVouchers,
 } from "~/apis/endpoints";
-import Social from "~/assets/images/social.png";
 import Button from "~/components/Button/Button";
 import Input from "~/components/Input/Input";
+import Loading from "~/components/Loading/Loading";
 import Star from "~/components/Star/Star";
 import { addToCart as addToCartRedux, updateCart } from "~/redux/cartSlice";
 import { formatVND } from "~/utils/formatters";
 import Logo from "/logo.jpg";
-import Loading from "~/components/Loading/Loading";
 
 const CourseHeading = ({ reviews, courseInfo }) => {
   const [reviewsList, setReviewsList] = useState([]);
@@ -31,9 +43,7 @@ const CourseHeading = ({ reviews, courseInfo }) => {
 
   const totalRating =
     reviewsList.reduce((acc, review) => acc + review.rating, 0) || 0;
-  const averageRating = Math.floor(
-    totalRating / reviewsList?.length || 5
-  ).toFixed(1);
+  const averageRating = Math.floor(totalRating / reviewsList?.length || 0);
 
   const totalLessons = courseInfo?.courseModules?.reduce(
     (acc, module) => acc + module?.lessons?.length,
@@ -45,6 +55,9 @@ const CourseHeading = ({ reviews, courseInfo }) => {
   const voucherValue =
     Math.ceil(courseInfo?.price * voucher?.discount) / 100 || 0;
   const totalPrice = courseInfo?.price - discountValue - voucherValue;
+
+  const shareUrl = `https://fla-dev-lms.vercel.app/courses/${courseInfo?.id}`;
+  const shareTitle = `${courseInfo?.name}`;
 
   const currentUser = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -136,8 +149,8 @@ const CourseHeading = ({ reviews, courseInfo }) => {
       instructor: courseInfo?.instructor,
       duration: courseInfo?.duration,
       totalLessons,
-      totalReviews: courseInfo?.reviews || 0,
-      rating: courseInfo?.rating || 5,
+      totalReviews: reviewsList?.length || 0,
+      rating: averageRating || 0,
     };
 
     toast
@@ -228,9 +241,9 @@ const CourseHeading = ({ reviews, courseInfo }) => {
           <div className="flex items-center gap-3">
             <div className="text-[20px] flex items-center gap-2">
               <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
-                {averageRating || 5}
+                {averageRating || 0}
               </p>
-              <Star value={averageRating || 5} />
+              <Star value={averageRating || 0} />
               <p className="text-[14px] mt-[1px]">
                 {reviewsList?.length || 0} đánh giá
               </p>
@@ -328,7 +341,64 @@ const CourseHeading = ({ reviews, courseInfo }) => {
 
         <div className="p-[20px] border-t border-slate-300">
           <h3 className="text-[18px] font-semibold mt-3">Chia sẻ</h3>
-          <img src={Social} className="mt-3" alt="" />
+          <div className="flex items-start gap-4 mt-5">
+            <div className="Demo__some-network">
+              <FacebookShareButton
+                url={shareUrl}
+                className="Demo__some-network__share-button"
+              >
+                <FacebookIcon size={40} round />
+              </FacebookShareButton>
+
+              <div>
+                <FacebookShareCount
+                  url={shareUrl}
+                  className="Demo__some-network__share-count"
+                >
+                  {(count) => count}
+                </FacebookShareCount>
+              </div>
+            </div>
+
+            <div className="Demo__some-network">
+              <FacebookMessengerShareButton
+                url={shareUrl}
+                appId="521270401588372"
+                className="Demo__some-network__share-button"
+              >
+                <FacebookMessengerIcon size={40} round />
+              </FacebookMessengerShareButton>
+            </div>
+
+            <div className="Demo__some-network">
+              <TwitterShareButton
+                url={shareUrl}
+                title={shareTitle}
+                className="Demo__some-network__share-button"
+              >
+                <XIcon size={40} round />
+              </TwitterShareButton>
+            </div>
+
+            <div className="Demo__some-network">
+              <TelegramShareButton
+                url={shareUrl}
+                title={shareTitle}
+                className="Demo__some-network__share-button"
+              >
+                <TelegramIcon size={40} round />
+              </TelegramShareButton>
+            </div>
+
+            <div className="Demo__some-network">
+              <LinkedinShareButton
+                url={shareUrl}
+                className="Demo__some-network__share-button"
+              >
+                <LinkedinIcon size={40} round />
+              </LinkedinShareButton>
+            </div>
+          </div>
         </div>
       </div>
     </div>

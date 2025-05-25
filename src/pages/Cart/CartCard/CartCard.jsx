@@ -29,6 +29,8 @@ const CartCard = ({ setCarts, cartItem }) => {
       });
   };
 
+  console.log(cartItem);
+
   const handleDeleteCart = (id) => {
     toast
       .promise(deleteCart(id), {
@@ -65,11 +67,11 @@ const CartCard = ({ setCarts, cartItem }) => {
             <div className="flex items-center gap-3">
               <div className="text-[20px] flex items-center gap-2">
                 <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
-                  {cartItem?.rating || 5}
+                  {cartItem?.rating || 0}
                 </p>
-                <Star value={4.6} />
+                <Star value={cartItem?.rating || 0} />
                 <p className="text-[14px] mt-[1px] text-[#64748b]">
-                  ({cartItem?.reviews || 0} đánh giá)
+                  ({cartItem?.totalReviews || 0} đánh giá)
                 </p>
               </div>
             </div>

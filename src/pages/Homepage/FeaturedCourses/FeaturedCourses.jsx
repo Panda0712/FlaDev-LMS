@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import Button from "~/components/Button/Button";
 import CourseCard from "~/components/CourseCard/CourseCard";
 
 const FeaturedCourses = ({ courses }) => {
+  const navigate = useNavigate();
+
   return (
     <section className="my-[90px] px-28 relative">
       <div className="flex items-center justify-between gap-5 mb-[34px]">
@@ -12,7 +15,11 @@ const FeaturedCourses = ({ courses }) => {
           </p>
         </div>
 
-        <Button title="Xem thêm" type="secondary" />
+        <Button
+          onClick={() => navigate("/courses")}
+          title="Xem thêm"
+          type="secondary"
+        />
       </div>
 
       <div className="grid grid-cols-3 gap-[30px] basis-[100%]">

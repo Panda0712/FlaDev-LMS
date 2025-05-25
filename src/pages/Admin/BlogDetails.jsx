@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { fetchBlogById, deleteBlog } from "~/apis/endpoints";
 import { Spin } from "antd";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { deleteBlog, fetchBlogById } from "~/apis/endpoints";
 import DeleteConfirmationModal from "~/components/DeleteConfirmationModal/DeleteConfirmationModal";
 
 const AdminBlogDetails = () => {
   const { blogId } = useParams();
   const navigate = useNavigate();
+
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,9 +22,9 @@ const AdminBlogDetails = () => {
         const response = await fetchBlogById(blogId);
         setBlog(response);
       } catch (error) {
-        console.error("Error fetching blog:", error);
-        setError("Failed to load blog post");
-        toast.error("Failed to load blog post");
+        console.error("Lỗi tải nội dung bài viết:", error);
+        setError("Lỗi tải nội dung bài viết");
+        toast.error("Lỗi tải nội dung bài viết!!!");
       } finally {
         setLoading(false);
       }
@@ -37,11 +38,11 @@ const AdminBlogDetails = () => {
   const handleDeleteBlog = async () => {
     try {
       await deleteBlog(blogId);
-      toast.success("Blog deleted successfully!");
+      toast.success("Xóa bài viết thành công!");
       navigate("/admin/blogs");
     } catch (error) {
-      console.error("Error deleting blog:", error);
-      toast.error("Failed to delete blog");
+      console.error("Lỗi xóa bài viết:", error);
+      toast.error("Lỗi xóa bài viết!! Vui lòng thử lại sau!!!");
     } finally {
       setShowDeleteModal(false);
     }
@@ -60,7 +61,6 @@ const AdminBlogDetails = () => {
 
   const formatContent = (content) => {
     if (!content) return "";
-    // Convert markdown-like formatting to HTML for display
     let formattedContent = content
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // Bold
       .replace(/\*(.*?)\*/g, "<em>$1</em>") // Italic
@@ -71,21 +71,19 @@ const AdminBlogDetails = () => {
       .replace(
         /^> (.*$)/gm,
         '<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4">$1</blockquote>'
-      ) // Blockquote
+      )
       .replace(/^- (.*$)/gm, '<li class="ml-4">$1</li>') // List items
       .replace(/^\d+\. (.*$)/gm, '<li class="ml-4">$1</li>') // Numbered list items
       .replace(
         /\[([^\]]+)\]\(([^)]+)\)/g,
         '<a href="$2" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>'
-      ); // Links
+      );
 
-    // Wrap consecutive list items in ul tags
     formattedContent = formattedContent.replace(
       /((<li class="ml-4">.*<\/li>\s*)+)/g,
       '<ul class="list-disc mb-4">$1</ul>'
     );
 
-    // Split by newlines and wrap in paragraphs
     return formattedContent
       .split("\n")
       .map((paragraph, index) => {
@@ -173,7 +171,6 @@ const AdminBlogDetails = () => {
         modalStyle="w-[450px]"
       />
 
-      {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -227,12 +224,9 @@ const AdminBlogDetails = () => {
         </div>
       </div>
 
-      {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Blog Info Card */}
         <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left Column */}
             <div>
               <h2 className="text-sm font-medium text-gray-500 mb-2">
                 Thông tin cơ bản
@@ -249,7 +243,7 @@ const AdminBlogDetails = () => {
                     Tác giả:
                   </span>
                   <span className="ml-2 text-sm text-gray-900">
-                    {blog.author || "Anonymous"}
+                    {blog.author || "Ẩn danh"}
                   </span>
                 </div>
                 <div>
@@ -257,7 +251,7 @@ const AdminBlogDetails = () => {
                     Ngày tạo:
                   </span>
                   <span className="ml-2 text-sm text-gray-900">
-                    {formatDate(blog.createdAt || blog.created_at)}
+                    {formatDate(blog.created_at || blog.createdAt)}
                   </span>
                 </div>
                 <div>
@@ -265,13 +259,12 @@ const AdminBlogDetails = () => {
                     Cập nhật lần cuối:
                   </span>
                   <span className="ml-2 text-sm text-gray-900">
-                    {formatDate(blog.updatedAt || blog.updated_at)}
+                    {formatDate(blog.updated_at || blog.updatedAt)}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column */}
             <div>
               <h2 className="text-sm font-medium text-gray-500 mb-2">Tags</h2>
               {blog.tags && blog.tags.length > 0 ? (
@@ -292,9 +285,7 @@ const AdminBlogDetails = () => {
           </div>
         </div>
 
-        {/* Blog Content */}
         <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-          {/* Cover Image */}
           {blog.coverImage && (
             <div className="aspect-w-16 aspect-h-9">
               <img
@@ -305,14 +296,11 @@ const AdminBlogDetails = () => {
             </div>
           )}
 
-          {/* Content */}
           <div className="p-6">
-            {/* Title */}
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               {blog.title}
             </h1>
 
-            {/* Summary */}
             {blog.summary && (
               <div className="mb-6">
                 <h2 className="text-lg font-medium text-gray-900 mb-2">
@@ -324,7 +312,6 @@ const AdminBlogDetails = () => {
               </div>
             )}
 
-            {/* Content */}
             <div className="mb-6">
               <h2 className="text-lg font-medium text-gray-900 mb-4">
                 Nội dung

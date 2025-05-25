@@ -1,9 +1,16 @@
 import AwardImg from "~/assets/images/award.png";
 import GraduationImg from "~/assets/images/graduation.png";
 import PlayImg from "~/assets/images/play.png";
+import useCourses from "~/hooks/useCourses";
 import Logo from "/logo.jpg";
 
-const CourseInstructor = ({ courseInfo }) => {
+const CourseInstructor = ({ courseInfo, reviews = [], orders = [] }) => {
+  const { courses } = useCourses();
+
+  const studentCount = orders?.length
+    ? [...new Set(orders.map((order) => order?.userName))]
+    : [];
+
   return (
     <div className="py-[32px] border-b border-slate-300">
       <h3 className="text-[20px] font-semibold">Giảng viên</h3>
@@ -26,19 +33,19 @@ const CourseInstructor = ({ courseInfo }) => {
           <div className="flex items-center gap-2">
             <img src={AwardImg} className="w-[24px] h-[24px]" alt="" />
             <p className="text-[16px] text-[#555555] font-medium">
-              {courseInfo?.reviews || 0} đánh giá
+              {reviews?.length || 0} đánh giá
             </p>
           </div>
           <div className="flex items-center gap-2">
             <img src={GraduationImg} className="w-[24px] h-[24px]" alt="" />
             <p className="text-[16px] text-[#555555] font-medium">
-              {courseInfo?.students || 0} học sinh
+              {studentCount?.length || 0} học sinh
             </p>
           </div>
           <div className="flex items-center gap-2">
             <img src={PlayImg} className="w-[24px] h-[24px]" alt="" />
             <p className="text-[16px] text-[#555555] font-medium">
-              {courseInfo?.courses || 0} khóa học
+              {courses?.length || 0} khóa học
             </p>
           </div>
         </div>
