@@ -1,9 +1,9 @@
-import { ChevronDown, FilterIcon, Search } from "lucide-react";
-import Input from "~/components/Input/Input";
-import TeacherCard from "~/pages/Profile/TeacherCard/TeacherCard";
+import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchUserProfile } from "~/apis/endpoints";
+import Input from "~/components/Input/Input";
 import Loading from "~/components/Loading/Loading";
+import TeacherCard from "~/pages/Profile/TeacherCard/TeacherCard";
 import { ACCOUNT_ROLES } from "~/utils/constants";
 
 const ListTeachers = () => {
@@ -27,8 +27,8 @@ const ListTeachers = () => {
   return (
     <section className="w-full pb-[90px]">
       <div className="flex items-center gap-3 mb-4">
-        <h3 className="text-[24px] font-semibold">Giảng viên</h3>
-        <span className="text-[18px] font-semibold">(1)</span>
+        <h3 className="md:text-[24px] text-[20px] font-semibold">Giảng viên</h3>
+        <span className="md:text-[18px] text-[16px] font-semibold">(1)</span>
       </div>
       <div className="flex items-center justify-between gap-5">
         <div className="relative">
@@ -40,23 +40,12 @@ const ListTeachers = () => {
             }
           />
         </div>
-        <div className="flex items-center gap-3">
-          <p className="text-[18px] font-medium">Sắp xếp theo</p>
-          <div className="flex gap-2">
-            <button className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-800 hover:bg-gray-100">
-              <span className="text-[18px] font-medium">Liên quan</span>
-              <ChevronDown size={18} />
-            </button>
-
-            <button className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-800 hover:bg-gray-100">
-              <FilterIcon size={18} />
-              <span className="text-[18px] font-medium">Bộ lọc</span>
-            </button>
-          </div>
-        </div>
       </div>
 
-      <div className="relative mt-5 grid grid-cols-4 gap-[20px]">
+      <div
+        className="relative mt-5 grid lg:grid-cols-3 md:grid-cols-2 
+      max-[500px]:grid-cols-1! max-sm:grid-cols-2 gap-[20px]"
+      >
         <TeacherCard teacher={admin} />
       </div>
     </section>

@@ -25,14 +25,17 @@ const CourseProgress = ({
               index < courseModule?.length - 1
                 ? "border-b border-slate-300"
                 : ""
-            } flex items-center gap-4 cursor-pointer transition hover:bg-slate-200 py-[24px] px-[20px] w-full`}
+            } flex items-center gap-4 cursor-pointer transition 
+            hover:bg-slate-200 py-[24px] px-[20px] w-full`}
           >
             {openItemList?.[index]?.active ? (
               <ChevronDown size={24} />
             ) : (
               <ChevronUp size={24} />
             )}
-            <p className="font-semibold text-[18px]">{item?.title}</p>
+            <p className="font-semibold md:text-[18px] text-[16px]">
+              {item?.title}
+            </p>
           </div>
           <div
             className={`${
@@ -47,7 +50,8 @@ const CourseProgress = ({
                   currentActiveLesson === lesson?.name
                     ? "bg-[#0f172a] text-white"
                     : ""
-                } flex w-full items-start justify-between gap-2 pt-4 pb-5 px-[20px] cursor-pointer transition hover:bg-[#0f172a] hover:text-white`}
+                } flex w-full items-start justify-between gap-2 pt-4 pb-5 
+                px-[20px] cursor-pointer transition hover:bg-[#0f172a] hover:text-white`}
               >
                 <div className="flex gap-2">
                   <img
@@ -61,22 +65,26 @@ const CourseProgress = ({
                     className="w-[24px] h-[24px]"
                     alt=""
                   />
-                  <p className="max-w-[200px]">
-                    {lessonIndex + 1}. {lesson?.name}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <img
-                    src={RecorderImg}
-                    className="w-[24px] h-[24px] text-[#64748b]"
-                    alt=""
-                  />
-                  <p className="text-[#64748b] text-[16px]">
-                    {lessonDurations[lesson?.name] &&
-                      `${Math.floor(
-                        lessonDurations[lesson?.name] / 60
-                      )}m${Math.floor(lessonDurations[lesson?.name] % 60)}s`}
-                  </p>
+                  <div className="flex flex-col gap-2">
+                    <p className="max-w-[200px]">
+                      {lessonIndex + 1}. {lesson?.name}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={RecorderImg}
+                        className="w-[24px] h-[24px] text-[#64748b]"
+                        alt=""
+                      />
+                      <p className="text-[#64748b] md:text-[16px] text-[14px]">
+                        {lessonDurations[lesson?.name] &&
+                          `${Math.floor(
+                            lessonDurations[lesson?.name] / 60
+                          )}m${Math.floor(
+                            lessonDurations[lesson?.name] % 60
+                          )}s`}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

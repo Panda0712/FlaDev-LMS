@@ -1,6 +1,9 @@
 const CheckoutNote = () => {
   return (
-    <div className="border-2 font-medium mt-10 text-[18px] max-w-[400px] border-[#152c5b] pt-3 pb-5 px-4 rounded-sm">
+    <div
+      className="border-2 font-medium mt-10 md:text-[18px] 
+    text-[16px] max-w-[400px] border-[#152c5b] pt-3 pb-5 px-4 rounded-sm"
+    >
       <p>Lưu ý cho trường hợp hủy khóa học:</p>
       <p>
         &#34;Yêu cầu hủy của quý khách sẽ được ghi nhận xử lý và Thời gian quý

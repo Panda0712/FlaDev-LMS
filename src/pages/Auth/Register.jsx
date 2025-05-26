@@ -12,6 +12,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,9 +62,22 @@ const Register = () => {
       });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const togglePasswordConfirmationVisibility = () => {
+    setShowPasswordConfirmation(!showPasswordConfirmation);
+  };
+
   return (
-    <div className="basis-[calc(50%-12px)] mt-8 p-7 bg-white rounded-2xl border border-slate-200">
-      <h2 className="text-[32px] font-semibold mb-6">Đăng ký</h2>
+    <div
+      className="lg:basis-[calc(50%-12px)] md:basis-[calc(70%-12px)] basis-[calc(90%-12px)]
+     mt-8 p-7 bg-white rounded-2xl border border-slate-200"
+    >
+      <h2 className="lg:text-[32px] md:text-[28px] text-[24px] font-semibold mb-6">
+        Đăng ký
+      </h2>
 
       {error && (
         <div className="mb-4 text-red-500">
@@ -94,29 +110,35 @@ const Register = () => {
 
         <div className="mb-4 relative">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Mật khẩu*"
             className={inputStyle}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer">
-            👁️
+          <span
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer select-none"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? "🙈" : "👁️"}
           </span>
         </div>
 
         <div className="mb-4 relative">
           <input
-            type="password"
+            type={showPasswordConfirmation ? "text" : "password"}
             placeholder="Nhập lại mật khẩu*"
             className={inputStyle}
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
             required
           />
-          <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer">
-            👁️
+          <span
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer select-none"
+            onClick={togglePasswordConfirmationVisibility}
+          >
+            {showPasswordConfirmation ? "🙈" : "👁️"}
           </span>
         </div>
 

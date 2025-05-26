@@ -26,7 +26,11 @@ const Navbar = () => {
   }, [isOrderComplete]);
 
   return (
-    <nav className="relative px-28 flex items-center h-[72px] justify-between gap-28 border-b border-slate-200">
+    <nav
+      className="relative px-8 flex items-center lg:flex-nowrap flex-wrap 
+    lg:h-[72px] h-auto lg:pb-0 pb-8 max-[598px]:pt-4 lg:justify-between justify-center 
+    lg:gap-4 gap-8 border-b border-slate-200"
+    >
       <div className="flex items-center gap-2">
         <img src={Logo} className="w-10 h-10 object-cover" alt="" />
         <h2 className="text-[24px] font-semibold">FlaDev</h2>
@@ -46,35 +50,37 @@ const Navbar = () => {
           </Link>
         ))}
       </ul>
-      <div className="flex items-center gap-5">
-        <Notifications />
-        {user && (
-          <div
-            onClick={() => navigate("/cart")}
-            className="relative flex items-center justify-center cursor-pointer"
-          >
-            <ShoppingCart size={24} />
+      <div className="flex max-sm:flex-col items-center gap-5">
+        <div className="flex items-center gap-5 max-sm:mb-4">
+          {user && <Notifications />}
+          {user && (
             <div
-              className="rounded-full absolute right-[-12px] top-[-9px]
+              onClick={() => navigate("/cart")}
+              className="relative flex items-center justify-center cursor-pointer"
+            >
+              <ShoppingCart size={24} />
+              <div
+                className="rounded-full absolute right-[-12px] top-[-9px]
               border p-2 w-[18px] h-[18px] bg-amber-100 border-slate-300 
             flex items-center justify-center"
-            >
-              <span className="text-[10px]">
-                {!!cartRedux.length && isOrderComplete
-                  ? 0
-                  : cartRedux?.length || carts?.length}
-              </span>
+              >
+                <span className="text-[10px]">
+                  {!!cartRedux.length && isOrderComplete
+                    ? 0
+                    : cartRedux?.length || carts?.length}
+                </span>
+              </div>
             </div>
-          </div>
-        )}
-        {user && (
-          <div
-            onClick={() => navigate("/wishlist")}
-            className="relative flex items-center justify-center cursor-pointer ml-6 mr-16"
-          >
-            <Heart size={24} />
-          </div>
-        )}
+          )}
+          {user && (
+            <div
+              onClick={() => navigate("/wishlist")}
+              className="relative flex items-center justify-center cursor-pointer ml-6 mr-12"
+            >
+              <Heart size={24} />
+            </div>
+          )}
+        </div>
         {!user && (
           <>
             <Link to="/auth">

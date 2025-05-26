@@ -60,12 +60,17 @@ const OrderCheckout = () => {
   }, [navigate, orderData]);
 
   return (
-    <section className="px-28 pt-[32px] pb-[90px]">
-      <h3 className="text-[32px] font-semibold mb-5">Thanh toán</h3>
+    <section className="lg:px-28 md:px-24 sm:px-18 px-12 pt-[32px] pb-[90px]">
+      <h3 className="lg:text-[32px] md:text-[28px] text-[24px] font-semibold mb-5">
+        Thanh toán
+      </h3>
 
-      <div className="relative flex gap-5 justify-between basis-[100%]">
-        <div className="flex flex-col basis-[calc(60%-10px)]">
-          <h6 className="text-[24px] font-semibold mb-4">
+      <div
+        className="relative flex max-md:flex-col 
+      gap-5 justify-between basis-[100%]"
+      >
+        <div className="flex flex-col basis-[calc(60%-10px)] max-md:mb-12">
+          <h6 className="md:text-[24px] text-[20px] font-semibold mb-4">
             Phương thức thanh toán:
           </h6>
           <CheckoutRadio
@@ -76,10 +81,12 @@ const OrderCheckout = () => {
           <CheckoutNote />
         </div>
 
-        <div className="w-[1px] h-auto bg-slate-300" />
+        <div className="w-[1px] max-md:hidden h-auto bg-slate-300" />
 
         <div className="flex flex-col basis-[calc(30%-10px)]">
-          <h4 className="text-[24px] font-semibold mb-4">Chi tiết đơn hàng</h4>
+          <h4 className="md:text-[24px] text-[20px] font-semibold mb-4">
+            Chi tiết đơn hàng
+          </h4>
 
           <CheckoutDetails courseInfo={orderData} />
 

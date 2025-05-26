@@ -13,13 +13,13 @@ const CourseInstructor = ({ courseInfo, reviews = [], orders = [] }) => {
 
   return (
     <div className="py-[32px] border-b border-slate-300">
-      <h3 className="text-[20px] font-semibold">Giảng viên</h3>
+      <h3 className="md:text-[20px] text-[18px] font-semibold">Giảng viên</h3>
 
       <div className="mt-5">
-        <h4 className="text-[#2563eb] font-semibold text-[24px]">
+        <h4 className="text-[#2563eb] font-semibold md:text-[24px] text-[20px]">
           {courseInfo?.instructor}
         </h4>
-        <p className="text-[18px] text-[#555555]">
+        <p className="md:text-[18px] text-[16px] text-[#555555]">
           {courseInfo?.instructorRole}
         </p>
       </div>
@@ -32,26 +32,29 @@ const CourseInstructor = ({ courseInfo, reviews = [], orders = [] }) => {
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <img src={AwardImg} className="w-[24px] h-[24px]" alt="" />
-            <p className="text-[16px] text-[#555555] font-medium">
+            <p className="md:text-[16px] text-[14px] text-[#555555] font-medium">
               {reviews?.length || 0} đánh giá
             </p>
           </div>
           <div className="flex items-center gap-2">
             <img src={GraduationImg} className="w-[24px] h-[24px]" alt="" />
-            <p className="text-[16px] text-[#555555] font-medium">
+            <p className="md:text-[16px] text-[14px] text-[#555555] font-medium">
               {studentCount?.length || 0} học sinh
             </p>
           </div>
           <div className="flex items-center gap-2">
             <img src={PlayImg} className="w-[24px] h-[24px]" alt="" />
-            <p className="text-[16px] text-[#555555] font-medium">
+            <p className="md:text-[16px] text-[14px] text-[#555555] font-medium">
               {courses?.length || 0} khóa học
             </p>
           </div>
         </div>
       </div>
 
-      <p className="mt-6 text-[#555555] font-medium max-w-[75%]">
+      <p
+        className="mt-6 text-[#555555] font-medium md:max-w-[75%] 
+      sm:max-w-[85%] max-w-full"
+      >
         {courseInfo?.instructorDescription}
       </p>
     </div>

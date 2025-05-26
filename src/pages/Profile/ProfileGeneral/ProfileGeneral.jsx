@@ -8,18 +8,24 @@ const ProfileGeneral = () => {
   const currentUser = useSelector((state) => state.auth.user);
 
   return (
-    <div className="rounded-[16px] bg-[#f8fafc] w-[290px]">
+    <div className="rounded-[16px] bg-[#f8fafc] w-[290px] max-sm:w-full max-sm:mb-5">
       <div className="p-[24px] flex flex-col items-center justify-center border-b border-slate-300 pb-[32px]">
         <img
           src={currentUser?.avatar || NoUser}
-          className="w-[160px] h-[160px] object-cover rounded-full border border-gray-300"
+          className="md:w-[160px] md:h-[160px] sm:w-[120px] sm:h-[120px] w-[100px] h-[100px]
+           object-cover rounded-full border border-gray-300"
           alt=""
         />
-        <h3 className="text-[24px] font-semibold my-6">
+        <h3 className="md:text-[24px] text-[20px] font-semibold my-6">
           {currentUser?.username}
         </h3>
-        <div className="bg-white rounded-[8px] min-w-[164px] h-[48px] flex items-center p-[6px] gap-3 justify-center cursor-pointer transition hover:opacity-80">
-          <span className="text-[18px] font-medium">Chia sẻ</span>
+        <div
+          className="bg-white rounded-[8px] min-w-[164px] h-[48px] flex items-center p-[6px] gap-3 
+        justify-center cursor-pointer transition hover:opacity-80"
+        >
+          <span className="md:text-[18px] text-[16px] font-medium">
+            Chia sẻ
+          </span>
           <Share2 size={24} />
         </div>
       </div>
@@ -37,7 +43,9 @@ const ProfileGeneral = () => {
                   : "rounded-bl-[16px] rounded-br-[16px]"
               } p-[16px] cursor-pointer transition hover:bg-black hover:text-white`}
             >
-              <p className="text-[16px]">{item.name}</p>
+              <p className="md:text-[16px] max-sm:text-center text-[14px]">
+                {item.name}
+              </p>
             </div>
           </Link>
         ))}

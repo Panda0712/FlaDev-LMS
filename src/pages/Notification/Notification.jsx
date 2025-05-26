@@ -5,40 +5,16 @@ import { selectCurrentNotifications } from "~/redux/notificationsSlice";
 
 const Notifications = () => {
   const currentNotifications = useSelector(selectCurrentNotifications);
-  //   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //     dispatch(fetchNotificationsAPI());
-
-  //     const onReceiveNewNotification = (notification) => {
-  //       if (typeof notification === "string")
-  //         dispatch(deleteNotificationAPI(notification));
-  //       else if (notification?.updated) {
-  //         delete notification.updated;
-  //         dispatch(
-  //           updateNotificationAPI({
-  //             notificationId: String(notification.payload._id),
-  //             updateData: notification.payload,
-  //           })
-  //         );
-  //       } else {
-  //         dispatch(addNotifications(notification));
-  //       }
-  //     };
-
-  //     socketIoInstance.on("BE_SEND_NOTIFICATION", onReceiveNewNotification);
-
-  //     return () => {
-  //       socketIoInstance.off("BE_SEND_NOTIFICATION", onReceiveNewNotification);
-  //     };
-  //   }, [dispatch]);
 
   return (
     <>
       <NavigationText placeTo="Danh sách thông báo" />
       <div className="mx-6 cursor-pointer relative">
-        <p className="text-[32px] font-semibold text-center mt-6 mb-8">
+        <p
+          className="lg:text-[32px] md:text-[28px] text-[24px] 
+        font-semibold text-center mt-6 mb-8"
+        >
           Thông báo
         </p>
         <div
@@ -51,22 +27,24 @@ const Notifications = () => {
                 <div
                   key={index}
                   onClick={() => navigate("/notifications")}
-                  className={`flex items-center gap-5 mb-3 hover:bg-slate-100 p-2 rounded-md ${
-                    index < currentNotifications.length - 1 &&
-                    "border-b border-slate-300"
-                  }`}
+                  className={`flex max-[450px]:flex-wrap items-center 
+                    max-[450px]:gap-8 gap-5 mb-3 hover:bg-slate-100 p-2 rounded-md ${
+                      index < currentNotifications.length - 1 &&
+                      "border-b border-slate-300"
+                    }`}
                 >
                   <img
                     src={notify.images}
-                    className="w-[300px] h-[200px] object-cover rounded-md border border-slate-200"
+                    className="md:w-[300px] md:h-[200px] w-[200px] h-[150px]
+                     object-cover rounded-md border border-slate-200"
                     alt=""
                   />
                   <div className="flex flex-col gap-1">
-                    <p className="text-xl font-semibold truncate">
+                    <p className="lg:text-xl md:text-[18px] text-[16px] font-semibold">
                       {notify.name}
                     </p>
                     <span
-                      className="text-lg text-gray-600 truncate"
+                      className="md:text-lg text-[14px] text-gray-600"
                       title={notify.message}
                     >
                       {notify.message}
@@ -75,7 +53,10 @@ const Notifications = () => {
                 </div>
               ))
             ) : (
-              <div className="text-center text-xl text-gray-500">
+              <div
+                className="text-center lg:text-xl 
+              md:text-[18px] text-[16px] text-gray-500"
+              >
                 Chưa có thông báo mới nào!
               </div>
             )}

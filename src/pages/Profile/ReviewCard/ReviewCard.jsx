@@ -1,4 +1,3 @@
-import { Ellipsis } from "lucide-react";
 import Star from "~/components/Star/Star";
 
 const ReviewCard = ({ review }) => {
@@ -11,7 +10,6 @@ const ReviewCard = ({ review }) => {
             {review?.courseName}
           </span>
         </p>
-        <Ellipsis size={20} />
       </div>
       <div className="flex items-center gap-3 my-4">
         <span className="mt-1">Đánh giá: </span>

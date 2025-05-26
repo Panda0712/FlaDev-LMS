@@ -29,8 +29,6 @@ const CartCard = ({ setCarts, cartItem }) => {
       });
   };
 
-  console.log(cartItem);
-
   const handleDeleteCart = (id) => {
     toast
       .promise(deleteCart(id), {
@@ -48,28 +46,43 @@ const CartCard = ({ setCarts, cartItem }) => {
   };
 
   return (
-    <div className="w-full p-[16px] border border-[#e2e8f0] rounded-[8px] flex justify-between gap-5">
-      <div className="flex items-center gap-4">
+    <div
+      className="w-full p-[16px] border border-[#e2e8f0] 
+    rounded-[8px] flex flex-wrap justify-between gap-5"
+    >
+      <div className="flex max-sm:flex-wrap items-center gap-4">
         <img
           src={cartItem?.courseThumbnail}
-          className="w-[192px] h-full object-cover rounded-[4px]"
+          className="w-[192px] sm:h-full h-auto object-cover rounded-[4px]"
           alt=""
         />
         <div>
-          <h3 className="text-[18px] font-semibold max-w-md">
-            {cartItem?.courseName}
-          </h3>
-          <p className="text-[16px] font-medium text-[#555555]">
-            Giảng dạy bởi {cartItem?.instructor}
-          </p>
+          <div className="flex flex-wrap justify-between gap-3 mb-2">
+            <div>
+              <h3 className="md:text-[18px] text-[16px] font-semibold max-w-md">
+                {cartItem?.courseName}
+              </h3>
+              <p className="md:text-[16px] text-[14px] font-medium text-[#555555]">
+                Giảng dạy bởi {cartItem?.instructor}
+              </p>
+            </div>
+            <p className="md:text-[24px] text-[20px] font-semibold">
+              {formatVND(cartItem?.totalPrice)}đ
+            </p>
+          </div>
 
           <div className="mb-1">
             <div className="flex items-center gap-3">
-              <div className="text-[20px] flex items-center gap-2">
-                <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
-                  {cartItem?.rating || 0}
-                </p>
-                <Star value={cartItem?.rating || 0} />
+              <div className="text-[20px] flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <p
+                    className="text-[#ffb400] md:text-[18px] 
+                text-[16px] font-medium mt-[1px]"
+                  >
+                    {cartItem?.rating || 0}
+                  </p>
+                  <Star value={cartItem?.rating || 0} />
+                </div>
                 <p className="text-[14px] mt-[1px] text-[#64748b]">
                   ({cartItem?.totalReviews || 0} đánh giá)
                 </p>
@@ -77,12 +90,12 @@ const CartCard = ({ setCarts, cartItem }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               onClick={handleWishlist}
               title="Thêm vào wishlist"
               type="wishlist"
-              style="py-1"
+              style="py-1 px-0!"
             />
             <Button
               onClick={() => handleDeleteCart(cartItem?.id)}
@@ -93,9 +106,6 @@ const CartCard = ({ setCarts, cartItem }) => {
           </div>
         </div>
       </div>
-      <p className="text-[24px] font-semibold">
-        {formatVND(cartItem?.totalPrice)}đ
-      </p>
     </div>
   );
 };

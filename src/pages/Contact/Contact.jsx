@@ -1,11 +1,12 @@
-import NavigationText from "~/components/NavigationText/NavigationText";
-import PhoneIcon from "~/assets/images/phone.png";
-import MailIcon from "~/assets/images/mail.png";
-import Input from "~/components/Input/Input";
-import Button from "~/components/Button/Button";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { createContact } from "~/apis/endpoints";
+import MailIcon from "~/assets/images/mail.png";
+import PhoneIcon from "~/assets/images/phone.png";
+import Button from "~/components/Button/Button";
+import Input from "~/components/Input/Input";
+import NavigationText from "~/components/NavigationText/NavigationText";
 import {
   EMAIL_RULE,
   EMAIL_RULE_MESSAGE,
@@ -13,7 +14,6 @@ import {
   PHONE_RULE,
   PHONE_RULE_MESSAGE,
 } from "~/utils/validators";
-import { useSelector } from "react-redux";
 
 const Contact = () => {
   const user = useSelector((state) => state.auth.user);
@@ -45,10 +45,16 @@ const Contact = () => {
   return (
     <section>
       <NavigationText placeTo="Liên hệ" />
-      <div className="px-28">
-        <div className="py-[60px] flex justify-between">
+      <div className="lg:px-28 md:px-24 sm:px-18 px-12">
+        <div
+          className="py-[60px] flex max-md:flex-wrap 
+        max-md:gap-14 justify-between"
+        >
           <div>
-            <h3 className="text-[32px] font-semibold mb-[24px]">
+            <h3
+              className="lg:text-[32px] md:text-[28px] text-[24px]
+             font-semibold mb-[24px]"
+            >
               Cần hỗ trợ trực tiếp?
             </h3>
             <p className="text-[#555555] font-medium mb-[16px]">
@@ -75,9 +81,9 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="flex justify-center mb-12 basis-[60%]">
+          <div className="flex justify-center mb-12 basis-[60%] max-md:basis-[100%]">
             <iframe
-              className="rounded-2xl"
+              className="rounded-2xl max-md:w-full"
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15677.598579955422!2d106.6401792!3d10.780672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1728490781938!5m2!1svi!2s"
               width={"100%"}
               height={450}
@@ -90,7 +96,10 @@ const Contact = () => {
         </div>
 
         <div className="pb-[90px]">
-          <h3 className="text-[32px] font-semibold mb-[24px]">
+          <h3
+            className="lg:text-[32px] md:text-[28px] text-[24px]
+           font-semibold mb-[24px]"
+          >
             Liên hệ với chúng tôi
           </h3>
           <p className="text-[#555555] font-medium mb-[16px]">
@@ -99,7 +108,10 @@ const Contact = () => {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex items-center basis-[100%] gap-[20px] w-full">
+            <div
+              className="flex max-sm:flex-wrap 
+            items-center basis-[100%] gap-[20px] w-full"
+            >
               <Input
                 name="name"
                 content="Tên của bạn*"
@@ -115,7 +127,7 @@ const Contact = () => {
                   },
                 })}
                 error={errors?.name}
-                style="basis-[calc(50%-10px)]"
+                style="basis-[calc(50%-10px)] max-sm:w-full"
               />
               <Input
                 name="email"
@@ -129,7 +141,7 @@ const Contact = () => {
                   },
                 })}
                 error={errors?.email}
-                style="basis-[calc(50%-10px)]"
+                style="basis-[calc(50%-10px)] max-sm:w-full"
               />
             </div>
             <Input

@@ -60,7 +60,7 @@ const Course = () => {
       <NavigationText placeTo="MERN Stack" />
       <CourseHeading reviews={reviews} courseInfo={course} />
 
-      <div className="px-28">
+      <div className="lg:px-28 md:px-24 sm:px-18 px-12">
         <CourseLinkBox onScrollToSection={handleScrollToSection} />
 
         <div ref={contentRef}>

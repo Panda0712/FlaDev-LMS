@@ -141,15 +141,18 @@ const Courses = () => {
     <section>
       <NavigationText placeTo="Danh sách khóa học" />
 
-      <div className="pt-[32px] pb-[90px] px-28">
-        <div className="flex gap-[32px] items-start justify-between">
+      <div className="pt-[32px] pb-[90px] lg:px-28 md:px-24 sm:px-18 px-12">
+        <div className="flex max-lg:flex-col-reverse gap-[32px] items-start justify-between">
           <div className="basis-[calc(75%-16px)]">
             <CoursesSearch
               handleSearch={handleSearch}
               searchQuery={searchQuery}
               handleChangeSearchValue={handleChangeSearchValue}
             />
-            <div className="flex flex-col gap-[32px]">
+            <div
+              className="flex max-md:grid max-md:grid-cols-2 
+            max-sm:grid-cols-1 flex-col gap-[32px]"
+            >
               {(selectedCategory || selectedReview || searchQuery) &&
               !filterCourses?.length ? (
                 <p className="text-[18px] font-medium">
@@ -182,8 +185,13 @@ const Courses = () => {
         </div>
 
         <div className="mt-24">
-          <h3 className="text-[24px] font-semibold">Khóa học nổi bật</h3>
-          <div className="relative mt-5 grid grid-cols-4 gap-[30px]">
+          <h3 className="md:text-[24px] text-[20px] font-semibold">
+            Khóa học nổi bật
+          </h3>
+          <div
+            className="relative mt-5 grid lg:grid-cols-4 md:grid-cols-3 
+          min-[500px]:grid-cols-2 max-[500px]:grid-cols-1 gap-[30px]"
+          >
             {courses?.slice(0, 4).map((course, index) => (
               <CourseCard
                 key={index}

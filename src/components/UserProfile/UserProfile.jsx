@@ -78,9 +78,9 @@ const UserProfile = ({ currentUser }) => {
       </div>
 
       {openProfile && (
-        <ul className="absolute z-99 shadow-sm bottom-[-100px] rounded-lg bg-gray-200 left-0 py-3 px-4">
-          <Link to="/profile">
-            <li className={profileItemStyle}>Thông tin cá nhân</li>
+        <ul className="absolute z-99 shadow-sm bottom-[-110px] rounded-lg bg-gray-200 left-0 py-3 px-4">
+          <Link to="/profile" className={profileItemStyle}>
+            <li>Thông tin cá nhân</li>
           </Link>
           <li onClick={() => setOpenModal(true)} className={profileItemStyle}>
             Đăng xuất

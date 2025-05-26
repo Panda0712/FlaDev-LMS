@@ -9,12 +9,15 @@ const CourseLessons = ({ courseInfo }) => {
 
   return (
     <div className="py-[32px] border-b border-slate-300">
-      <h3 className="text-[20px] font-semibold">Chương trình</h3>
+      <h3 className="md:text-[20px] text-[18px] font-semibold">Chương trình</h3>
 
       <div className="flex flex-col mt-5 pb-8">
         {courseInfo?.courseModules?.map((item, index) => (
           <div key={index} className="rounded-md flex flex-col justify-start">
-            <div className="p-[24px] cursor-pointer rounded-md flex items-center justify-between border border-slate-300">
+            <div
+              className="p-[24px] cursor-pointer rounded-md flex max-md:flex-wrap items-center 
+            justify-between gap-5 border border-slate-300"
+            >
               <div
                 onClick={() => handleToggleList(index)}
                 className="flex items-center gap-4"
@@ -24,9 +27,11 @@ const CourseLessons = ({ courseInfo }) => {
                 ) : (
                   <ChevronUp size={24} />
                 )}{" "}
-                <p className="font-semibold text-[18px]">{item?.title}</p>
+                <p className="font-semibold md:text-[18px] text-[16px]">
+                  {item?.title}
+                </p>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex max-md:hidden items-center gap-4">
                 <p className="font-medium text-[#555555]">
                   {item?.lessons.length} bài học
                 </p>
@@ -59,7 +64,7 @@ const CourseLessons = ({ courseInfo }) => {
                         className="w-[24px] h-[24px] text-[#64748b]"
                         alt=""
                       />
-                      <p className="text-[#64748b] text-[16px]">
+                      <p className="text-[#64748b] md:text-[16px] text-[14px]">
                         {lesson?.duration}
                       </p>
                     </div>

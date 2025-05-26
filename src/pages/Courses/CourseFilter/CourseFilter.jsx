@@ -11,12 +11,13 @@ const CourseFilter = ({
 }) => {
   return (
     <div className="flex flex-col gap-6">
-      <h3 className="text-[24px] font-semibold">{label}</h3>
+      <h3 className="md:text-[24px] text-[20px] font-semibold">{label}</h3>
       <div className="flex flex-col gap-4">
         {listItem?.map((item, index) => (
           <div
             key={index}
-            className="flex items-center justify-between gap-5 text-[18px] font-medium text-[#555555]"
+            className="flex items-center justify-between gap-5 
+            md:text-[18px] text-[16px] font-medium text-[#555555]"
           >
             <div className="flex items-center gap-3">
               <input
