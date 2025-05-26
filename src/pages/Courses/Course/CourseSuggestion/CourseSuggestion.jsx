@@ -30,11 +30,14 @@ const CourseSuggestion = ({ reviews = [], style }) => {
 
   return (
     <section className={`pt-[90px] pb-[120px] bg-[#f8fafc] ${style}`}>
-      <h3 className="text-[20px] font-semibold mb-[36px]">
+      <h3 className="md:text-[20px] text-[18px] font-semibold mb-[36px]">
         Các khóa học tương tự
       </h3>
 
-      <div className="grid grid-cols-4 gap-[30px] basis-[100%]">
+      <div
+        className="grid lg:grid-cols-4 md:grid-cols-3 
+          min-[500px]:grid-cols-2 max-[500px]:grid-cols-1 gap-[30px] basis-[100%]"
+      >
         {courses.slice(0, 4).map((course, index) => (
           <CourseCard
             key={index}

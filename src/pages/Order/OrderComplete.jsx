@@ -81,10 +81,15 @@ const OrderComplete = () => {
   }, [cartRedux]);
 
   return (
-    <div className="flex flex-col items-center justify-center py-[90px] px-[28px]">
+    <div
+      className="flex flex-col items-center justify-center 
+    py-[90px] md:px-[28px] sm:px-[24px] px-[20px]"
+    >
       <img src={CompleteImg} className="w-[200px] h-[200px]" alt="" />
-      <h2 className="text-[32px] font-bold my-4">Hoàn thành đơn hàng</h2>
-      <p className="text-[24px] font-semibold">
+      <h2 className="lg:text-[32px] md:text-[28px] text-[24px] font-bold my-4">
+        Hoàn thành đơn hàng
+      </h2>
+      <p className="md:text-[24px] text-[20px] font-semibold">
         Hãy truy cập khóa học để tiến hành học nhé !!!
       </p>
       <p className="text-center mt-4">

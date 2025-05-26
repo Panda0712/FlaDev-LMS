@@ -29,12 +29,12 @@ const CourseVideo = ({
   return (
     <div className="relative rounded-[16px] overflow-hidden">
       {videoUrl ? (
-        <div className="player-wrapper">
+        <div className="relative player-wrapper w-full h-full aspect-video">
           <ReactPlayer
             ref={playerRef}
             url={videoUrl}
             width="100%"
-            height="450px"
+            height="100%"
             playing={playing}
             controls={true}
             onProgress={handleProgress}
@@ -48,20 +48,24 @@ const CourseVideo = ({
                 },
               },
             }}
-            style={{ borderRadius: "16px" }}
+            style={{
+              borderRadius: "16px",
+              objectFit: "cover",
+            }}
           />
         </div>
       ) : (
         <>
           <img
             src={thumbnail}
-            className="w-full min-h-[450px] object-cover rounded-[16px]"
+            className="w-full h-full object-cover rounded-[16px]"
             alt=""
           />
           <div
             onClick={handlePlayPause}
             className="absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] 
-              w-[100px] h-[100px] shadow-sm cursor-pointer transition hover:opacity-80 bg-white rounded-full flex items-center justify-center"
+              w-[100px] h-[100px] shadow-sm cursor-pointer transition hover:opacity-80 bg-white 
+              rounded-full flex items-center justify-center"
           >
             <Play size={44} className="fill-black" />
           </div>

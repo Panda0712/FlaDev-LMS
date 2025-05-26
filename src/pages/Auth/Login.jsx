@@ -10,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,9 +44,18 @@ const Login = () => {
       });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <div className="basis-[calc(50%-12px)] mt-8 p-7 bg-white rounded-2xl border border-slate-200">
-      <h2 className="text-[32px] font-semibold mb-6">Đăng nhập</h2>
+    <div
+      className="lg:basis-[calc(50%-12px)] md:basis-[calc(70%-12px)] basis-[calc(90%-12px)] 
+    mt-8 p-7 bg-white rounded-2xl border border-slate-200"
+    >
+      <h2 className="lg:text-[32px] md:text-[28px] text-[24px] font-semibold mb-6">
+        Đăng nhập
+      </h2>
 
       {error && <div className="mb-4 text-red-500">{error}</div>}
 
@@ -63,15 +73,18 @@ const Login = () => {
 
         <div className="mb-4 relative">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Mật khẩu*"
             className={inputStyle}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer">
-            👁️
+          <span
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer select-none"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? "🙈" : "👁️"}
           </span>
         </div>
 
@@ -83,7 +96,7 @@ const Login = () => {
           />
           <label
             htmlFor="remember"
-            className="text-md text-[#555555] font-medium"
+            className="md:text-md text-sm text-[#555555] font-medium"
           >
             Ghi nhớ tài khoản
           </label>
@@ -99,7 +112,10 @@ const Login = () => {
           Chưa có tài khoản? <Link to="/auth/register">Đăng ký ngay</Link>
         </p>
 
-        <p className="mt-7 text-md text-[16px] font-medium cursor-pointer hover:underline">
+        <p
+          className="mt-7 text-md md:text-[16px] text-[14px] 
+        font-medium cursor-pointer hover:underline"
+        >
           Quên mật khẩu?
         </p>
       </form>

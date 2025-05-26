@@ -68,20 +68,62 @@ const CourseLearning = () => {
   if (loading) return <Loading />;
 
   return (
-    <section className="px-28 pt-[32px] pb-[90px]">
+    <section className="lg:px-28 md:px-24 sm:px-16 px-4 pt-[32px] pb-[90px]">
       <h3 className="text-[24px] font-semibold mb-[32px]">
         {courseInfo?.courseName}
       </h3>
 
       <div className="flex items-start gap-[32px]">
-        <div className="basis-[calc(70%-16px)]">
-          <CourseVideo
-            thumbnail={courseInfo?.thumbnail || courseInfo?.courseThumbnail}
-            videoUrl={currentVideoUrl}
-            onVideoComplete={handleVideoComplete}
-            lessonId={currentActiveLesson}
-            handleDuration={handleDuration}
-          />
+        <div>
+          <div
+            className="flex w-full max-[1250px]:flex-col 
+          items-start justify-between gap-5"
+          >
+            <div className="basis-[calc(70%-10px)] max-[1250px]:basis-[100%] max-[1250px]:w-full">
+              <CourseVideo
+                thumbnail={courseInfo?.thumbnail || courseInfo?.courseThumbnail}
+                videoUrl={currentVideoUrl}
+                onVideoComplete={handleVideoComplete}
+                lessonId={currentActiveLesson}
+                handleDuration={handleDuration}
+              />
+            </div>
+            <div
+              ref={lessonsRef}
+              className="basis-[calc(30%-10px)] max-[1250px]:basis-[100%] max-[1250px]:w-full 
+              rounded-[16px] bg-[#faf8fc] py-[20px] pb-0 border-2 border-slate-200"
+            >
+              <h3 className="md:text-[24px] text-[20px] font-semibold mt-2 mb-2 px-[20px]">
+                Tiến độ hoàn thành
+              </h3>
+
+              <div className="px-[20px] mb-5">
+                <div className="w-full bg-gray-200 rounded-full h-4 mb-2">
+                  <div
+                    className="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-in-out"
+                    style={{ width: `${progressPercent}%` }}
+                  ></div>
+                </div>
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>Tiến độ: {Math.round(progressPercent)}%</span>
+                  <span>
+                    {progressInfo?.completedLessons?.length || 0}/
+                    {progressInfo?.totalLessons || 0} bài học
+                  </span>
+                </div>
+              </div>
+
+              <CourseProgress
+                openItemList={openItemList}
+                courseModule={courseInfo?.courseModules}
+                currentActiveLesson={currentActiveLesson}
+                handleToggleList={handleToggleList}
+                handleChangeActiveLesson={handleChangeActiveLesson}
+                progressInfo={progressInfo}
+                lessonDurations={lessonDurations}
+              />
+            </div>
+          </div>
 
           <CourseLinkBox onScrollToSection={handleScrollToSection} />
 
@@ -96,40 +138,6 @@ const CourseLearning = () => {
               orders={orders}
             />
           </div>
-        </div>
-        <div
-          ref={lessonsRef}
-          className="basis-[calc(30%-16px)] rounded-[16px] bg-[#faf8fc] py-[20px] pb-0 border-2 border-slate-200"
-        >
-          <h3 className="text-[24px] font-semibold mt-2 mb-2 px-[20px]">
-            Tiến độ hoàn thành
-          </h3>
-
-          <div className="px-[20px] mb-5">
-            <div className="w-full bg-gray-200 rounded-full h-4 mb-2">
-              <div
-                className="bg-blue-600 h-4 rounded-full transition-all duration-500 ease-in-out"
-                style={{ width: `${progressPercent}%` }}
-              ></div>
-            </div>
-            <div className="flex justify-between text-sm text-gray-600">
-              <span>Tiến độ: {Math.round(progressPercent)}%</span>
-              <span>
-                {progressInfo?.completedLessons?.length || 0}/
-                {progressInfo?.totalLessons || 0} bài học
-              </span>
-            </div>
-          </div>
-
-          <CourseProgress
-            openItemList={openItemList}
-            courseModule={courseInfo?.courseModules}
-            currentActiveLesson={currentActiveLesson}
-            handleToggleList={handleToggleList}
-            handleChangeActiveLesson={handleChangeActiveLesson}
-            progressInfo={progressInfo}
-            lessonDurations={lessonDurations}
-          />
         </div>
       </div>
 

@@ -228,29 +228,35 @@ const CourseHeading = ({ reviews, courseInfo }) => {
   if (loading || loadingButton) return <Loading />;
 
   return (
-    <div className="relative px-28 py-16 flex bg-[#f8fafc]">
+    <div
+      className="relative lg:px-28 md:px-24 sm:px-18 px-12 
+    py-16 flex max-[1280px]:flex-col gap-5 bg-[#f8fafc]"
+    >
       <div>
-        <h3 className="text-[32px] font-semibold max-w-[70%] mb-3">
+        <h3
+          className="lg:text-[32px] md:text-[28px] text-[24px] 
+        font-semibold lg:max-w-[70%] max-w-full mb-3"
+        >
           {courseInfo?.name}
         </h3>
-        <p className="max-w-[70%] text-[#555555] font-medium">
+        <p className="lg:max-w-[70%] md:max-w-[80%] max-w-full text-[#555555] font-medium">
           {courseInfo?.description}
         </p>
 
         <div className="mt-4">
-          <div className="flex items-center gap-3">
-            <div className="text-[20px] flex items-center gap-2">
-              <p className="text-[#ffb400] text-[18px] font-medium mt-[1px]">
+          <div className="flex max-sm:flex-wrap items-center gap-3">
+            <div className="md:text-[20px] text-[18px] flex items-center gap-2">
+              <p className="text-[#ffb400] md:text-[18px] text-[16px] font-medium mt-[1px]">
                 {averageRating || 0}
               </p>
               <Star value={averageRating || 0} />
-              <p className="text-[14px] mt-[1px]">
+              <p className="md:text-[14px] text-[12px] mt-[1px]">
                 {reviewsList?.length || 0} đánh giá
               </p>
             </div>
 
             <div className="mt-[1.5px] border-l-2 border-slate-500 pl-3">
-              <p className="text-[#555555] text-[16px]">
+              <p className="text-[#555555] md:text-[16px] text-[14px]">
                 {courseInfo?.duration} giờ. {totalLessons} bài học. Tất cả trình
                 độ
               </p>
@@ -273,7 +279,11 @@ const CourseHeading = ({ reviews, courseInfo }) => {
         </div>
       </div>
 
-      <div className="absolute right-8 rounded-[16px] max-w-[400px] max-h-[788px] z-1000 shadow-sm">
+      <div
+        className="max-[1280px]:relative absolute max-[1280px]:right-0 right-8 rounded-[16px] max-[1280px]:max-w-[50%] 
+        max-lg:max-w-[70%] max-md:max-w-[80%] max-sm:max-w-full 
+      max-w-[400px] max-h-[788px] bg-white z-1000 shadow-sm"
+      >
         <div className="p-[20px] pb-[32px]">
           <img
             src={courseInfo?.thumbnail}
@@ -282,7 +292,7 @@ const CourseHeading = ({ reviews, courseInfo }) => {
           />
           <div className="flex items-center gap-2">
             <p
-              className={`text-[24px] font-semibold pt-[28px] pb-[12px] ${
+              className={`md:text-[24px] text-[20px] font-semibold pt-[28px] pb-[12px] ${
                 courseInfo?.price !== totalPrice &&
                 "line-through text-slate-400 font-normal"
               }`}
@@ -290,7 +300,10 @@ const CourseHeading = ({ reviews, courseInfo }) => {
               {formatVND(courseInfo?.price)}đ
             </p>
             {courseInfo?.price !== totalPrice && (
-              <p className="text-[32px] font-semibold pt-[28px] pb-[12px]">
+              <p
+                className="lg:text-[32px] md:text-[28px] sm:text-[24px] text-[20px]
+               font-semibold pt-[28px] pb-[12px]"
+              >
                 {formatVND(totalPrice)}đ
               </p>
             )}
@@ -331,7 +344,7 @@ const CourseHeading = ({ reviews, courseInfo }) => {
           </div>
 
           {voucher && (
-            <p className="text-[18px] font-medium mt-2">
+            <p className="md:text-[18px] text-[16px] font-medium mt-2">
               Bạn đã giảm được{" "}
               <span className="font-semibold">{formatVND(voucherValue)}đ</span>{" "}
               với voucher "{voucher.code}"
@@ -340,8 +353,10 @@ const CourseHeading = ({ reviews, courseInfo }) => {
         </div>
 
         <div className="p-[20px] border-t border-slate-300">
-          <h3 className="text-[18px] font-semibold mt-3">Chia sẻ</h3>
-          <div className="flex items-start gap-4 mt-5">
+          <h3 className="md:text-[18px] text-[16px] font-semibold mt-3">
+            Chia sẻ
+          </h3>
+          <div className="flex max-sm:flex-wrap items-start gap-4 mt-5">
             <div className="Demo__some-network">
               <FacebookShareButton
                 url={shareUrl}

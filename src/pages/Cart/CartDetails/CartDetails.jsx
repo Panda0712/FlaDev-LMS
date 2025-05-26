@@ -60,16 +60,22 @@ const CartDetails = ({ carts, orders }) => {
     navigate("/order/checkout");
   };
 
-  const mediumTextStyle = "text-[18px] font-semibold";
-  const greyTextStyle = "text-[18px] text-[#555555] font-medium";
-  const largeTextStyle = "text-[22px] font-semibold";
+  const mediumTextStyle = "md:text-[18px] text-[16px] font-semibold";
+  const greyTextStyle = "md:text-[18px] text-[16px] text-[#555555] font-medium";
+  const largeTextStyle =
+    "lg:text-[22px] md:text-[20px] text-[18px] font-semibold";
 
   const totalPrice = carts.reduce((acc, cart) => acc + cart.totalPrice, 0);
 
   return (
-    <div className="relative flex flex-col gap-4 basis-[calc(25%-24px)]">
+    <div
+      className="relative flex flex-col gap-4 basis-[calc(25%-24px)] 
+    max-md:basis-[70%] max-sm:basis-[100%]"
+    >
       <div className="flex flex-col gap-3 w-full">
-        <h4 className="text-[24px] font-semibold">Chi tiết đơn hàng</h4>
+        <h4 className="lg:text-[24px] md:text-[22px] text-[20px] font-semibold">
+          Chi tiết đơn hàng
+        </h4>
         <div className="bg-[#f8fafc] border-2 border-slate-200 rounded-[8px] p-[16px] w-full">
           <div className="flex items-center justify-between gap-4">
             <span className={greyTextStyle}>Giá</span>

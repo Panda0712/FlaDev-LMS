@@ -14,7 +14,10 @@ const Profile = () => {
   const isListReviews = location.pathname === "/profile/list_reviews";
 
   return (
-    <section className="py-[32px] px-28 flex items-start gap-8">
+    <section
+      className="pt-[32px] pb-[80px] lg:px-28 
+      md:px-24 sm:px-18 px-12 flex max-sm:flex-col items-start gap-8"
+    >
       <ProfileGeneral />
       {isUserProfile && <UserProfile />}
       {isListCourses && <ListCourses />}

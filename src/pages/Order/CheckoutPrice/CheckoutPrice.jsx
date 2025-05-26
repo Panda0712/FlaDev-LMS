@@ -2,9 +2,9 @@ import { isArray } from "lodash";
 import { formatVND } from "~/utils/formatters";
 
 const CheckoutPrice = ({ courseInfo }) => {
-  const mediumTextStyle = "text-[18px] font-semibold";
-  const greyTextStyle = "text-[18px] text-[#555555] font-medium";
-  const largeTextStyle = "text-[22px] font-semibold";
+  const mediumTextStyle = "md:text-[18px] text-[16px] font-semibold";
+  const greyTextStyle = "md:text-[18px] text-[16px] text-[#555555] font-medium";
+  const largeTextStyle = "md:text-[22px] text-[20px] font-semibold";
 
   const totalPrice = isArray(courseInfo)
     ? courseInfo.reduce((acc, course) => acc + course.totalPrice, 0)

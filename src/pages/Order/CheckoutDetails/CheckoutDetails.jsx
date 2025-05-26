@@ -10,18 +10,18 @@ const CheckoutDetails = ({ courseInfo }) => {
             <div key={course?.id} className="pb-40">
               <img
                 src={course?.courseThumbnail}
-                className="w-full h-full object-cover rounded-[8px]"
+                className="w-full max-md:h-auto h-full object-cover rounded-[8px]"
                 alt=""
               />
               <div>
-                <h4 className="text-[24px] font-semibold line-clamp-2">
+                <h4 className="md:text-[24px] text-[20px] font-semibold line-clamp-2">
                   {course?.courseName}
                 </h4>
-                <p className="text-[18px] text-[#555555] font-medium">
+                <p className="md:text-[18px] text-[16px] text-[#555555] font-medium">
                   Giảng dạy bởi {course?.instructor}
                 </p>
                 <div className="flex flex-col gap-1 mt-2">
-                  <span className="text-[28px] font-semibold">
+                  <span className="md:text-[28px] text-[24px] font-semibold">
                     {formatVND(course?.totalPrice)}đ
                   </span>
                 </div>
@@ -33,18 +33,18 @@ const CheckoutDetails = ({ courseInfo }) => {
         <>
           <img
             src={courseInfo?.courseThumbnail}
-            className="w-full h-full object-cover rounded-[8px]"
+            className="w-full max-md:h-auto h-full object-cover rounded-[8px]"
             alt=""
           />
           <div>
-            <h4 className="text-[24px] font-semibold line-clamp-2">
+            <h4 className="md:text-[24px] text-[20px] font-semibold line-clamp-2">
               {courseInfo?.courseName}
             </h4>
-            <p className="text-[18px] text-[#555555] font-medium">
+            <p className="md:text-[18px] text-[16px] text-[#555555] font-medium">
               Giảng dạy bởi {courseInfo?.instructor}
             </p>
             <div className="flex flex-col gap-1 mt-2">
-              <span className="text-[28px] font-semibold">
+              <span className="md:text-[28px] text-[24px] font-semibold">
                 {formatVND(courseInfo?.totalPrice)}đ
               </span>
             </div>

@@ -13,7 +13,7 @@ const Input = ({
   const { error } = props;
 
   const globalStyle =
-    "text-[16px] border border-slate-400 rounded-[12px] px-4 py-4 my-2 font-medium";
+    "md:text-[16px] text-[14px] border border-slate-400 rounded-[12px] px-4 py-4 my-2 font-medium";
 
   if (type === "file" || type === "file-secondary") {
     return (
@@ -36,7 +36,10 @@ const Input = ({
           {...props}
         />
         {error && (
-          <p className="text-red-500 text-left max-w-[300px] text-[14px] my-1">
+          <p
+            className="text-red-500 text-left max-w-[300px] 
+          md:text-[14px] text-[12px] my-1"
+          >
             {error.message}
           </p>
         )}
@@ -55,7 +58,10 @@ const Input = ({
       />
       {icon && icon}
       {error && (
-        <p className="text-red-500 text-left max-w-[300px] text-[14px] my-1">
+        <p
+          className="text-red-500 text-left max-w-[300px] 
+        md:text-[14px] text-[12px] my-1"
+        >
           {error.message}
         </p>
       )}

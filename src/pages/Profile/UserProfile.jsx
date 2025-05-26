@@ -221,7 +221,9 @@ const UserProfile = () => {
       </div>
       <div className="rounded-[16px] border p-[16px] border-slate-200">
         <div>
-          <h3 className="text-[18px] font-semibold mb-4">Hình ảnh</h3>
+          <h3 className="md:text-[18px] text-[16px] font-semibold mb-4">
+            Hình ảnh
+          </h3>
           <Input
             type="file-secondary"
             image={image}
@@ -236,7 +238,9 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="rounded-[16px] border p-[16px] border-slate-200">
-        <h3 className="text-[18px] font-semibold mb-4">Liên kết</h3>
+        <h3 className="md:text-[18px] text-[16px] font-semibold mb-4">
+          Liên kết
+        </h3>
 
         <div className="flex flex-col mb-4">
           <label htmlFor="website">Website</label>

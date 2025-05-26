@@ -58,13 +58,15 @@ const ListReviews = () => {
   return (
     <section className="w-full pb-[90px]">
       <div className="flex items-center gap-3 mb-4">
-        <h3 className="text-[24px] font-semibold">Đánh giá</h3>
-        <span className="text-[18px] font-semibold">({reviews?.length})</span>
+        <h3 className="md:text-[24px] text-[20px] font-semibold">Đánh giá</h3>
+        <span className="md:text-[18px] text-[16px] font-semibold">
+          ({reviews?.length})
+        </span>
       </div>
 
       <div className="flex flex-col gap-[16px]">
         {!currentReviews?.length && (
-          <p className="text-[18px] font-medium">
+          <p className="md:text-[18px] text-[16px] font-medium">
             Hiện chưa có đánh giá nào!!!
           </p>
         )}
