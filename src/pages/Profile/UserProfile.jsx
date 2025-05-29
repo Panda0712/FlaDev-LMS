@@ -134,6 +134,11 @@ const UserProfile = () => {
       })
       .then((res) => {
         if (!res.error) {
+          const actionData = {
+            user: res,
+            token: localStorage.getItem("token"),
+          };
+          dispatch(setUserRedux(actionData));
           toast.success("Cập nhật thông tin thành công!!!");
           imageRef.current = null;
         }
