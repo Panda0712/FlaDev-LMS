@@ -67,6 +67,7 @@ const OrderComplete = () => {
       updateVoucher(voucher?.id, updateData);
       localStorage.removeItem("voucher");
     }
+    localStorage.removeItem("order-data");
   }, [navigate]);
 
   useEffect(() => {

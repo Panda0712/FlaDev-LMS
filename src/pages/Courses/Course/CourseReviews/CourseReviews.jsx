@@ -31,9 +31,7 @@ const CourseReviews = ({ loading, currentUser, reviews, courseInfo }) => {
 
   const totalRating =
     reviewsList.reduce((acc, review) => acc + review.rating, 0) || 0;
-  const averageRating = Math.floor(
-    totalRating / reviewsList?.length || 5
-  ).toFixed(1);
+  const averageRating = Math.floor(totalRating / reviewsList?.length || 0);
 
   const listRateValue = Array.from({ length: 5 }, (_, index) => index + 1).map(
     (item) => {
@@ -327,7 +325,7 @@ const CourseReviews = ({ loading, currentUser, reviews, courseInfo }) => {
             <div className="flex items-center gap-2">
               <img src={StarImg} className="w-[20px] h-[20px]" alt="" />
               <span className="text-[20px] leading-1 mt-[2px] font-semibold">
-                {averageRating || 5}
+                {averageRating || 0}
               </span>
             </div>
             <p className="text-[18px] leading-1 mt-[4px] font-semibold text-[#555555]">
