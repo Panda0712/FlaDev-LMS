@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   fetchUserProfile,
@@ -10,6 +10,7 @@ import {
 import Button from "~/components/Button/Button";
 import Input from "~/components/Input/Input";
 import Loading from "~/components/Loading/Loading";
+import { setUser as setUserRedux } from "~/redux/authSlice";
 import { singleFileValidator } from "~/utils/validators";
 
 const UserProfile = () => {
@@ -19,6 +20,7 @@ const UserProfile = () => {
 
   const { register, handleSubmit, reset, getValues } = useForm();
 
+  const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.user);
   const imageRef = useRef(null);
 
@@ -74,6 +76,11 @@ const UserProfile = () => {
         })
         .then((res) => {
           if (!res.error) {
+            const actionData = {
+              user: res,
+              token: localStorage.getItem("token"),
+            };
+            dispatch(setUserRedux(actionData));
             toast.success("Cập nhật hình ảnh thành công!!!");
             imageRef.current = null;
           }
