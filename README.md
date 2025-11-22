@@ -12,16 +12,16 @@ React + Vite frontend for the FlaDev Learning Management System (LMS). It provid
 
 ## Main features
 
-- Admin dashboard: manage courses, blogs, contacts, orders, reviews, vouchers, and notifications.
-- Course browsing & filtering: lists, search, categories, and paginated results.
-- Course learning experience: lesson navigation, video playback, and progress tracking.
-- Cart & checkout: add to cart, view cart details, and create orders (payment handled by backend services).
-- Authentication & profiles: register, login, and manage user profiles.
-- Real-time notifications: socket-based updates for notifications and live events.
-- Blog & rich content: create/edit blog posts using a rich text editor (Quill/react-quill).
-- File & media uploads: file/video input components for uploading course materials.
-- Reviews & ratings: students can rate and review courses; admin can manage reviews.
-- Wishlist & sharing: wishlist functionality and social sharing utilities.
+- **Admin dashboard:** manage courses, blogs, contacts, orders, reviews, vouchers, and notifications.
+- **Course browsing & filtering:** lists, search, categories, and paginated results.
+- **Course learning experience:** lesson navigation, video playback, and progress tracking.
+- **Cart & checkout:** add to cart, view cart details, and create orders (payment handled by backend services).
+- **Authentication & profiles:** register, login, and manage user profiles.
+- **Real-time notifications:** socket-based updates for notifications and live events.
+- **Blog & rich content:** create/edit blog posts using a rich text editor (Quill/react-quill).
+- **File & media uploads:** file/video input components for uploading course materials.
+- **Reviews & ratings:** students can rate and review courses; admin can manage reviews.
+- **Wishlist & sharing:** wishlist functionality and social sharing utilities.
 
 ## Demo
 
