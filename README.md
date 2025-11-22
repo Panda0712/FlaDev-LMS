@@ -1,7 +1,6 @@
-# FlaDev-LMS — Frontend
-
 <div align="center">
-  <h1 align="center">LMS & E-learning Platform</h1>
+  <h1 align="center">FlaDev-LMS — Frontend</h1>
+  <h3>LMS & E-learning Platform</h3>
 
 <img src="public/lms-icon.png" alt="Papermark" style="width:80px;height:80px"></a>
 
