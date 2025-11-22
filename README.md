@@ -1,5 +1,12 @@
 # FlaDev-LMS — Frontend
 
+<div align="center">
+  <h1 align="center">LMS & E-learning Platform</h1>
+
+<img src="public/lms-icon.png" alt="Papermark" style="width:80px;height:80px"></a>
+
+</div>
+
 ![Vite](https://img.shields.io/badge/Vite-DevServer-brightgreen?logo=vite)
 ![React](https://img.shields.io/badge/React-19-blue?logo=react)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-skyblue?logo=tailwindcss)
