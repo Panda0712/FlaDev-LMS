@@ -25,11 +25,15 @@ React + Vite frontend for the FlaDev Learning Management System (LMS). It provid
 
 ## Demo
 
-<img src="public/LMS-demo-1.gif" width="840" alt="Demo GIF">
-<img src="public/LMS-demo-4.gif" width="840" alt="Demo GIF">
-<img src="public/LMS-demo-2.gif" width="840" alt="Demo GIF">
-<img src="public/LMS-demo-3.gif" width="840" alt="Demo GIF">
-<img src="public/LMS-demo-5.gif" width="840" alt="Demo GIF">
+<img src="public/LMS-demo-1.gif" width="840" alt="Demo GIF 1">
+<br>
+<img src="public/LMS-demo-4.gif" width="840" alt="Demo GIF 4">
+<br>
+<img src="public/LMS-demo-2.gif" width="840" alt="Demo GIF 2">
+<br>
+<img src="public/LMS-demo-3.gif" width="840" alt="Demo GIF 3">
+<br>
+<img src="public/LMS-demo-5.gif" width="840" alt="Demo GIF 5">
 
 ## Tech stack
 
