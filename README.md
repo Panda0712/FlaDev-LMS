@@ -25,9 +25,11 @@ React + Vite frontend for the FlaDev Learning Management System (LMS). It provid
 
 ## Demo
 
-Replace the placeholder GIF at `public/demo.gif` with your recorded demo. The image below is a placeholder and will render once you add your GIF.
-
-![Demo Placeholder](./public/demo.gif)
+<img src="public/LMS-demo-1.gif" width="840" alt="Demo GIF">
+<img src="public/LMS-demo-4.gif" width="840" alt="Demo GIF">
+<img src="public/LMS-demo-2.gif" width="840" alt="Demo GIF">
+<img src="public/LMS-demo-3.gif" width="840" alt="Demo GIF">
+<img src="public/LMS-demo-5.gif" width="840" alt="Demo GIF">
 
 ## Tech stack
 
@@ -41,33 +43,37 @@ Replace the placeholder GIF at `public/demo.gif` with your recorded demo. The im
 
 ## Install & development
 
-1. Install dependencies
+1. Clone the repository
+
+```shell
+git clone https://github.com/Panda0712/FlaDev-LMS.git
+```
+
+2. Install dependencies
 
 ```powershell
 npm install
 ```
 
-2. Create a `.env` file at the project root and add required client variables (use `VITE_` prefix so Vite exposes them to the client). Example keys:
+3. Create a `.env` file at the project root and add required client variables (use `VITE_` prefix so Vite exposes them to the client). Example keys:
 
 ```
-VITE_API_BASE_URL=https://api.example.com
-VITE_SOCKET_URL=https://sockets.example.com
-VITE_PAYMENT_PUBLIC_KEY=pk_test_xxx
+REACT_APP_API_BASE_URL=https://api.example.com
 ```
 
-3. Run development server
+4. Run development server
 
 ```powershell
 npm run dev
 ```
 
-4. Build for production
+5. Build for production
 
 ```powershell
 npm run build
 ```
 
-5. Preview production build
+6. Preview production build
 
 ```powershell
 npm run preview
@@ -75,7 +81,5 @@ npm run preview
 
 ## Notes
 
-- Backend services for payments and order processing are separate (see related backend folders in the workspace). Configure `VITE_API_BASE_URL` to point to your running backend.
-- The demo GIF should be placed at `public/demo.gif` so it renders on GitHub and Vercel.
-
-If you want, I can also add a `frontend/.env.example` file listing the `VITE_` variables, or replace the current placeholder GIF with a minimal valid GIF so the README shows an image immediately.
+- Backend services for payments and order processing are separate (see related backend folders in the workspace). Configure `REACT_APP_API_BASE_URL` to point to your running backend.
+- Replace "https://api.example.com" with backend domain of this project: "lms-backend-production-b51f.up.railway.app"
